@@ -1,0 +1,12 @@
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\bin\Debug\net6.0\AutoMoreira.Core.deps.json
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\bin\Debug\net6.0\AutoMoreira.Core.dll
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\bin\Debug\net6.0\AutoMoreira.Core.pdb
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.csproj.AssemblyReference.cache
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.AssemblyInfoInputs.cache
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.AssemblyInfo.cs
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.csproj.CoreCompileInputs.cache
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.dll
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\refint\AutoMoreira.Core.dll
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\AutoMoreira.Core.pdb
+C:\Users\Pedro Rafael Santos\Documents\AutoMoreira\Back\AutoMoreira\AutoMoreira.Core\obj\Debug\net6.0\ref\AutoMoreira.Core.dll
