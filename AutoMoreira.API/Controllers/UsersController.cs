@@ -24,6 +24,9 @@
 
         #region CRUD Methods
 
+        /// <summary>
+        /// Get All Users
+        /// </summary>
         [HttpGet()]
         [AllowAnonymous]
         public async Task<IActionResult> Get()
@@ -44,6 +47,9 @@
         }
 
 
+        /// <summary>
+        /// Get User
+        /// </summary>
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUserByUserName()
         {
@@ -64,6 +70,10 @@
         }
 
 
+        /// <summary>
+        /// Create User
+        /// </summary>
+        /// <param name="userDTO"></param>
         [HttpPost("CreateUser")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUser(UserDTO userDTO)
@@ -99,6 +109,10 @@
         }
 
 
+        /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="userLoginDTO"></param>
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginUser(UserUpdateDTO userLoginDTO)
@@ -136,6 +150,10 @@
         }
 
 
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <param name="userUpdateDTO"></param>
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
         {

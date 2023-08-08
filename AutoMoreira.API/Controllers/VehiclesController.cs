@@ -25,6 +25,10 @@ namespace AutoMoreira.API.Controllers
 
         #region CRUD Methods
 
+        /// <summary>
+        /// Get All Vehicles
+        /// </summary>
+        /// <param name="pageParams"></param>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Get([FromQuery] PageParams pageParams)
@@ -45,6 +49,11 @@ namespace AutoMoreira.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get Vehicle
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
@@ -63,6 +72,11 @@ namespace AutoMoreira.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Create Vehicle
+        /// </summary>
+        /// <param name="vehicleDTO"></param>
         [HttpPost]
         public async Task<IActionResult> Post(VehicleDTO vehicleDTO)
         {
@@ -80,6 +94,12 @@ namespace AutoMoreira.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Update Vehicle
+        /// </summary>
+        /// <param name="vehicleDTO"></param>
+        /// <param name="id"></param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, VehicleDTO vehicleDTO)
         {
@@ -97,6 +117,11 @@ namespace AutoMoreira.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Delete Vehicle
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

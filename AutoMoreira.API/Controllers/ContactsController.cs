@@ -20,6 +20,9 @@
 
         #region CRUD Methods
 
+        /// <summary>
+        /// Get All Contacts
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -37,6 +40,11 @@
             }
         }
 
+
+        /// <summary>
+        /// Get Contact
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -55,6 +63,10 @@
         }
 
 
+        /// <summary>
+        /// Create Contact
+        /// </summary>
+        /// <param name="contactDTO"></param>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Post(ContactDTO contactDTO)
@@ -73,6 +85,11 @@
             }
         }
 
+
+        /// <summary>
+        /// Delete Contact
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

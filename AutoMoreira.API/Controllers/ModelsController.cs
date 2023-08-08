@@ -22,6 +22,9 @@
 
         #region CRUD Methods
 
+        /// <summary>
+        /// Get All Models
+        /// </summary>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Get()
@@ -41,6 +44,10 @@
         }
 
 
+        /// <summary>
+        /// Get Model
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
@@ -60,6 +67,10 @@
         }
 
 
+        /// <summary>
+        /// Get Models by Mark
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("Mark/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByMarkId(int id)
@@ -79,6 +90,10 @@
         }
 
 
+        /// <summary>
+        /// Create Model
+        /// </summary>
+        /// <param name="modelDTO"></param>
         [HttpPost]
         public async Task<IActionResult> Post(ModelDTO modelDTO)
         {
@@ -97,6 +112,11 @@
         }
 
 
+        /// <summary>
+        /// Update Model
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="modelDTO></param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, ModelDTO modelDTO)
         {
@@ -115,6 +135,10 @@
         }
 
 
+        /// <summary>
+        /// Delete Model
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
