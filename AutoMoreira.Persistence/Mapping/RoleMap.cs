@@ -11,7 +11,7 @@
             entity.Property(x => x.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd()
-                .IsRequired();
+                .IsRequired(true);
 
 
         }

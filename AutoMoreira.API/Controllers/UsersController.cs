@@ -43,6 +43,7 @@
 
         }
 
+
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUserByUserName()
         {
@@ -61,6 +62,8 @@
             }
 
         }
+
+
         [HttpPost("CreateUser")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUser(UserDTO userDTO)
@@ -77,7 +80,8 @@
                     return Ok(new
                     {
                         userName = user.UserName,
-                        PrimeiroNome = user.PrimeiroNome,
+                        firstName = user.FirstName,
+                        lastName = user.LastName,
                         token = _tokenService.CreateToken(user).Result
 
                     });
@@ -93,6 +97,8 @@
             }
 
         }
+
+
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginUser(UserUpdateDTO userLoginDTO)
@@ -114,7 +120,8 @@
                 return Ok(new
                 {
                     userName = user.UserName,
-                    primeiroNome = user.PrimeiroNome,
+                    firstName = user.FirstName,
+                    lastName = user.LastName,
                     token = _tokenService.CreateToken(user).Result
 
                 });
@@ -127,6 +134,8 @@
             }
 
         }
+
+
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
         {
@@ -146,7 +155,8 @@
                 return Ok(new
                 {
                     userName = userReturn.UserName,
-                    PrimeroNome = userReturn.PrimeiroNome,
+                    firstName = user.FirstName,
+                    lastName = user.LastName,
                     token = _tokenService.CreateToken(userReturn).Result
                 });
             }

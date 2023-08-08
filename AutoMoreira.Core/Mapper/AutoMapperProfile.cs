@@ -6,11 +6,13 @@
         {
 
             //Ele cria do evento para o DTO e do DTO para o Evento
-            CreateMap<Veiculo, VeiculoDTO>().ReverseMap();
+            CreateMap<Vehicle, VehicleDTO>().ReverseMap();
 
-            CreateMap<Marca, MarcaDTO>().ReverseMap();
+            CreateMap<VehicleImage, VehicleImageDTO>().ReverseMap();
 
-            CreateMap<Modelo, ModeloDTO>().ReverseMap();
+            CreateMap<Mark, MarkDTO>().ReverseMap();
+
+            CreateMap<Model, ModelDTO>().ReverseMap();
 
             CreateMap<User, UserDTO>().ReverseMap();
 
@@ -18,7 +20,7 @@
 
             CreateMap<User, UserUpdateDTO>().ReverseMap();
 
-            CreateMap<Contacto, ContactoDTO>().ReverseMap();
+            CreateMap<Contact, ContactDTO>().ReverseMap();
 
         }
     }

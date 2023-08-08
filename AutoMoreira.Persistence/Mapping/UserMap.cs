@@ -11,27 +11,27 @@
             entity.Property(x => x.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd()
-                .IsRequired();
+                .IsRequired(true);
 
-            entity.Property(x => x.PrimeiroNome)
-                .HasColumnName("primeiro_nome")
-                .IsRequired();
+            entity.Property(x => x.FirstName)
+                .HasColumnName("first_name")
+                .IsRequired(true);
 
-            entity.Property(x => x.UltimoNome)
-                .HasColumnName("ultimo_nome")
-                .IsRequired();
+            entity.Property(x => x.LastName)
+                .HasColumnName("last_name")
+                .IsRequired(true);
 
-            entity.Property(x => x.Funcao)
-                .HasColumnName("funcao")
-                .IsRequired();
+            entity.Property(x => x.Role)
+                .HasColumnName("role")
+                .IsRequired(true);
 
-            entity.Property(x => x.Descricao)
-                .HasColumnName("descricao")
-                .IsRequired();
+            entity.Property(x => x.Description)
+                .HasColumnName("description")
+                .IsRequired(true);
 
-            entity.Property(x => x.ImagemUrl)
-                .HasColumnName("imagem_url")
-                .IsRequired();
+            entity.Property(x => x.ImageUrl)
+                .HasColumnName("image_url")
+                .IsRequired(true);
 
 
         }

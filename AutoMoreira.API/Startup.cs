@@ -65,19 +65,19 @@ namespace AutoMoreira.API
 
             //Repositories
             services.AddScoped<IBaseRepository, BaseRepository>();
-            services.AddScoped<IVeiculoRepository, VeiculoRepository>();
-            services.AddScoped<IMarcaRepository, MarcaRepository>();
-            services.AddScoped<IModeloRepository, ModeloRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IMarkRepository, MarkRepository>();
+            services.AddScoped<IModelRepository, ModelRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IContactoRepository, ContactoRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
 
             //Services
-            services.AddScoped<IVeiculoService, VeiculoService>();
-            services.AddScoped<IMarcaService, MarcaService>();
-            services.AddScoped<IModeloService, ModeloService>();
+            services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IMarkService, MarkService>();
+            services.AddScoped<IModelService, ModelService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IContactoService, ContactoService>();
+            services.AddScoped<IContactService, ContactService>();
 
             //Rafael AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

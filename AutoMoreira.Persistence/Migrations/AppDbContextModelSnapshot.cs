@@ -22,42 +22,42 @@ namespace AutoMoreira.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Contacto", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Contact", b =>
                 {
-                    b.Property<int>("ContactoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("contacto_id");
+                        .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactoId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataHora")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2")
-                        .HasColumnName("data_hora");
+                        .HasColumnName("date_time");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("email");
 
-                    b.Property<string>("Mensagem")
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("mensagem");
+                        .HasColumnName("message");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nome");
+                        .HasColumnName("name");
 
-                    b.Property<string>("Telefone")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("telefone");
+                        .HasColumnName("phone_number");
 
-                    b.HasKey("ContactoId");
+                    b.HasKey("Id");
 
-                    b.ToTable("contacto", (string)null);
+                    b.ToTable("contact", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.Role", b =>
@@ -107,10 +107,10 @@ namespace AutoMoreira.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("descricao");
+                        .HasColumnName("description");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -119,14 +119,20 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Funcao")
-                        .HasColumnType("int")
-                        .HasColumnName("funcao");
-
-                    b.Property<string>("ImagemUrl")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("imagem_url");
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("image_url");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("last_name");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -151,21 +157,15 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PrimeiroNome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("primeiro_nome");
+                    b.Property<int>("Role")
+                        .HasColumnType("int")
+                        .HasColumnName("role");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
-
-                    b.Property<string>("UltimoNome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ultimo_nome");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -199,239 +199,271 @@ namespace AutoMoreira.Persistence.Migrations
                     b.ToTable("user_role", (string)null);
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Marca", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>
                 {
-                    b.Property<int>("MarcaId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("marca_id");
+                        .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarcaId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("MarcaNome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nome");
+                        .HasColumnName("name");
 
-                    b.HasKey("MarcaId");
+                    b.HasKey("Id");
 
-                    b.ToTable("marca", (string)null);
+                    b.ToTable("mark", (string)null);
 
                     b.HasData(
                         new
                         {
-                            MarcaId = 1,
-                            MarcaNome = "Audi"
+                            Id = 1,
+                            Name = "Audi"
                         },
                         new
                         {
-                            MarcaId = 2,
-                            MarcaNome = "Mercedes"
+                            Id = 2,
+                            Name = "Mercedes"
                         },
                         new
                         {
-                            MarcaId = 3,
-                            MarcaNome = "BMW"
+                            Id = 3,
+                            Name = "BMW"
                         },
                         new
                         {
-                            MarcaId = 4,
-                            MarcaNome = "Peugeot"
+                            Id = 4,
+                            Name = "Peugeot"
                         },
                         new
                         {
-                            MarcaId = 5,
-                            MarcaNome = "Volkswagen"
+                            Id = 5,
+                            Name = "Volkswagen"
                         },
                         new
                         {
-                            MarcaId = 6,
-                            MarcaNome = "Citroën"
+                            Id = 6,
+                            Name = "Citroën"
                         },
                         new
                         {
-                            MarcaId = 7,
-                            MarcaNome = "Renault"
+                            Id = 7,
+                            Name = "Renault"
                         },
                         new
                         {
-                            MarcaId = 8,
-                            MarcaNome = "Volvo"
+                            Id = 8,
+                            Name = "Volvo"
                         },
                         new
                         {
-                            MarcaId = 9,
-                            MarcaNome = "Fiat"
+                            Id = 9,
+                            Name = "Fiat"
                         });
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Modelo", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Model", b =>
                 {
-                    b.Property<int>("ModeloId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("modelo_id");
+                        .HasColumnName("id");
 
-                    b.Property<int>("MarcaId")
+                    b.Property<int>("MarkId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ModeloNome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nome");
+                        .HasColumnName("name");
 
-                    b.HasKey("ModeloId");
+                    b.HasKey("Id");
 
-                    b.ToTable("modelo", (string)null);
+                    b.ToTable("model", (string)null);
 
                     b.HasData(
                         new
                         {
-                            ModeloId = 1,
-                            MarcaId = 1,
-                            ModeloNome = "A3"
+                            Id = 1,
+                            MarkId = 1,
+                            Name = "A3"
                         },
                         new
                         {
-                            ModeloId = 2,
-                            MarcaId = 2,
-                            ModeloNome = "Classe A"
+                            Id = 2,
+                            MarkId = 2,
+                            Name = "Classe A"
                         },
                         new
                         {
-                            ModeloId = 3,
-                            MarcaId = 3,
-                            ModeloNome = "Serie 1"
+                            Id = 3,
+                            MarkId = 3,
+                            Name = "Serie 1"
                         },
                         new
                         {
-                            ModeloId = 4,
-                            MarcaId = 4,
-                            ModeloNome = "208"
+                            Id = 4,
+                            MarkId = 4,
+                            Name = "208"
                         },
                         new
                         {
-                            ModeloId = 5,
-                            MarcaId = 5,
-                            ModeloNome = "Golf"
+                            Id = 5,
+                            MarkId = 5,
+                            Name = "Golf"
                         },
                         new
                         {
-                            ModeloId = 6,
-                            MarcaId = 6,
-                            ModeloNome = "C4"
+                            Id = 6,
+                            MarkId = 6,
+                            Name = "C4"
                         },
                         new
                         {
-                            ModeloId = 7,
-                            MarcaId = 7,
-                            ModeloNome = "Megane"
+                            Id = 7,
+                            MarkId = 7,
+                            Name = "Megane"
                         },
                         new
                         {
-                            ModeloId = 8,
-                            MarcaId = 8,
-                            ModeloNome = "V40"
+                            Id = 8,
+                            MarkId = 8,
+                            Name = "V40"
                         },
                         new
                         {
-                            ModeloId = 9,
-                            MarcaId = 9,
-                            ModeloNome = "Punto"
+                            Id = 9,
+                            MarkId = 9,
+                            Name = "Punto"
                         });
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Veiculo", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Vehicle", b =>
                 {
-                    b.Property<int>("VeiculoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("veiculo_id");
+                        .HasColumnName("id");
 
-                    b.Property<int>("Ano")
-                        .HasColumnType("int")
-                        .HasColumnName("ano");
-
-                    b.Property<int>("Cilindrada")
-                        .HasColumnType("int")
-                        .HasColumnName("cilindrada");
-
-                    b.Property<int>("Combustivel")
-                        .HasColumnType("int")
-                        .HasColumnName("combustivel");
-
-                    b.Property<string>("Cor")
+                    b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("cor");
+                        .HasColumnName("color");
 
-                    b.Property<string>("ImagemURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("imagem_url");
-
-                    b.Property<int>("MarcaId")
+                    b.Property<int>("Doors")
                         .HasColumnType("int")
-                        .HasColumnName("marca_id");
+                        .HasColumnName("doors");
 
-                    b.Property<int>("ModeloId")
+                    b.Property<int>("EngineSize")
                         .HasColumnType("int")
-                        .HasColumnName("modelo_id");
+                        .HasColumnName("engine_size");
 
-                    b.Property<bool>("Novidade")
-                        .HasColumnType("bit")
-                        .HasColumnName("novidade");
-
-                    b.Property<int>("NumeroPortas")
+                    b.Property<int>("FuelType")
                         .HasColumnType("int")
-                        .HasColumnName("numero_portas");
+                        .HasColumnName("fuel_type");
 
-                    b.Property<string>("Observacoes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("observacoes");
-
-                    b.Property<int>("Potencia")
+                    b.Property<int>("MarkId")
                         .HasColumnType("int")
-                        .HasColumnName("potencia");
+                        .HasColumnName("mark_id");
 
-                    b.Property<double>("Preco")
+                    b.Property<double>("Mileage")
                         .HasColumnType("float")
-                        .HasColumnName("preco");
+                        .HasColumnName("mileage");
 
-                    b.Property<string>("Transmissao")
+                    b.Property<int>("ModelId")
+                        .HasColumnType("int")
+                        .HasColumnName("model_id");
+
+                    b.Property<bool>("New")
+                        .HasColumnType("bit")
+                        .HasColumnName("new");
+
+                    b.Property<string>("Observations")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("transmissao");
+                        .HasColumnName("observations");
 
-                    b.Property<string>("Versao")
+                    b.Property<bool>("Opportunity")
+                        .HasColumnType("bit")
+                        .HasColumnName("opportunity");
+
+                    b.Property<int>("Power")
+                        .HasColumnType("int")
+                        .HasColumnName("power");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float")
+                        .HasColumnName("price");
+
+                    b.Property<bool>("Sold")
+                        .HasColumnType("bit")
+                        .HasColumnName("sold");
+
+                    b.Property<int>("Transmission")
+                        .HasColumnType("int")
+                        .HasColumnName("transmission");
+
+                    b.Property<string>("Version")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("versao");
+                        .HasColumnName("version");
 
-                    b.HasKey("VeiculoId");
+                    b.Property<int>("Year")
+                        .HasColumnType("int")
+                        .HasColumnName("year");
 
-                    b.ToTable("veiculo", (string)null);
+                    b.HasKey("Id");
+
+                    b.ToTable("vehicle", (string)null);
 
                     b.HasData(
                         new
                         {
-                            VeiculoId = 1,
-                            Ano = 2020,
-                            Cilindrada = 1999,
-                            Combustivel = 1,
-                            Cor = "Azul",
-                            ImagemURL = "exemplo.jpg",
-                            MarcaId = 1,
-                            ModeloId = 1,
-                            Novidade = false,
-                            NumeroPortas = 5,
-                            Observacoes = "Garantia de 2 anos",
-                            Potencia = 140,
-                            Preco = 20000.0,
-                            Transmissao = "Automatica",
-                            Versao = "Sport"
+                            Id = 1,
+                            Color = "Azul",
+                            Doors = 5,
+                            EngineSize = 1999,
+                            FuelType = 1,
+                            MarkId = 1,
+                            Mileage = 20000.0,
+                            ModelId = 1,
+                            New = false,
+                            Observations = "Garantia de 2 anos",
+                            Opportunity = false,
+                            Power = 140,
+                            Price = 20000.0,
+                            Sold = false,
+                            Transmission = 0,
+                            Version = "Sport",
+                            Year = 2020
                         });
+                });
+
+            modelBuilder.Entity("AutoMoreira.Core.Domains.VehicleImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int")
+                        .HasColumnName("order");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("url");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("vehicle_image", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -541,34 +573,45 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Modelo", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Model", b =>
                 {
-                    b.HasOne("AutoMoreira.Core.Domains.Marca", "Marca")
-                        .WithMany("Modelos")
-                        .HasForeignKey("ModeloId")
+                    b.HasOne("AutoMoreira.Core.Domains.Mark", "Mark")
+                        .WithMany("Models")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Marca");
+                    b.Navigation("Mark");
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Veiculo", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Vehicle", b =>
                 {
-                    b.HasOne("AutoMoreira.Core.Domains.Marca", "Marca")
-                        .WithMany("Veiculos")
-                        .HasForeignKey("VeiculoId")
+                    b.HasOne("AutoMoreira.Core.Domains.Mark", "Mark")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMoreira.Core.Domains.Modelo", "Modelo")
-                        .WithMany("Veiculos")
-                        .HasForeignKey("VeiculoId")
+                    b.HasOne("AutoMoreira.Core.Domains.Model", "Model")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Marca");
+                    b.Navigation("Mark");
 
-                    b.Navigation("Modelo");
+                    b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("AutoMoreira.Core.Domains.VehicleImage", b =>
+                {
+                    b.HasOne("AutoMoreira.Core.Domains.Vehicle", "Vehicle")
+                        .WithMany("VehicleImages")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -617,16 +660,21 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Marca", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>
                 {
-                    b.Navigation("Modelos");
+                    b.Navigation("Models");
 
-                    b.Navigation("Veiculos");
+                    b.Navigation("Vehicles");
                 });
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Modelo", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Model", b =>
                 {
-                    b.Navigation("Veiculos");
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("AutoMoreira.Core.Domains.Vehicle", b =>
+                {
+                    b.Navigation("VehicleImages");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,12 +14,12 @@ namespace AutoMoreira.Persistence.Mapping
             entity.HasOne(userRole => userRole.Role)
                     .WithMany(role => role.UserRoles)
                     .HasForeignKey(userRole => userRole.RoleId)
-                    .IsRequired();
+                    .IsRequired(true);
 
             entity.HasOne(userRole => userRole.User)
                     .WithMany(role => role.UserRoles)
                     .HasForeignKey(userRole => userRole.UserId)
-                    .IsRequired();
+                    .IsRequired(true);
 
 
         }
