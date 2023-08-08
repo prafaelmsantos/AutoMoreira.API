@@ -60,7 +60,7 @@
         }
 
 
-        [HttpGet("mark/{id}")]
+        [HttpGet("Mark/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByMarkId(int id)
         {
