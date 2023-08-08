@@ -5,10 +5,10 @@
         public int Id { get; set; }
 
         public int MarkId { get; set; }
-        public virtual MarkDTO Mark { get; set; }
+        public MarkDTO Mark { get; set; }
 
         public int ModelId { get; set; }
-        public virtual ModelDTO Model { get; set; }
+        public ModelDTO Model { get; set; }
 
         public string Version { get; set; }
         public string FuelType { get; set; }
@@ -22,7 +22,7 @@
         public int EngineSize { get; set; }
         public int Power { get; set; }
         public string Observations { get; set; }
-        public string ImageURL { get; set; }
+
         public bool New { get; set; }
         public bool Opportunity { get; set; }
         public bool Sold { get; set; }
