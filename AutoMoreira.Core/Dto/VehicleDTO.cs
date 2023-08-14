@@ -23,7 +23,6 @@
         public int Power { get; set; }
         public string Observations { get; set; }
 
-        public bool New { get; set; }
         public bool Opportunity { get; set; }
         public bool Sold { get; set; }
 

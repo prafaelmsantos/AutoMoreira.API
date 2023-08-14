@@ -65,10 +65,6 @@
                 .HasColumnName("observations")
                 .IsRequired(true);
 
-            entity.Property(x => x.New)
-                .HasColumnName("new")
-                .IsRequired(true);
-
             entity.Property(x => x.Opportunity)
                 .HasColumnName("opportunity")
                 .IsRequired(true);

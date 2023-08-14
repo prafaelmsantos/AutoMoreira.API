@@ -377,10 +377,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("model_id");
 
-                    b.Property<bool>("New")
-                        .HasColumnType("bit")
-                        .HasColumnName("new");
-
                     b.Property<string>("Observations")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -430,13 +426,50 @@ namespace AutoMoreira.Persistence.Migrations
                             MarkId = 1,
                             Mileage = 20000.0,
                             ModelId = 1,
-                            New = false,
                             Observations = "Garantia de 2 anos",
                             Opportunity = false,
                             Power = 140,
                             Price = 20000.0,
                             Sold = false,
                             Transmission = 0,
+                            Version = "Sport",
+                            Year = 2020
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Color = "Cinza",
+                            Doors = 5,
+                            EngineSize = 1999,
+                            FuelType = 2,
+                            MarkId = 2,
+                            Mileage = 20000.0,
+                            ModelId = 2,
+                            Observations = "Garantia de 2 anos",
+                            Opportunity = false,
+                            Power = 140,
+                            Price = 20000.0,
+                            Sold = false,
+                            Transmission = 1,
+                            Version = "Sport",
+                            Year = 2020
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Color = "Vermelho",
+                            Doors = 5,
+                            EngineSize = 1999,
+                            FuelType = 0,
+                            MarkId = 3,
+                            Mileage = 20000.0,
+                            ModelId = 3,
+                            Observations = "Garantia de 2 anos",
+                            Opportunity = false,
+                            Power = 140,
+                            Price = 20000.0,
+                            Sold = false,
+                            Transmission = 1,
                             Version = "Sport",
                             Year = 2020
                         });

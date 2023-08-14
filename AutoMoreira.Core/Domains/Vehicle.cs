@@ -22,7 +22,6 @@
         public int EngineSize { get; private set; }
         public int Power { get; private set; }
         public string Observations { get; private set; }
-        public bool New { get; private set; }
         public bool Opportunity { get; set; }
         public bool Sold { get; set; }
 
@@ -36,7 +35,7 @@
 
         public Vehicle(int id, int markId, int modelId, string version, FUEL fuelType, 
             double price, double mileage, int year, string color, int doors, TRANSMISSION transmission, 
-            int engineSize, int power, string observations, bool @new, bool opportunity, bool sold)
+            int engineSize, int power, string observations, bool opportunity, bool sold)
         {
             Id = id;
             MarkId = markId;
@@ -52,7 +51,6 @@
             EngineSize = engineSize;
             Power = power;
             Observations = observations;
-            New = @new;
             Opportunity = opportunity;
             Sold = sold;
 

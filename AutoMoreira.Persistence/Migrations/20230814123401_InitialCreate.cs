@@ -228,7 +228,6 @@ namespace AutoMoreira.Persistence.Migrations
                     engine_size = table.Column<int>(type: "int", nullable: false),
                     power = table.Column<int>(type: "int", nullable: false),
                     observations = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    @new = table.Column<bool>(name: "new", type: "bit", nullable: false),
                     opportunity = table.Column<bool>(type: "bit", nullable: false),
                     sold = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -302,8 +301,18 @@ namespace AutoMoreira.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "vehicle",
-                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mark_id", "mileage", "model_id", "new", "observations", "opportunity", "power", "price", "sold", "transmission", "version", "year" },
-                values: new object[] { 1, "Azul", 5, 1999, 1, 1, 20000.0, 1, false, "Garantia de 2 anos", false, 140, 20000.0, false, 0, "Sport", 2020 });
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mark_id", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold", "transmission", "version", "year" },
+                values: new object[] { 1, "Azul", 5, 1999, 1, 1, 20000.0, 1, "Garantia de 2 anos", false, 140, 20000.0, false, 0, "Sport", 2020 });
+
+            migrationBuilder.InsertData(
+                table: "vehicle",
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mark_id", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold", "transmission", "version", "year" },
+                values: new object[] { 2, "Cinza", 5, 1999, 2, 2, 20000.0, 2, "Garantia de 2 anos", false, 140, 20000.0, false, 1, "Sport", 2020 });
+
+            migrationBuilder.InsertData(
+                table: "vehicle",
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mark_id", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold", "transmission", "version", "year" },
+                values: new object[] { 3, "Vermelho", 5, 1999, 0, 3, 20000.0, 3, "Garantia de 2 anos", false, 140, 20000.0, false, 1, "Sport", 2020 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

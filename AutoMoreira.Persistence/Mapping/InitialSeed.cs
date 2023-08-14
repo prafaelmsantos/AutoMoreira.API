@@ -29,9 +29,11 @@
               new Model(9, "Punto", 9)
               );
 
-            Vehicle vehicle = new Vehicle(1, 1, 1, "Sport", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false, false);
+            Vehicle vehicle = new Vehicle(1, 1, 1, "Sport", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false);
+            Vehicle vehicle1 = new Vehicle(2, 2, 2, "Sport", FUEL.Hybrid, 20000, 20000, 2020, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", false, false);
+            Vehicle vehicle2 = new Vehicle(3, 3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", false, false);
 
-            modelBuilder.Entity<Vehicle>().HasData(vehicle);
+            modelBuilder.Entity<Vehicle>().HasData(vehicle, vehicle1, vehicle2);
         }
     }
 }
