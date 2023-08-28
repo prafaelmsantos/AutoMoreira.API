@@ -13,7 +13,9 @@
                 .ValueGeneratedOnAdd()
                 .IsRequired(true);
 
-
+            entity.Property(x => x.Name)
+                .HasColumnName("name")
+                .IsRequired(true);
         }
 
     }

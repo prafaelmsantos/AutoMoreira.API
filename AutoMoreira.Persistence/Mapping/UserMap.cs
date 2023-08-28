@@ -21,17 +21,13 @@
                 .HasColumnName("last_name")
                 .IsRequired(true);
 
-            entity.Property(x => x.Role)
-                .HasColumnName("role")
-                .IsRequired(true);
-
             entity.Property(x => x.Description)
                 .HasColumnName("description")
-                .IsRequired(true);
+                .IsRequired(false);
 
             entity.Property(x => x.ImageUrl)
                 .HasColumnName("image_url")
-                .IsRequired(true);
+                .IsRequired(false);
 
 
         }

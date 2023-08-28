@@ -74,8 +74,10 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
@@ -108,7 +110,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
@@ -125,7 +126,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("first_name");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("image_url");
 
@@ -156,10 +156,6 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int")
-                        .HasColumnName("role");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

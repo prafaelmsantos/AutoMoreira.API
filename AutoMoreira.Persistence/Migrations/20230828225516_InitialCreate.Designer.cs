@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230814123401_InitialCreate")]
+    [Migration("20230828225516_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,8 +76,10 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
@@ -110,7 +112,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
@@ -127,7 +128,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("first_name");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("image_url");
 
@@ -158,10 +158,6 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int")
-                        .HasColumnName("role");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

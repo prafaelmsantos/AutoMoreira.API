@@ -45,7 +45,7 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -62,9 +62,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     first_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    role = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    image_url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    image_url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
