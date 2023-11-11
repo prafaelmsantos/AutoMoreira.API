@@ -50,9 +50,9 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<long>("Phone")
+                    b.Property<long>("PhoneNumber")
                         .HasColumnType("bigint")
-                        .HasColumnName("phone");
+                        .HasColumnName("phone_number");
 
                     b.HasKey("Id");
 
