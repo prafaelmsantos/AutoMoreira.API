@@ -21,8 +21,8 @@
                 .HasColumnName("email")
                 .IsRequired(true);
 
-            entity.Property(x => x.PhoneNumber)
-                .HasColumnName("phone_number")
+            entity.Property(x => x.Phone)
+                .HasColumnName("phone")
                 .IsRequired(true);
 
             entity.Property(x => x.Message)
