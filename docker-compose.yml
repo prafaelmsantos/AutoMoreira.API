@@ -1,0 +1,29 @@
+version: '3.4'
+
+networks:
+  automoreira.api:
+
+services:
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=password@12345#
+    networks:
+      - automoreira.api
+  automoreira.api:
+    container_name: automoreira.api
+    image: ${DOCKER_REGISTRY-}automoreiraapi
+    build:
+      context: .
+      dockerfile: AutoMoreira.API/Dockerfile
+    ports:
+      - 9000:80
+      - 9001:443
+    depends_on:
+      - mssql
+    networks:
+      - automoreira.api

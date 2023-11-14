@@ -166,3 +166,4 @@ C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.API
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.API\obj\Debug\net6.0\AutoMoreira.API.pdb
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.API\obj\Debug\net6.0\AutoMoreira.API.genruntimeconfig.cache
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.API\obj\Debug\net6.0\ref\AutoMoreira.API.dll
+C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.API\obj\Debug\net6.0\AutoMoreira.API.sourcelink.json
