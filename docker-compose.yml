@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  automoreira.api:
+    driver: bridge
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=sa
+      - POSTGRES_PASSWORD=password@12345#
+      - POSTGRES_DB=auto_moreira_db
+    ports:
+      - 5432:5432
+    networks:
+      - automoreira.api
+
+  automoreira.api:
+    container_name: automoreira.api
+    image: ${DOCKER_REGISTRY-}automoreiraapi
+    build:
+      context: .
+      dockerfile: AutoMoreira.API/Dockerfile
+    ports:
+      - 9000:80
+      - 9001:443
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - automoreira.api

@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("51e3f7c3-9ea4-4ce1-afdf-779ea708533d")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ab20a7f1fbcd83476250fa74afe0fc4491e9e94")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

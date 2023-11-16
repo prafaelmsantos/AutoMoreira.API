@@ -14,7 +14,7 @@ namespace AutoMoreira.API
         {
             //Rafael
             services.AddDbContext<AppDbContext>(
-                context => context.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                context => context.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
 
             //Para facilitar a criação de password. 
@@ -120,8 +120,20 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+
             if (env.IsDevelopment())
             {
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+
+                    var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    Console.WriteLine("Update database started");
+                    context.Database.SetCommandTimeout(TimeSpan.FromHours(2));
+                    context.Database.EnsureCreated(); //Migrate();
+                    Console.WriteLine("Update database ended");
+                }
+
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoMoreira.API v1"));
@@ -136,14 +148,6 @@ namespace AutoMoreira.API
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            //Rafael - Upload de ficheiros
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
-                RequestPath = new PathString("/Resources")
-
-            });
 
             //Rafael - Dado qualquer header da requisição por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
             app.UseCors(x => x.AllowAnyHeader()
