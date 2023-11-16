@@ -137,6 +137,14 @@ namespace AutoMoreira.API
 
             app.UseAuthorization();
 
+            //Rafael - Upload de ficheiros
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+                RequestPath = new PathString("/Resources")
+
+            });
+
             //Rafael - Dado qualquer header da requisição por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
             app.UseCors(x => x.AllowAnyHeader()
                               .AllowAnyMethod()

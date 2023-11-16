@@ -32,4 +32,3 @@ C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.Per
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.Persistence\obj\Debug\net6.0\AutoMoreira.Persistence.pdb
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.Persistence\obj\Debug\net6.0\AutoMoreira.Persistence.genruntimeconfig.cache
 C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.Persistence\obj\Debug\net6.0\ref\AutoMoreira.Persistence.dll
-C:\Users\Pedro Rafael Santos\Documents\.NET Projects\AutoMoreira\AutoMoreira.Persistence\obj\Debug\net6.0\AutoMoreira.Persistence.sourcelink.json
