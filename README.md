@@ -1,5 +1,5 @@
 # AutoMoreira.API
-.NET Core Web API 6 and SQL Server
+.NET Core, PostgreSQL and Docker
 
 # Author
 Rafael Santos
