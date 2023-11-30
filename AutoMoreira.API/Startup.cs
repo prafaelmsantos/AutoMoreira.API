@@ -12,14 +12,9 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
 
-            var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-            var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-
-            var defaultConnection = $"host={dbHost};port=5432;Database={dbName};User ID=sa;Password={dbPassword};Include Error Detail=true";
             //Rafael
+            var defaultConnection = Environment.GetEnvironmentVariable("CONNECTION_STRINGS") ?? Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(
                 context => context.UseNpgsql(defaultConnection)
             );
