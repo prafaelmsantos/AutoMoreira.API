@@ -2,7 +2,6 @@ version: '3.4'
 
 networks:
   automoreira.api:
-    driver: bridge
 
 services:
   postgres:
@@ -28,6 +27,10 @@ services:
       - 9001:443
     depends_on:
       - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_SA_PASSWORD=password@12345#
+      - DB_NAME=auto_moreira_db
     restart: always
     networks:
       - automoreira.api

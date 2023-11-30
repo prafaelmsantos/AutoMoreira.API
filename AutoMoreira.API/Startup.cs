@@ -12,9 +12,16 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
+
+            var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+            var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+
+            var defaultConnection = $"host={dbHost};port=5432;Database={dbName};User ID=sa;Password={dbPassword};Include Error Detail=true";
             //Rafael
             services.AddDbContext<AppDbContext>(
-                context => context.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                context => context.UseNpgsql(defaultConnection)
             );
 
             //Para facilitar a criação de password. 
@@ -120,24 +127,23 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+
+                var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+                Console.WriteLine("Update database started");
+                context.Database.SetCommandTimeout(TimeSpan.FromHours(2));
+                context.Database.EnsureCreated(); //Migrate();
+                Console.WriteLine("Update database ended");
+            }
+
 
             if (env.IsDevelopment())
-            {
-                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-                {
-
-                    var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-                    Console.WriteLine("Update database started");
-                    context.Database.SetCommandTimeout(TimeSpan.FromHours(2));
-                    context.Database.EnsureCreated(); //Migrate();
-                    Console.WriteLine("Update database ended");
-                }
-
+            {             
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoMoreira.API v1"));
-
             }
 
             app.UseHttpsRedirection(); //Rafael - HTTPS
