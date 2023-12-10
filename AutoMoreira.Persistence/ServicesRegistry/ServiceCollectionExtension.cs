@@ -42,26 +42,14 @@
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();//Se nao adicionar o Defaul Token, o no UserService, ele não faz o Generate/reset token
 
-            /*
+            
             services
             .AddGraphQLServer()
             .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.Always)
-            .AddType<FeederType>()
-            .AddType<MasterBusLineType>()
-            .AddType<PowerBusLineType>()
-            .AddType<CableTypeClass>()
-            .AddType<EquipmentType>()
-            .AddType<AssetType>()
-            .AddType<CustomPropertiesType>()
-            .AddType<DeviceInputNumberType>()
-            .AddType<DeviceType>()
-            .AddType<LayoutMessageType>()
-            .AddType<DeviceMessageType>()
-            .AddType<RegionType>()
-            .AddType<OperationalAreaType>()
-            .AddType<AlarmStandardType>()
-            .AddType<DeviceLogType>()
-            .AddType<EquipBulkConfigurationType>()
+            .AddType<MarkType>()
+            .AddType<ModelType>()
+            .AddType<VehicleType>()
+            .AddType<ContactType>()
             .AddQueryType<Query>()
             .AddFiltering()
             .AddSorting()
@@ -71,7 +59,7 @@
                 IncludeTotalCount = true,
                 DefaultPageSize = 10
             })
-            .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);*/
+            .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);
 
             return services;
         }

@@ -104,43 +104,6 @@
           "build/HotChocolate.AspNetCore.targets": {}
         }
       },
-      "HotChocolate.AspNetCore.Abstractions/10.5.5": {
-        "type": "package",
-        "dependencies": {
-          "HotChocolate": "10.5.5",
-          "HotChocolate.Server": "10.5.5",
-          "Microsoft.AspNetCore.Http": "2.1.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/HotChocolate.AspNetCore.Abstractions.dll": {
-            "related": ".pdb"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/HotChocolate.AspNetCore.Abstractions.dll": {
-            "related": ".pdb"
-          }
-        }
-      },
-      "HotChocolate.AspNetCore.Playground/10.5.5": {
-        "type": "package",
-        "dependencies": {
-          "HotChocolate.AspNetCore.Abstractions": "10.5.5",
-          "Microsoft.AspNetCore.StaticFiles": "2.1.1",
-          "Microsoft.Extensions.FileProviders.Embedded": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/HotChocolate.AspNetCore.Playground.dll": {
-            "related": ".pdb"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/HotChocolate.AspNetCore.Playground.dll": {
-            "related": ".pdb"
-          }
-        }
-      },
       "HotChocolate.Data/12.12.1": {
         "type": "package",
         "dependencies": {
@@ -285,24 +248,6 @@
         "runtime": {
           "lib/net6.0/HotChocolate.Language.Visitors.dll": {
             "related": ".xml"
-          }
-        }
-      },
-      "HotChocolate.Server/10.5.5": {
-        "type": "package",
-        "dependencies": {
-          "HotChocolate.Abstractions": "10.5.5",
-          "HotChocolate.Utilities": "10.5.5",
-          "System.IO.Pipelines": "4.5.3"
-        },
-        "compile": {
-          "lib/netstandard2.0/HotChocolate.Server.dll": {
-            "related": ".pdb"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/HotChocolate.Server.dll": {
-            "related": ".pdb"
           }
         }
       },
@@ -801,26 +746,6 @@
           }
         }
       },
-      "Microsoft.AspNetCore.StaticFiles/2.1.1": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Hosting.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.Http.Extensions": "2.1.1",
-          "Microsoft.Extensions.FileProviders.Abstractions": "2.1.1",
-          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
-          "Microsoft.Extensions.WebEncoders": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Microsoft.AspNetCore.WebUtilities/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -1072,28 +997,6 @@
           "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {
             "related": ".xml"
           }
-        }
-      },
-      "Microsoft.Extensions.FileProviders.Embedded/2.1.1": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "build/netstandard2.0/_._": {}
-        },
-        "buildMultiTargeting": {
-          "buildMultiTargeting/_._": {}
         }
       },
       "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
@@ -1539,19 +1442,6 @@
           }
         }
       },
-      "System.IO.Pipelines/4.5.3": {
-        "type": "package",
-        "compile": {
-          "lib/netcoreapp2.1/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "System.Memory/4.5.4": {
         "type": "package",
         "compile": {
@@ -1892,34 +1782,6 @@
         "strawberryshake-signet.png"
       ]
     },
-    "HotChocolate.AspNetCore.Abstractions/10.5.5": {
-      "sha512": "Meu+p2PvDjvPci16qPH947RjsC3Xbi0a1OP2UyxQXXMIlPUJzdKtlad3R3EK6d419PV/JrynIMjHJYS516TcRg==",
-      "type": "package",
-      "path": "hotchocolate.aspnetcore.abstractions/10.5.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "hotchocolate.aspnetcore.abstractions.10.5.5.nupkg.sha512",
-        "hotchocolate.aspnetcore.abstractions.nuspec",
-        "lib/netstandard2.0/AspNetCore.Abstractions.xml",
-        "lib/netstandard2.0/HotChocolate.AspNetCore.Abstractions.dll",
-        "lib/netstandard2.0/HotChocolate.AspNetCore.Abstractions.pdb"
-      ]
-    },
-    "HotChocolate.AspNetCore.Playground/10.5.5": {
-      "sha512": "ZwXtlKx7aJXfhHdequp+Sbv/GsqMg6l+cEfhCwem4cELQnyh3Z1RXS2pbUiuXLVxapI6f8HW+NP70oweGgC9Lg==",
-      "type": "package",
-      "path": "hotchocolate.aspnetcore.playground/10.5.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "hotchocolate.aspnetcore.playground.10.5.5.nupkg.sha512",
-        "hotchocolate.aspnetcore.playground.nuspec",
-        "lib/netstandard2.0/AspNetCore.Playground.xml",
-        "lib/netstandard2.0/HotChocolate.AspNetCore.Playground.dll",
-        "lib/netstandard2.0/HotChocolate.AspNetCore.Playground.pdb"
-      ]
-    },
     "HotChocolate.Data/12.12.1": {
       "sha512": "xRnMjhsbdG0loDzR7U+zWglU+u1vmhR5xmP2BkGEmzQku+LZ45B3MfeaYv+S7Zk9w246t2lhRHFlkWBSLec88w==",
       "type": "package",
@@ -2104,23 +1966,6 @@
         "lib/netstandard2.0/HotChocolate.Language.Visitors.dll",
         "lib/netstandard2.0/HotChocolate.Language.Visitors.xml",
         "strawberryshake-signet.png"
-      ]
-    },
-    "HotChocolate.Server/10.5.5": {
-      "sha512": "oGEUTJq/2axD74+HCDwN4FxMWCbYFgjknMFZbOrPNuL2Wy9C0x0nWEeWpxLHRKUvfRn5L7bUZ2av9BgjvxOg2g==",
-      "type": "package",
-      "path": "hotchocolate.server/10.5.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "hotchocolate.server.10.5.5.nupkg.sha512",
-        "hotchocolate.server.nuspec",
-        "lib/net461/HotChocolate.Server.dll",
-        "lib/net461/HotChocolate.Server.pdb",
-        "lib/net461/Server.xml",
-        "lib/netstandard2.0/HotChocolate.Server.dll",
-        "lib/netstandard2.0/HotChocolate.Server.pdb",
-        "lib/netstandard2.0/Server.xml"
       ]
     },
     "HotChocolate.Subscriptions/12.12.1": {
@@ -2606,19 +2451,6 @@
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.StaticFiles/2.1.1": {
-      "sha512": "THLu6XGauf9kdAI0OyjoqvY/11Ap/Ra/ZNHfWQjrsS4b0AhvzUZgyuq5xYrmdA4+3goRxkqbH2xvrIISGGsukA==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.staticfiles/2.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.dll",
-        "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.xml",
-        "microsoft.aspnetcore.staticfiles.2.1.1.nupkg.sha512",
-        "microsoft.aspnetcore.staticfiles.nuspec"
-      ]
-    },
     "Microsoft.AspNetCore.WebUtilities/2.2.0": {
       "sha512": "9ErxAAKaDzxXASB/b5uLEkLgUWv1QbeVxyJYEHQwMaxXOeFFVkQxiq8RyfVcifLU7NR0QY0p3acqx4ZpYfhHDg==",
       "type": "package",
@@ -2958,25 +2790,6 @@
         "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Abstractions.xml",
         "microsoft.extensions.fileproviders.abstractions.2.2.0.nupkg.sha512",
         "microsoft.extensions.fileproviders.abstractions.nuspec"
-      ]
-    },
-    "Microsoft.Extensions.FileProviders.Embedded/2.1.1": {
-      "sha512": "TYyZBm9rxNtXvAK81E53VOxWnEbnbDZVzWjwbvgox5oHMUTm3Blm4p6MyK2Rlj2d/tEMK0ofG4ooUEaKYS8Lpg==",
-      "type": "package",
-      "path": "microsoft.extensions.fileproviders.embedded/2.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.props",
-        "build/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.targets",
-        "buildMultiTargeting/Microsoft.Extensions.FileProviders.Embedded.props",
-        "buildMultiTargeting/Microsoft.Extensions.FileProviders.Embedded.targets",
-        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.xml",
-        "microsoft.extensions.fileproviders.embedded.2.1.1.nupkg.sha512",
-        "microsoft.extensions.fileproviders.embedded.nuspec",
-        "tasks/net461/Microsoft.Extensions.FileProviders.Embedded.Manifest.Task.dll",
-        "tasks/netstandard1.5/Microsoft.Extensions.FileProviders.Embedded.Manifest.Task.dll"
       ]
     },
     "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
@@ -3639,27 +3452,6 @@
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
-    "System.IO.Pipelines/4.5.3": {
-      "sha512": "k6Ac5MuJ/GbFo7l/bB0Bxg0JxHReDi19eW1wuDGIy/iSIAJob0cNHChvILde/v4fdX1ZNmL2Nr7axKG21wbNLw==",
-      "type": "package",
-      "path": "system.io.pipelines/4.5.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/netcoreapp2.1/System.IO.Pipelines.dll",
-        "lib/netcoreapp2.1/System.IO.Pipelines.xml",
-        "lib/netstandard1.3/System.IO.Pipelines.dll",
-        "lib/netstandard1.3/System.IO.Pipelines.xml",
-        "lib/netstandard2.0/System.IO.Pipelines.dll",
-        "lib/netstandard2.0/System.IO.Pipelines.xml",
-        "system.io.pipelines.4.5.3.nupkg.sha512",
-        "system.io.pipelines.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
     "System.Memory/4.5.4": {
       "sha512": "1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
       "type": "package",
@@ -4206,7 +3998,6 @@
       "AutoMoreira.Core >= 1.0.0",
       "HotChocolate >= 12.12.1",
       "HotChocolate.AspNetCore >= 12.12.1",
-      "HotChocolate.AspNetCore.Playground >= 10.5.5",
       "HotChocolate.Data.EntityFramework >= 12.12.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.14",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
@@ -4275,10 +4066,6 @@
           "HotChocolate.AspNetCore": {
             "target": "Package",
             "version": "[12.12.1, )"
-          },
-          "HotChocolate.AspNetCore.Playground": {
-            "target": "Package",
-            "version": "[10.5.5, )"
           },
           "HotChocolate.Data.EntityFramework": {
             "target": "Package",

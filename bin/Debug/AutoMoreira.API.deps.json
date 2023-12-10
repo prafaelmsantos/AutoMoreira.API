@@ -9,10 +9,7 @@
       "AutoMoreira.API/1.0.0": {
         "dependencies": {
           "AutoMoreira.Persistence": "1.0.0",
-          "HotChocolate": "12.12.1",
-          "HotChocolate.AspNetCore": "12.12.1",
           "HotChocolate.AspNetCore.Playground": "10.5.5",
-          "HotChocolate.Data.EntityFramework": "12.12.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.14",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.14",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.14",
@@ -1009,7 +1006,6 @@
           "AutoMoreira.Core": "1.0.0",
           "HotChocolate": "12.12.1",
           "HotChocolate.AspNetCore": "12.12.1",
-          "HotChocolate.AspNetCore.Playground": "10.5.5",
           "HotChocolate.Data.EntityFramework": "12.12.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.14",
           "Microsoft.AspNetCore.Identity": "2.2.0",

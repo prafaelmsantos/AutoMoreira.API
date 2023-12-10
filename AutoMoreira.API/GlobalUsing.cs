@@ -33,3 +33,5 @@ global using System.Collections.Generic;
 global using System.Text;
 global using System.Text.Json.Serialization;
 global using AutoMoreira.Persistence.ServicesRegistry;
+global using HotChocolate.AspNetCore.Playground;
+global using HotChocolate.AspNetCore;

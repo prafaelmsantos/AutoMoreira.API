@@ -92,7 +92,10 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //CORS
+            app.UseCors("CustomPolicy");
 
+            //Update Database
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -102,6 +105,12 @@ namespace AutoMoreira.API
                 Console.WriteLine("Update database ended");
             }
 
+            //GraphQL
+            app.UsePlayground(new PlaygroundOptions
+            {
+                QueryPath = "/graphql",
+                Path = "/playground"
+            });
 
             if (env.IsDevelopment())
             {             
@@ -110,22 +119,21 @@ namespace AutoMoreira.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoMoreira.API v1"));
             }
 
-            app.UseHttpsRedirection(); //Rafael - HTTPS
+            //HTTPS
+            app.UseHttpsRedirection();
 
-            app.UseRouting();  // Indica que vou trabalhar por rotas. 
+            //Indica que vou trabalhar por rotas.
+            app.UseRouting();
 
             //Auth- 1º autentica e depois autoriza
             app.UseAuthentication();
-
             app.UseAuthorization();
-
-            //CORS
-            app.UseCors("CustomPolicy");
 
             //E vou retornar determinados endpoints de acordo com a configuração destas rotas dentro do meu controller
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGraphQL();
             });
         }
     }

@@ -129,10 +129,6 @@
               "target": "Package",
               "version": "[12.12.1, )"
             },
-            "HotChocolate.AspNetCore.Playground": {
-              "target": "Package",
-              "version": "[10.5.5, )"
-            },
             "HotChocolate.Data.EntityFramework": {
               "target": "Package",
               "version": "[12.12.1, )"

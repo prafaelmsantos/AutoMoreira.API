@@ -100,8 +100,7 @@
           "Microsoft.AspNetCore.App"
         ],
         "build": {
-          "build/HotChocolate.AspNetCore.props": {},
-          "build/HotChocolate.AspNetCore.targets": {}
+          "build/_._": {}
         }
       },
       "HotChocolate.AspNetCore.Abstractions/10.5.5": {
@@ -179,8 +178,7 @@
           }
         },
         "build": {
-          "build/HotChocolate.Data.EntityFramework.props": {},
-          "build/HotChocolate.Data.EntityFramework.targets": {}
+          "build/_._": {}
         }
       },
       "HotChocolate.Execution/12.12.1": {
@@ -1931,7 +1929,6 @@
           "AutoMoreira.Core": "1.0.0",
           "HotChocolate": "12.12.1",
           "HotChocolate.AspNetCore": "12.12.1",
-          "HotChocolate.AspNetCore.Playground": "10.5.5",
           "HotChocolate.Data.EntityFramework": "12.12.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.14",
           "Microsoft.AspNetCore.Identity": "2.2.0",
@@ -4852,10 +4849,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "AutoMoreira.Persistence >= 1.0.0",
-      "HotChocolate >= 12.12.1",
-      "HotChocolate.AspNetCore >= 12.12.1",
       "HotChocolate.AspNetCore.Playground >= 10.5.5",
-      "HotChocolate.Data.EntityFramework >= 12.12.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.14",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.14",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 6.0.14",
@@ -4916,21 +4910,9 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
-          "HotChocolate": {
-            "target": "Package",
-            "version": "[12.12.1, )"
-          },
-          "HotChocolate.AspNetCore": {
-            "target": "Package",
-            "version": "[12.12.1, )"
-          },
           "HotChocolate.AspNetCore.Playground": {
             "target": "Package",
             "version": "[10.5.5, )"
-          },
-          "HotChocolate.Data.EntityFramework": {
-            "target": "Package",
-            "version": "[12.12.1, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
