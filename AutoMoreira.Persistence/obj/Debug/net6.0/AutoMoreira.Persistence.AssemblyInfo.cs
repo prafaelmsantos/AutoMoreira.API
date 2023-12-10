@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutoMoreira.Persistence")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebb9a69db288ef3f340900a9692abbcb7c6adc56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e470ebcdc62b9a89ee989a1522dabf05c5cd361")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutoMoreira.Persistence")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutoMoreira.Persistence")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
