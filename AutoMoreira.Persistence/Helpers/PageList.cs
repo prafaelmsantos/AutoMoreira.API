@@ -3,7 +3,6 @@
     public class PageList<T> : List<T>
     {
         //Vai ser um List Generico
-
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public int PageSize { get; set; }

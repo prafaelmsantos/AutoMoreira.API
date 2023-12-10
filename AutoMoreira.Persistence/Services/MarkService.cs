@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class MarkService : IMarkService
     {

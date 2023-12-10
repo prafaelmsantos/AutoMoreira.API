@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Domains;
-
-namespace AutoMoreira.API.Controllers
+﻿namespace AutoMoreira.API.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

@@ -12,74 +12,35 @@ namespace AutoMoreira.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //Rafael
+            //DB Connection
             var defaultConnection = Environment.GetEnvironmentVariable("CONNECTION_STRINGS") ?? Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDbContext>(
-                context => context.UseNpgsql(defaultConnection)
-            );
+            services.AddDbContext<AppDbContext>(context => context.UseNpgsql(defaultConnection));
 
-            //Para facilitar a criação de password. 
-            //Nao Requerer Letras maisculuas, minusculas e numeros
-            //Apenas requer uma password de tamanho 6
-            services
-            .AddIdentityCore<User>(x =>
-            {
-                x.Password.RequireDigit = false;
-                x.Password.RequireNonAlphanumeric = false;
-                x.Password.RequireLowercase = false;
-                x.Password.RequireUppercase = false;
-                x.Password.RequiredLength = 6;
-            })
-            .AddRoles<Role>()
-            .AddRoleManager<RoleManager<Role>>()
-            .AddSignInManager<SignInManager<User>>()
-            .AddRoleValidator<RoleValidator<Role>>()
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-            //Se nao adicionar o Defaul Token, o no UserService, ele não faz o Generate/reset token
+            //Repositories and Services
+            services.AddCustomServices();
 
-            //Portador do JWT
+            //JWT
             //Cada vez que criptografamos com uma chave, tambem temos de discriptografar com a mesma
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(x =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x => {
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-
-                    };
-                });
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             //Rafael
             //Indica que estou a trabalhar com a arquitetura MVC com Views Controllers. Permite chamar o meu controller
             //NewsoftJson para evitar um loop infinito no retorno
             //AddJsonOptions para os Enums, onde para cada item do meu Enum, retorna um Id
             services.AddControllers()
-                .AddJsonOptions(x =>
-                    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
-                .AddNewtonsoftJson(x =>
-                    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                    .AddJsonOptions(x =>
+                        x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+                    .AddNewtonsoftJson(x =>
+                        x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-
-            //Repositories
-            services.AddScoped<IBaseRepository, BaseRepository>();
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
-            services.AddScoped<IMarkRepository, MarkRepository>();
-            services.AddScoped<IModelRepository, ModelRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
-
-            //Services
-            services.AddScoped<IVehicleService, VehicleService>();
-            services.AddScoped<IMarkService, MarkService>();
-            services.AddScoped<IModelService, ModelService>();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IContactService, ContactService>();
 
             //Rafael AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -117,6 +78,15 @@ namespace AutoMoreira.API
                     }
                 });
             });
+
+            //CORS - Dado qualquer header da requisição por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
+            services.AddCors(o => o.AddPolicy("CustomPolicy", builder =>
+            {
+               builder.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .WithExposedHeaders("Token-Expired"); ;
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,7 +95,6 @@ namespace AutoMoreira.API
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-
                 var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
                 Console.WriteLine("Update database started");
                 context.Database.SetCommandTimeout(TimeSpan.FromHours(2));
@@ -150,10 +119,8 @@ namespace AutoMoreira.API
 
             app.UseAuthorization();
 
-            //Rafael - Dado qualquer header da requisição por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
-            app.UseCors(x => x.AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowAnyOrigin());
+            //CORS
+            app.UseCors("CustomPolicy");
 
             //E vou retornar determinados endpoints de acordo com a configuração destas rotas dentro do meu controller
             app.UseEndpoints(endpoints =>

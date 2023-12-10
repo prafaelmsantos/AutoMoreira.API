@@ -1,19 +1,4 @@
-﻿using AutoMapper;
-using AutoMoreira.Core.Domains.Identity;
-using AutoMoreira.Core.Dto.Identity;
-using AutoMoreira.Persistence.Interfaces.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class TokenService : ITokenService
     {
@@ -32,7 +17,7 @@ namespace AutoMoreira.Persistence.Services
             _config = config;
             _userManager = userManager;
             _mapper = mapper;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
         }
         public async Task<string> CreateToken(UserUpdateDTO userUpdateDTO)
         {

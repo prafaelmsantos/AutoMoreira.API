@@ -5,7 +5,6 @@
         public AutoMapperProfile()
         {
 
-            //Ele cria do evento para o DTO e do DTO para o Evento
             CreateMap<Vehicle, VehicleDTO>().ReverseMap();
 
             CreateMap<VehicleImage, VehicleImageDTO>().ReverseMap();
