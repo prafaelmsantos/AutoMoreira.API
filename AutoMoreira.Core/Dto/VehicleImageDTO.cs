@@ -1,8 +1,7 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class VehicleImageDTO
+    public class VehicleImageDTO : EntityBaseDTO
     {
-        public int Id { get; set; }
         public string Url { get; set; }
         public int Order { get; set; }
 

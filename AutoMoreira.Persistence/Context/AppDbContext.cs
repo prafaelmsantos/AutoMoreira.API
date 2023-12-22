@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Context
+﻿using AutoMoreira.Persistence.Mapping.Seed;
+
+namespace AutoMoreira.Persistence.Context
 {
     public class AppDbContext : IdentityDbContext<User, Role, int, 
                                                    IdentityUserClaim<int>, 

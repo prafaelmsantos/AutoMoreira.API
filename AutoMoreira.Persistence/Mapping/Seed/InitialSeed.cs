@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Seed
 {
     public static class InitialSeed
     {
@@ -16,12 +16,12 @@
                 new Mark(9, "Fiat")
                 );
 
-          
+
             modelBuilder.Entity<Model>().HasData(
               new Model(1, "A3", 1),
               new Model(2, "Classe A", 2),
               new Model(3, "Serie 1", 3),
-              new Model(4, "208", 4), 
+              new Model(4, "208", 4),
               new Model(5, "Golf", 5),
               new Model(6, "C4", 6),
               new Model(7, "Megane", 7),

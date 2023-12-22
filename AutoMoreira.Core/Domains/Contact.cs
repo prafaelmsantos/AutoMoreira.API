@@ -1,8 +1,7 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Contact
+    public class Contact : EntityBase
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
         public long PhoneNumber { get; private set; }

@@ -1,8 +1,7 @@
 ﻿namespace AutoMoreira.Core.Dto
 {
-    public class VehicleDTO
+    public class VehicleDTO : EntityBaseDTO
     {
-        public int Id { get; set; }
 
         public int MarkId { get; set; }
         public MarkDTO Mark { get; set; }

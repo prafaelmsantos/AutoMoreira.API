@@ -1,8 +1,7 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Vehicle
+    public class Vehicle : EntityBase
     {
-        public int Id { get; private set; }
 
         public int MarkId { get; private set; }
         public virtual Mark Mark { get; private set; }

@@ -1,8 +1,7 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Mark
+    public class Mark : EntityBase
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
 
         private readonly List<Model> _models;
