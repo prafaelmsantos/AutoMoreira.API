@@ -10,7 +10,6 @@
         public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
             //Repositories
-            services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IMarkRepository, MarkRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();

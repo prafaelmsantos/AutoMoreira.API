@@ -2,16 +2,13 @@
 {
     public class ContactService : IContactService
     {
-        private readonly IBaseRepository _baseRepository;
         private readonly IContactRepository _contactRepository;
         private readonly IMapper _mapper;
 
         public ContactService(
-        IBaseRepository baseRepository,
         IContactRepository contactRepository,
         IMapper mapper)
         {
-            _baseRepository = baseRepository;
             _contactRepository = contactRepository;
             _mapper = mapper;
 
@@ -21,15 +18,10 @@
             try
             {
 
-                var contact = _mapper.Map<Contact>(contactDTO);
-                _baseRepository.Add<Contact>(contact);
+                Contact contact = _mapper.Map<Contact>(contactDTO);
+                await _contactRepository.AddAsync(contact);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _contactRepository.GetContactByIdAsync(contact.Id);
-                    return _mapper.Map<ContactDTO>(result);
-                }
-                return null;
+                return _mapper.Map<ContactDTO>(contact);
             }
             catch (Exception ex)
             {
@@ -42,11 +34,10 @@
         {
             try
             {
-                var contact = await _contactRepository.GetContactByIdAsync(contactId);
+                Contact contact = await _contactRepository.FindByIdAsync(contactId);
                 if (contact == null) throw new Exception("Contacto não encontrado.");
 
-                _baseRepository.Delete<Contact>(contact);
-                return await _baseRepository.SaveChangesAsync();
+                return await _contactRepository.RemoveAsync(contact);
             }
             catch (Exception ex)
             {
@@ -54,14 +45,13 @@
             }
         }
 
-        public async Task<ContactDTO[]> GetAllContactsAsync()
+        public async Task<List<ContactDTO>> GetAllContactsAsync()
         {
             try
             {
-                var contacts = await _contactRepository.GetAllContactsAsync();
-                if (contacts == null) return null;
+                List<Contact> contacts = await _contactRepository.GetAll().ToListAsync();
 
-                return _mapper.Map<ContactDTO[]>(contacts);
+                return _mapper.Map<List<ContactDTO>>(contacts);
 
             }
             catch (Exception ex)
@@ -74,8 +64,8 @@
         {
             try
             {
-                var contact = await _contactRepository.GetContactByIdAsync(contactId);
-                if (contact == null) return null;
+                Contact contact = await _contactRepository.FindByIdAsync(contactId);
+                if (contact == null) throw new Exception("Contacto não encontrado.");
 
                 return _mapper.Map<ContactDTO>(contact);
             }

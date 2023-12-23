@@ -31,3 +31,5 @@ global using HotChocolate.Data;
 global using HotChocolate;
 global using AutoMoreira.Persistence.GraphQL;
 global using Equipments.Data.EF.GraphQL.DomainsMap;
+global using System.Linq.Expressions;
+global using AutoMoreira.Persistence.Mapping.Seed;

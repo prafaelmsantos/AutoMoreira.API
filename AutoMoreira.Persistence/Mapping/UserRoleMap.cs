@@ -1,7 +1,4 @@
-﻿using AutoMoreira.Core.Domains.Identity;
-using Microsoft.EntityFrameworkCore;
-
-namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping
 {
     public class UserRoleMap : IEntityTypeConfiguration<UserRole>
     {
@@ -11,16 +8,23 @@ namespace AutoMoreira.Persistence.Mapping
 
             entity.HasKey(user => new { user.UserId, user.RoleId });
 
+            entity.Property(x => x.UserId)
+                .HasColumnName("user_id")
+                .IsRequired(true);
+
+            entity.Property(x => x.RoleId)
+                .HasColumnName("role_id")
+                .IsRequired(true);
+
             entity.HasOne(userRole => userRole.Role)
-                    .WithMany(role => role.UserRoles)
-                    .HasForeignKey(userRole => userRole.RoleId)
-                    .IsRequired(true);
+                .WithMany(role => role.UserRoles)
+                .HasForeignKey(userRole => userRole.RoleId)
+                .IsRequired(true);
 
             entity.HasOne(userRole => userRole.User)
-                    .WithMany(role => role.UserRoles)
-                    .HasForeignKey(userRole => userRole.UserId)
-                    .IsRequired(true);
-
+                .WithMany(role => role.UserRoles)
+                .HasForeignKey(userRole => userRole.UserId)
+                .IsRequired(true);
 
         }
 

@@ -1,10 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IUserRepository : IBaseRepository
+    public interface IUserRepository : IRepository<User>
     {
-        
-        Task<User[]> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task<User> GetUserByUserNameAsync(string userName);
     }
 }

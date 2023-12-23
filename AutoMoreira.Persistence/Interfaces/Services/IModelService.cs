@@ -6,8 +6,8 @@
         Task<ModelDTO> UpdateModel(int modelId, ModelDTO modelDTO);
         Task<bool> DeleteModel(int modelId);
 
-        Task<ModelDTO[]> GetAllModelsAsync();
+        Task<List<ModelDTO>> GetAllModelsAsync();
         Task<ModelDTO> GetModelByIdAsync(int modelId);
-        Task<ModelDTO[]> GetModelsByMarkIdAsync(int markId);
+        Task<List<ModelDTO>> GetModelsByMarkIdAsync(int markId);
     }
 }

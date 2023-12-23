@@ -100,7 +100,7 @@
 
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar criar conta utilizador. Erro: {ex.Message}");

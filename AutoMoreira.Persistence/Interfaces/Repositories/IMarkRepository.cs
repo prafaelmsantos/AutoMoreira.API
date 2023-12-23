@@ -1,8 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IMarkRepository
+    public interface IMarkRepository : IRepository<Mark>
     {
-        Task<Mark[]> GetAllMarksAsync();
-        Task<Mark> GetMarkByIdAsync(int markId);
     }
 }

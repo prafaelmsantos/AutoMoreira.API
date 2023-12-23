@@ -1,9 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IVehicleImageRepository
+    public interface IVehicleImageRepository : IRepository<VehicleImage>
     {
-        Task<VehicleImage[]> GetAllVehicleImagesAsync();
-        Task<VehicleImage> GetVehicleImageByIdAsync(int vehicleImageId);
-        Task<VehicleImage[]> GetVehicleImagesByVehicleIdAsync(int vehicleId);
     }
 }

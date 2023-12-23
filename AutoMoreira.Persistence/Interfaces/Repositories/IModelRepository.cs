@@ -1,9 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IModelRepository
+    public interface IModelRepository : IRepository<Model>
     {
-        Task<Model[]> GetAllModelsAsync();
-        Task<Model> GetModelByIdAsync(int modelId);
-        Task<Model[]> GetModelsByMarkIdAsync(int markId);
     }
 }

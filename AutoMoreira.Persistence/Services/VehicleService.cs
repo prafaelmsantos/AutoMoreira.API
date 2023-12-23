@@ -1,35 +1,24 @@
-﻿using AutoMoreira.Core.Domains;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
-        private readonly IBaseRepository _baseRepository;
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IMapper _mapper;
-        public VehicleService(
-        IBaseRepository baseRepository,
-        IVehicleRepository vehicleRepository,
-        IMapper mapper)
+        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
         {
             _vehicleRepository = vehicleRepository;
-            _baseRepository = baseRepository;
             _mapper = mapper;
         }
+
         public async Task<VehicleDTO> AddVehicle(VehicleDTO vehicleDTO)
         {
 
             try
             {
-                var vehicle = _mapper.Map<Vehicle>(vehicleDTO);
-                _baseRepository.Add<Vehicle>(vehicle);
+                Vehicle vehicle = _mapper.Map<Vehicle>(vehicleDTO);
+                 await _vehicleRepository.AddAsync(vehicle);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _vehicleRepository.GetVehicleByIdAsync(vehicle.Id);
-                    return _mapper.Map<VehicleDTO>(result);
-                }
-                return null;
+                return _mapper.Map<VehicleDTO>(vehicle);
             }
             catch (Exception ex)
             {
@@ -41,21 +30,16 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
-                if (vehicle == null) return null;
+                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+                if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 vehicleDTO.Id = vehicle.Id;
 
                 _mapper.Map(vehicleDTO, vehicle);
 
-                _baseRepository.Update<Vehicle>(vehicle);
+                await _vehicleRepository.UpdateAsync(vehicle);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _vehicleRepository.GetVehicleByIdAsync(vehicle.Id);
-                    return _mapper.Map<VehicleDTO>(result);
-                }
-                return null;
+                return _mapper.Map<VehicleDTO>(vehicle);
             }
             catch (Exception ex)
             {
@@ -67,11 +51,10 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
+                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
-                _baseRepository.Delete<Vehicle>(vehicle);
-                return await _baseRepository.SaveChangesAsync();
+                return await _vehicleRepository.RemoveAsync(vehicle);
             }
             catch (Exception ex)
             {
@@ -83,17 +66,16 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var vehicles = await _vehicleRepository.GetAllVehiclesAsync(pageParams);
-                if (vehicles == null) return null;
+                PageList<Vehicle> vehicles = await _vehicleRepository.GetAllByPageParamsAsync(pageParams);
 
-                var result = _mapper.Map<PageList<VehicleDTO>>(vehicles);
+                PageList<VehicleDTO> vehicleDTOs = _mapper.Map<PageList<VehicleDTO>>(vehicles);
 
                 //Manual Mapper
-                result.CurrentPage = vehicles.CurrentPage;
-                result.TotalPages = vehicles.TotalPages;
-                result.PageSize = vehicles.PageSize;
-                result.TotalCount = vehicles.TotalCount;
-                return  result;
+                vehicleDTOs.CurrentPage = vehicles.CurrentPage;
+                vehicleDTOs.TotalPages = vehicles.TotalPages;
+                vehicleDTOs.PageSize = vehicles.PageSize;
+                vehicleDTOs.TotalCount = vehicles.TotalCount;
+                return vehicleDTOs;
 
             }
             catch (Exception ex)
@@ -106,8 +88,8 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var vehicle = await _vehicleRepository.GetVehicleByIdAsync(vehicleId);
-                if (vehicle == null) return null;
+                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+                if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 return _mapper.Map<VehicleDTO>(vehicle);
             }

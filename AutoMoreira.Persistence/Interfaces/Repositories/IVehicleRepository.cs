@@ -1,9 +1,7 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IVehicleRepository
+    public interface IVehicleRepository : IRepository<Vehicle>
     {
-        Task<PageList<Vehicle>> GetAllVehiclesAsync(PageParams pageParams);
-        Task<Vehicle[]> GetAllAsync();
-        Task<Vehicle> GetVehicleByIdAsync(int vehicleId);
+        Task<PageList<Vehicle>> GetAllByPageParamsAsync(PageParams pageParams);
     }
 }

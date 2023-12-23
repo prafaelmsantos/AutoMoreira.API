@@ -72,6 +72,7 @@
         /// </summary>
         /// <param name="markDTO"></param>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(MarkDTO markDTO)
         {
             try
@@ -95,6 +96,7 @@
         /// <param name="id"></param>
         /// <param name="markDTO"></param>
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Put(int id, MarkDTO markDTO)
         {
             try
@@ -117,6 +119,7 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             try

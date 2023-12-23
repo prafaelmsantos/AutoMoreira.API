@@ -6,7 +6,7 @@
         Task<MarkDTO> UpdateMark(int markId, MarkDTO markDTO);
         Task<bool> DeleteMark(int markId);
 
-        Task<MarkDTO[]> GetAllMarksAsync();
+        Task<List<MarkDTO>> GetAllMarksAsync();
         Task<MarkDTO> GetMarkByIdAsync(int markId);
     }
 }

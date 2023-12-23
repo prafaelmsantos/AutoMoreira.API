@@ -1,16 +1,4 @@
-﻿using AutoMapper;
-using AutoMoreira.Core.Domains.Identity;
-using AutoMoreira.Core.Dto;
-using AutoMoreira.Core.Dto.Identity;
-using AutoMoreira.Persistence.Interfaces.Repositories;
-using AutoMoreira.Persistence.Interfaces.Services;
-using AutoMoreira.Persistence.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class UserService : IUserService
     {
@@ -33,14 +21,12 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var user = await _userManager.Users
-                                             .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
+                User user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
 
-                return await _signInManager
-                               .CheckPasswordSignInAsync(user, password, false);
+                return await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar verificar password. Erro: {ex.Message}");
 
@@ -51,18 +37,18 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var user = _mapper.Map<User>(userDTO);
-                var result = await _userManager.CreateAsync(user, userDTO.Password);
+                User user = _mapper.Map<User>(userDTO);
+                IdentityResult identityResult = await _userManager.CreateAsync(user, userDTO.Password);
 
-                if (result.Succeeded)
+                if (identityResult.Succeeded)
                 {
-                    var userToReturn = _mapper.Map<UserUpdateDTO>(user);
-                    return userToReturn;
+                    UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
+                    return userUpdateDTO;
                 }
                 return null;
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar criar conta de utilizador!. Erro: {ex.Message}");
 
@@ -73,18 +59,15 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var user = await _userRepository.GetUserByUserNameAsync(userName);
-                //Se não encontrar manda null
-                if (user == null)
-                {
-                    return null;
-                }
+                User user = await _userRepository.FindByCondition(x=> x.UserName == userName).FirstOrDefaultAsync();
+                
+                if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                var userUpdateDto = _mapper.Map<UserUpdateDTO>(user);
-                return userUpdateDto;
+                UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
+                return userUpdateDTO;
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar procurar utilizador por Username. Erro: {ex.Message}");
 
@@ -95,34 +78,27 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var user = await _userRepository.GetUserByIdAsync(id);
-                //Se não encontrar manda null
-                if (user == null)
-                {
-                    return null;
-                }
+                User user = await _userRepository.FindByIdAsync(id);
+                
+                if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                var userUpdateDto = _mapper.Map<UserUpdateDTO>(user);
-                return userUpdateDto;
+                UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
+                return userUpdateDTO;
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar procurar utilizador por Username. Erro: {ex.Message}");
 
             }
         }
-        public async Task<UserUpdateDTO[]> GetAllUsersAsync()
+        public async Task<List<UserUpdateDTO>> GetAllUsersAsync()
         {
             try
             {
-                var users = await _userRepository.GetAllUsersAsync();
-                if (users == null) return null;
+                List<User> users = await _userRepository.GetAll().ToListAsync();
 
-                var resultado = _mapper.Map<UserUpdateDTO[]>(users);
-                return resultado;
-
-
+                return _mapper.Map<List<UserUpdateDTO>>(users);
             }
             catch (Exception ex)
             {
@@ -135,11 +111,10 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                var user = await _userRepository.GetUserByUserNameAsync(userUpdateDTO.UserName);
-                if (user == null)
-                {
-                    return null;
-                }
+                User user = await _userRepository.FindByCondition(x=> x.UserName == userUpdateDTO.UserName).FirstOrDefaultAsync();
+
+                if (user == null) throw new Exception("Utilizador não encontrado.");
+
                 //Para não colocar o "id" no model userupdate no FE
                 userUpdateDTO.Id = user.Id;
 
@@ -152,19 +127,13 @@ namespace AutoMoreira.Persistence.Services
                     await _userManager.ResetPasswordAsync(user, token, userUpdateDTO.Password);
                 }
                 
-                _userRepository.Update<User>(user);
+                await _userRepository.UpdateAsync(user);
 
-                if (await _userRepository.SaveChangesAsync())
-                {
-                    var userRetorno = await _userRepository.GetUserByUserNameAsync(user.UserName);
-                    return _mapper.Map<UserUpdateDTO>(userRetorno);
-                }
-                return null;
+                return _mapper.Map<UserUpdateDTO>(user);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar atualizar utilizador. Erro: {ex.Message}");
-
             }
         }
 
@@ -172,11 +141,10 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                return await _userManager.Users
-                                         .AnyAsync(user => user.UserName == userName.ToLower());
+                return await _userManager.Users.AnyAsync(user => user.UserName == userName.ToLower());
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar verificar se o utilizador existe. Erro: {ex.Message}");
 

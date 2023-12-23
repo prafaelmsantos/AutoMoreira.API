@@ -2,29 +2,21 @@
 {
     public class ModelService : IModelService
     {
-        private readonly IBaseRepository _baseRepository;
         private readonly IModelRepository _modelRepository;
         private readonly IMapper _mapper;
-        public ModelService(IBaseRepository baseRepository, IModelRepository modelRepository, IMapper mapper)
+        public ModelService(IModelRepository modelRepository, IMapper mapper)
         {
             _modelRepository = modelRepository;
-            _baseRepository = baseRepository;
             _mapper = mapper;
         }
         public async Task<ModelDTO> AddModel(ModelDTO modelDTO)
         {
             try
             {
-                var model = _mapper.Map<Model>(modelDTO);
-                _baseRepository.Add<Model>(model);
+                Model model = _mapper.Map<Model>(modelDTO);
+                await _modelRepository.AddAsync(model);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _modelRepository.GetModelByIdAsync(model.Id);
-                    return _mapper.Map<ModelDTO>(result);
-
-                }
-                return null;
+                return _mapper.Map<ModelDTO>(model);
             }
             catch (Exception ex)
             {
@@ -36,22 +28,16 @@
         {
             try
             {
-                var model = await _modelRepository.GetModelByIdAsync(modelId);
-                if (model == null) return null;
+                Model model = await _modelRepository.FindByIdAsync(modelId);
+                if (model == null) throw new Exception("Modelo não encontrado.");
 
                 modelDTO.Id = model.Id;
 
                 _mapper.Map(modelDTO, model);
 
-                _baseRepository.Update<Model>(model);
+                await _modelRepository.UpdateAsync(model);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-
-                    var result = await _modelRepository.GetModelByIdAsync(model.Id);
-                    return _mapper.Map<ModelDTO>(result);
-                }
-                return null;
+                return _mapper.Map<ModelDTO>(model);
             }
             catch (Exception ex)
             {
@@ -63,11 +49,10 @@
         {
             try
             {
-                var model = await _modelRepository.GetModelByIdAsync(modelId);
+                Model model = await _modelRepository.FindByIdAsync(modelId);
                 if (model == null) throw new Exception("Modelo não encontrado.");
 
-                _baseRepository.Delete<Model>(model);
-                return await _baseRepository.SaveChangesAsync();
+                return await _modelRepository.RemoveAsync(model);
             }
             catch (Exception ex)
             {
@@ -75,14 +60,13 @@
             }
         }
 
-        public async Task<ModelDTO[]> GetAllModelsAsync()
+        public async Task<List<ModelDTO>> GetAllModelsAsync()
         {
             try
             {
-                var models = await _modelRepository.GetAllModelsAsync();
-                if (models == null) return null;
+                List<Model> models = await _modelRepository.GetAll().ToListAsync();
 
-                return _mapper.Map<ModelDTO[]>(models);
+                return _mapper.Map<List<ModelDTO>>(models);
             }
             catch (Exception ex)
             {
@@ -94,8 +78,8 @@
         {
             try
             {
-                var model = await _modelRepository.GetModelByIdAsync(modelId);
-                if (model == null) return null;
+                Model model = await _modelRepository.FindByIdAsync(modelId);
+                if (model == null) throw new Exception("Modelo não encontrado.");
 
                 return _mapper.Map<ModelDTO>(model);
             }
@@ -105,14 +89,16 @@
             }
         }
 
-        public async Task<ModelDTO[]> GetModelsByMarkIdAsync(int markId)
+        public async Task<List<ModelDTO>> GetModelsByMarkIdAsync(int markId)
         {
             try
             {
-                var models = await _modelRepository.GetModelsByMarkIdAsync(markId);
-                if (models == null) return null;
+                List<Model> models = await _modelRepository
+                    .GetAll()
+                    .Where(x=> x.MarkId == markId)
+                    .ToListAsync();
 
-                return _mapper.Map<ModelDTO[]>(models);
+                return _mapper.Map<List<ModelDTO>>(models);
             }
             catch (Exception ex)
             {

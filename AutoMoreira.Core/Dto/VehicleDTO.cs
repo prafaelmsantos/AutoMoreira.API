@@ -2,7 +2,6 @@
 {
     public class VehicleDTO : EntityBaseDTO
     {
-
         public int MarkId { get; set; }
         public MarkDTO Mark { get; set; }
 

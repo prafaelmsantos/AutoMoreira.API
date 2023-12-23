@@ -1,8 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IContactRepository
+    public interface IContactRepository : IRepository<Contact>
     {
-        Task<Contact[]> GetAllContactsAsync();
-        Task<Contact> GetContactByIdAsync(int contactId);
     }
 }

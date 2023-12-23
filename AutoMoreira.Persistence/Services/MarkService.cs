@@ -2,16 +2,13 @@
 {
     public class MarkService : IMarkService
     {
-        private readonly IBaseRepository _baseRepository;
         private readonly IMarkRepository _markRepository;
         private readonly IMapper _mapper;
 
         public MarkService(
-        IBaseRepository baseRepository,
         IMarkRepository markRepository,
         IMapper mapper)
         {
-            _baseRepository = baseRepository;
             _markRepository = markRepository;
             _mapper = mapper;
 
@@ -21,16 +18,10 @@
         {
             try
             {
-                var mark = _mapper.Map<Mark>(markDTO);
-                _baseRepository.Add<Mark>(mark);
+                Mark mark = _mapper.Map<Mark>(markDTO);
+                await _markRepository.AddAsync(mark);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _markRepository.GetMarkByIdAsync(mark.Id);
-                    return _mapper.Map<MarkDTO>(result);
-
-                }
-                return null;
+                return _mapper.Map<MarkDTO>(mark);
             }
             catch (Exception ex)
             {
@@ -42,22 +33,17 @@
         {
             try
             {
-                var mark = await _markRepository.GetMarkByIdAsync(markId);
-                if (mark == null) return null;
+                var mark = await _markRepository.FindByIdAsync(markId);
+
+                if (mark == null) throw new Exception("Marca não encontrada.");
 
                 markDTO.Id = mark.Id;
 
                 _mapper.Map(markDTO, mark);
 
-                _baseRepository.Update<Mark>(mark);
+                await _markRepository.UpdateAsync(mark);
 
-                if (await _baseRepository.SaveChangesAsync())
-                {
-                    var result = await _markRepository.GetMarkByIdAsync(mark.Id);
-                    return _mapper.Map<MarkDTO>(result);
-
-                }
-                return null;
+                return _mapper.Map<MarkDTO>(mark);
             }
             catch (Exception ex)
             {
@@ -69,11 +55,11 @@
         {
             try
             {
-                var mark = await _markRepository.GetMarkByIdAsync(markId);
+                var mark = await _markRepository.FindByIdAsync(markId);
                 if (mark == null) throw new Exception("Marca não encontrada.");
 
-                _baseRepository.Delete<Mark>(mark);
-                return await _baseRepository.SaveChangesAsync();
+                
+                return await _markRepository.RemoveAsync(mark);
             }
             catch (Exception ex)
             {
@@ -81,14 +67,13 @@
             }
         }
 
-        public async Task<MarkDTO[]> GetAllMarksAsync()
+        public async Task<List<MarkDTO>> GetAllMarksAsync()
         {
             try
             {
-                var marks = await _markRepository.GetAllMarksAsync();
-                if (marks == null) return null;
+                List<Mark> marks = await _markRepository.GetAll().ToListAsync();
 
-                return _mapper.Map<MarkDTO[]>(marks);
+                return _mapper.Map<List<MarkDTO>>(marks);
 
             }
             catch (Exception ex)
@@ -101,8 +86,8 @@
         {
             try
             {
-                var mark = await _markRepository.GetMarkByIdAsync(markId);
-                if (mark == null) return null;
+                var mark = await _markRepository.FindByIdAsync(markId);
+                if (mark == null) throw new Exception("Marca não encontrada.");
 
                 return _mapper.Map<MarkDTO>(mark);
             }

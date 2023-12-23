@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Persistence.Mapping.Seed;
-
-namespace AutoMoreira.Persistence.Context
+﻿namespace AutoMoreira.Persistence.Context
 {
     public class AppDbContext : IdentityDbContext<User, Role, int, 
                                                    IdentityUserClaim<int>, 
@@ -31,7 +29,6 @@ namespace AutoMoreira.Persistence.Context
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new UserRoleMap());
             modelBuilder.AddInitialSeed();
-
 
         }
     }

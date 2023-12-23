@@ -5,7 +5,7 @@
         Task<ContactDTO> AddContact(ContactDTO contactDTO);
         Task<bool> DeleteContact(int contactoId);
 
-        Task<ContactDTO[]> GetAllContactsAsync();
+        Task<List<ContactDTO>> GetAllContactsAsync();
         Task<ContactDTO> GetContactByIdAsync(int contactId);
     }
 }

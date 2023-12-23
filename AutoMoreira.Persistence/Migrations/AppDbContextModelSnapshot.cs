@@ -180,10 +180,12 @@ namespace AutoMoreira.Persistence.Migrations
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.UserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
 
                     b.HasKey("UserId", "RoleId");
 
