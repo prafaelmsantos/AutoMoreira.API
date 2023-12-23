@@ -1,5 +1,5 @@
 # AutoMoreira.API
-.NET Core, PostgreSQL and Docker
+.NET Core, EF Core, PostgreSQL, GraphQL and Docker
 
 # Author
 Rafael Santos
