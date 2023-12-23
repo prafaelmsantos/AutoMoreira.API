@@ -12,7 +12,6 @@
 
         public async Task<VehicleDTO> AddVehicle(VehicleDTO vehicleDTO)
         {
-
             try
             {
                 Vehicle vehicle = _mapper.Map<Vehicle>(vehicleDTO);
@@ -31,6 +30,7 @@
             try
             {
                 Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 vehicleDTO.Id = vehicle.Id;
@@ -52,6 +52,7 @@
             try
             {
                 Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 return await _vehicleRepository.RemoveAsync(vehicle);
@@ -89,6 +90,7 @@
             try
             {
                 Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 return _mapper.Map<VehicleDTO>(vehicle);

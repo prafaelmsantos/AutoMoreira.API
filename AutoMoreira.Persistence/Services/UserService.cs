@@ -7,10 +7,7 @@
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public UserService(UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IMapper mapper,
-            IUserRepository userRepository)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +35,7 @@
             try
             {
                 User user = _mapper.Map<User>(userDTO);
+
                 IdentityResult identityResult = await _userManager.CreateAsync(user, userDTO.Password);
 
                 if (identityResult.Succeeded)
@@ -115,7 +113,7 @@
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                //Para não colocar o "id" no model userupdate no FE
+                //Para não colocar o "id" no model user update no FE
                 userUpdateDTO.Id = user.Id;
 
                 _mapper.Map(userUpdateDTO, user);

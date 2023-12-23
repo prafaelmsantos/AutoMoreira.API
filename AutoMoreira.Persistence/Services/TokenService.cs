@@ -10,9 +10,7 @@
         //(chave de segurança- chave de encriptação)
         public readonly SymmetricSecurityKey _key;
 
-        public TokenService(IConfiguration config,
-                            UserManager<User> userManager,
-                            IMapper mapper)
+        public TokenService(IConfiguration config, UserManager<User> userManager, IMapper mapper)
         {
             _config = config;
             _userManager = userManager;
@@ -22,7 +20,7 @@
         public async Task<string> CreateToken(UserUpdateDTO userUpdateDTO)
         {
             //Podia mapiar o userDto em vez do userupdateDto. 
-            //Mass como mais a frente onde vai ser usado o createToken é necessario mapiar o userupdatedto,
+            //Mass como mais a frente onde vai ser usado o createToken é necessario mapiar o userUpdateDTO,
             //entao coloca-se ja aqui
             var user = _mapper.Map<User>(userUpdateDTO);
 

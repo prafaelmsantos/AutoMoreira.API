@@ -5,20 +5,17 @@
         private readonly IContactRepository _contactRepository;
         private readonly IMapper _mapper;
 
-        public ContactService(
-        IContactRepository contactRepository,
-        IMapper mapper)
+        public ContactService(IContactRepository contactRepository, IMapper mapper)
         {
             _contactRepository = contactRepository;
             _mapper = mapper;
-
         }
         public async Task<ContactDTO> AddContact(ContactDTO contactDTO)
         {
             try
             {
-
                 Contact contact = _mapper.Map<Contact>(contactDTO);
+
                 await _contactRepository.AddAsync(contact);
 
                 return _mapper.Map<ContactDTO>(contact);
@@ -35,6 +32,7 @@
             try
             {
                 Contact contact = await _contactRepository.FindByIdAsync(contactId);
+
                 if (contact == null) throw new Exception("Contacto não encontrado.");
 
                 return await _contactRepository.RemoveAsync(contact);
@@ -65,6 +63,7 @@
             try
             {
                 Contact contact = await _contactRepository.FindByIdAsync(contactId);
+
                 if (contact == null) throw new Exception("Contacto não encontrado.");
 
                 return _mapper.Map<ContactDTO>(contact);

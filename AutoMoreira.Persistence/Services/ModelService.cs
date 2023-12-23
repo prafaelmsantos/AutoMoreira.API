@@ -14,6 +14,7 @@
             try
             {
                 Model model = _mapper.Map<Model>(modelDTO);
+
                 await _modelRepository.AddAsync(model);
 
                 return _mapper.Map<ModelDTO>(model);
@@ -29,6 +30,7 @@
             try
             {
                 Model model = await _modelRepository.FindByIdAsync(modelId);
+
                 if (model == null) throw new Exception("Modelo não encontrado.");
 
                 modelDTO.Id = model.Id;
@@ -50,6 +52,7 @@
             try
             {
                 Model model = await _modelRepository.FindByIdAsync(modelId);
+
                 if (model == null) throw new Exception("Modelo não encontrado.");
 
                 return await _modelRepository.RemoveAsync(model);
@@ -79,6 +82,7 @@
             try
             {
                 Model model = await _modelRepository.FindByIdAsync(modelId);
+
                 if (model == null) throw new Exception("Modelo não encontrado.");
 
                 return _mapper.Map<ModelDTO>(model);

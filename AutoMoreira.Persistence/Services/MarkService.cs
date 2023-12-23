@@ -5,13 +5,10 @@
         private readonly IMarkRepository _markRepository;
         private readonly IMapper _mapper;
 
-        public MarkService(
-        IMarkRepository markRepository,
-        IMapper mapper)
+        public MarkService(IMarkRepository markRepository, IMapper mapper)
         {
             _markRepository = markRepository;
             _mapper = mapper;
-
         }
 
         public async Task<MarkDTO> AddMark(MarkDTO markDTO)
@@ -19,6 +16,7 @@
             try
             {
                 Mark mark = _mapper.Map<Mark>(markDTO);
+
                 await _markRepository.AddAsync(mark);
 
                 return _mapper.Map<MarkDTO>(mark);
@@ -56,6 +54,7 @@
             try
             {
                 var mark = await _markRepository.FindByIdAsync(markId);
+
                 if (mark == null) throw new Exception("Marca não encontrada.");
 
                 
@@ -87,6 +86,7 @@
             try
             {
                 var mark = await _markRepository.FindByIdAsync(markId);
+
                 if (mark == null) throw new Exception("Marca não encontrada.");
 
                 return _mapper.Map<MarkDTO>(mark);
