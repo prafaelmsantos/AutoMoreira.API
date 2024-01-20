@@ -7,7 +7,7 @@
         [UseSorting]
         public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
         {
-            return _repo.GetAll();
+            return _repo.GetAll().Include(x => x.Model).ThenInclude(x => x.Mark);
         }
         [UsePaging]
         [UseFiltering]
@@ -21,7 +21,7 @@
         [UseSorting]
         public IQueryable<Model> GetModels([Service] IModelRepository _repo)
         {
-            return _repo.GetAll();
+            return _repo.GetAll().Include(x => x.Mark);
         }
         [UsePaging]
         [UseFiltering]
