@@ -1,6 +1,6 @@
 ﻿namespace Equipments.Data.EF.GraphQL.DomainsMap
 {
-    public class VehicleType : ObjectType<Vehicle>
+    public class ModelType : ObjectType<Model>
     {
     }
 

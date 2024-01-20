@@ -17,6 +17,10 @@
                 .HasColumnName("name")
                 .IsRequired(true);
 
+            entity.Property(x => x.MarkId)
+                .HasColumnName("mark_id")
+                .IsRequired(true);
+
             entity.HasMany(x => x.Vehicles)
                 .WithOne(x => x.Model)
                 .HasForeignKey(x => x.Id)
