@@ -89,7 +89,12 @@
         {
             try
             {
-                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+                Vehicle vehicle = await _vehicleRepository
+                    .GetAll()
+                    .Where( x=> x.Id == vehicleId)
+                    .Include(x => x.Model)
+                    .ThenInclude(x => x.Mark)
+                    .FirstOrDefaultAsync();
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 

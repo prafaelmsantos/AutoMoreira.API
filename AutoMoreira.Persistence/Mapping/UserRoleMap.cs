@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<UserRole> entity)
         {
-            entity.ToTable("user_role");
+            entity.ToTable("user_roles");
 
             entity.HasKey(user => new { user.UserId, user.RoleId });
 
@@ -18,13 +18,11 @@
 
             entity.HasOne(userRole => userRole.Role)
                 .WithMany(role => role.UserRoles)
-                .HasForeignKey(userRole => userRole.RoleId)
-                .IsRequired(true);
+                .HasForeignKey(userRole => userRole.RoleId);
 
             entity.HasOne(userRole => userRole.User)
                 .WithMany(role => role.UserRoles)
-                .HasForeignKey(userRole => userRole.UserId)
-                .IsRequired(true);
+                .HasForeignKey(userRole => userRole.UserId);
 
         }
 

@@ -2,9 +2,6 @@
 {
     public class VehicleDTO : EntityBaseDTO
     {
-        public int MarkId { get; set; }
-        public MarkDTO Mark { get; set; }
-
         public int ModelId { get; set; }
         public ModelDTO Model { get; set; }
 

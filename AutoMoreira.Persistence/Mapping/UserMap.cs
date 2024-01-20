@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<User> entity)
         {
-            entity.ToTable("user");
+            entity.ToTable("users");
 
             entity.HasKey(x => x.Id);
 
@@ -28,6 +28,11 @@
             entity.Property(x => x.ImageUrl)
                 .HasColumnName("image_url")
                 .IsRequired(false);
+
+            entity.Property(x => x.DarkMode)
+                .HasColumnName("dark_mode")
+                .HasDefaultValue(false)
+                .IsRequired(true);
 
 
         }

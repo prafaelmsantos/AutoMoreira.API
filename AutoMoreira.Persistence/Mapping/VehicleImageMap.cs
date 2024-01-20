@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<VehicleImage> entity)
         {
-            entity.ToTable("vehicle_image");
+            entity.ToTable("vehicle_images");
 
             entity.HasKey(x => x.Id);
 
@@ -15,10 +15,6 @@
 
             entity.Property(x => x.Url)
                 .HasColumnName("url")
-                .IsRequired(true);
-
-            entity.Property(x => x.Order)
-                .HasColumnName("order")
                 .IsRequired(true);
 
         }

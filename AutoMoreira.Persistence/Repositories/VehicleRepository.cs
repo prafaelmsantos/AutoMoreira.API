@@ -9,8 +9,8 @@
             // Set<Vehicle>() or _context.Veihicles
             IQueryable<Vehicle> query = _context.Set<Vehicle>()
                 .AsNoTracking()
-                .Include(x => x.Mark)
-                .Include(y => y.Model)
+                .Include(x => x.Model)
+                .ThenInclude(x => x.Mark)
                 .OrderBy(v => v.Id);
 
             return await PageList<Vehicle>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);

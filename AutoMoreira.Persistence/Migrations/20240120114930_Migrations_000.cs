@@ -6,12 +6,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class migration01 : Migration
+    public partial class Migrations_000 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "contact",
+                name: "contacts",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -24,11 +24,11 @@ namespace AutoMoreira.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_contact", x => x.id);
+                    table.PrimaryKey("PK_contacts", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "mark",
+                name: "marks",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -37,11 +37,11 @@ namespace AutoMoreira.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_mark", x => x.id);
+                    table.PrimaryKey("PK_marks", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "role",
+                name: "roles",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -52,11 +52,11 @@ namespace AutoMoreira.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_role", x => x.id);
+                    table.PrimaryKey("PK_roles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "user",
+                name: "users",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -65,6 +65,7 @@ namespace AutoMoreira.Persistence.Migrations
                     last_name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),
                     image_url = table.Column<string>(type: "text", nullable: true),
+                    dark_mode = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -82,24 +83,24 @@ namespace AutoMoreira.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user", x => x.id);
+                    table.PrimaryKey("PK_users", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "model",
+                name: "models",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    MarkId = table.Column<int>(type: "integer", nullable: false)
+                    mark_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_model", x => x.id);
+                    table.PrimaryKey("PK_models", x => x.id);
                     table.ForeignKey(
-                        name: "FK_model_mark_id",
+                        name: "FK_models_marks_id",
                         column: x => x.id,
-                        principalTable: "mark",
+                        principalTable: "marks",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -118,9 +119,9 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_role_RoleId",
+                        name: "FK_AspNetRoleClaims_roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "role",
+                        principalTable: "roles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -139,9 +140,9 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_user_UserId",
+                        name: "FK_AspNetUserClaims_users_UserId",
                         column: x => x.UserId,
-                        principalTable: "user",
+                        principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -159,9 +160,9 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_user_UserId",
+                        name: "FK_AspNetUserLogins_users_UserId",
                         column: x => x.UserId,
-                        principalTable: "user",
+                        principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -179,43 +180,42 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_user_UserId",
+                        name: "FK_AspNetUserTokens_users_UserId",
                         column: x => x.UserId,
-                        principalTable: "user",
+                        principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "user_role",
+                name: "user_roles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    role_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_role", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_user_roles", x => new { x.user_id, x.role_id });
                     table.ForeignKey(
-                        name: "FK_user_role_role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "role",
+                        name: "FK_user_roles_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "roles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_user_role_user_UserId",
-                        column: x => x.UserId,
-                        principalTable: "user",
+                        name: "FK_user_roles_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "vehicle",
+                name: "vehicles",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false),
-                    mark_id = table.Column<int>(type: "integer", nullable: false),
                     model_id = table.Column<int>(type: "integer", nullable: false),
                     version = table.Column<string>(type: "text", nullable: false),
                     fuel_type = table.Column<int>(type: "integer", nullable: false),
@@ -228,47 +228,41 @@ namespace AutoMoreira.Persistence.Migrations
                     engine_size = table.Column<int>(type: "integer", nullable: false),
                     power = table.Column<int>(type: "integer", nullable: false),
                     observations = table.Column<string>(type: "text", nullable: false),
-                    opportunity = table.Column<bool>(type: "boolean", nullable: false),
-                    sold = table.Column<bool>(type: "boolean", nullable: false)
+                    opportunity = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    sold = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_vehicle", x => x.id);
+                    table.PrimaryKey("PK_vehicles", x => x.id);
                     table.ForeignKey(
-                        name: "FK_vehicle_mark_id",
+                        name: "FK_vehicles_models_id",
                         column: x => x.id,
-                        principalTable: "mark",
+                        principalTable: "models",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_vehicle_model_id",
-                        column: x => x.id,
-                        principalTable: "model",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "vehicle_image",
+                name: "vehicle_images",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false),
                     url = table.Column<string>(type: "text", nullable: false),
-                    order = table.Column<int>(type: "integer", nullable: false),
                     VehicleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_vehicle_image", x => x.id);
+                    table.PrimaryKey("PK_vehicle_images", x => x.id);
                     table.ForeignKey(
-                        name: "FK_vehicle_image_vehicle_id",
+                        name: "FK_vehicle_images_vehicles_id",
                         column: x => x.id,
-                        principalTable: "vehicle",
+                        principalTable: "vehicles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "mark",
+                table: "marks",
                 columns: new[] { "id", "name" },
                 values: new object[,]
                 {
@@ -284,8 +278,8 @@ namespace AutoMoreira.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "model",
-                columns: new[] { "id", "MarkId", "name" },
+                table: "models",
+                columns: new[] { "id", "mark_id", "name" },
                 values: new object[,]
                 {
                     { 1, 1, "A3" },
@@ -300,13 +294,13 @@ namespace AutoMoreira.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "vehicle",
-                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mark_id", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold", "transmission", "version", "year" },
+                table: "vehicles",
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mileage", "model_id", "observations", "power", "price", "transmission", "version", "year" },
                 values: new object[,]
                 {
-                    { 1, "Azul", 5, 1999, 1, 1, 20000.0, 1, "Garantia de 2 anos", false, 140, 20000.0, false, 0, "Sport", 2020 },
-                    { 2, "Cinza", 5, 1999, 2, 2, 20000.0, 2, "Garantia de 2 anos", false, 140, 20000.0, false, 1, "Sport", 2020 },
-                    { 3, "Vermelho", 5, 1999, 0, 3, 20000.0, 3, "Garantia de 2 anos", false, 140, 20000.0, false, 1, "Sport", 2020 }
+                    { 1, "Azul", 5, 1999, 1, 20000.0, 1, "Garantia de 2 anos", 140, 20000.0, 0, "Sportline", 2020 },
+                    { 2, "Cinza", 5, 1999, 2, 20000.0, 2, "Garantia de 2 anos", 140, 20000.0, 1, "AMG", 2020 },
+                    { 3, "Vermelho", 5, 1999, 0, 20000.0, 3, "Garantia de 2 anos", 140, 20000.0, 1, "Sport", 2020 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -326,25 +320,25 @@ namespace AutoMoreira.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                table: "role",
+                table: "roles",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_roles_role_id",
+                table: "user_roles",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "user",
+                table: "users",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "user",
+                table: "users",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_user_role_RoleId",
-                table: "user_role",
-                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -362,28 +356,28 @@ namespace AutoMoreira.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "contact");
+                name: "contacts");
 
             migrationBuilder.DropTable(
-                name: "user_role");
+                name: "user_roles");
 
             migrationBuilder.DropTable(
-                name: "vehicle_image");
+                name: "vehicle_images");
 
             migrationBuilder.DropTable(
-                name: "role");
+                name: "roles");
 
             migrationBuilder.DropTable(
-                name: "user");
+                name: "users");
 
             migrationBuilder.DropTable(
-                name: "vehicle");
+                name: "vehicles");
 
             migrationBuilder.DropTable(
-                name: "model");
+                name: "models");
 
             migrationBuilder.DropTable(
-                name: "mark");
+                name: "marks");
         }
     }
 }

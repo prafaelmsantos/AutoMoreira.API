@@ -4,17 +4,13 @@
     {
         public void Configure(EntityTypeBuilder<Vehicle> entity)
         {
-            entity.ToTable("vehicle");
+            entity.ToTable("vehicles");
 
             entity.HasKey(x => x.Id);
 
             entity.Property(x => x.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd()
-                .IsRequired(true);
-
-            entity.Property(x => x.MarkId)
-                .HasColumnName("mark_id")
                 .IsRequired(true);
 
             entity.Property(x => x.ModelId)
@@ -67,10 +63,12 @@
 
             entity.Property(x => x.Opportunity)
                 .HasColumnName("opportunity")
+                .HasDefaultValue("false")
                 .IsRequired(true);
 
             entity.Property(x => x.Sold)
                 .HasColumnName("sold")
+                .HasDefaultValue("false")
                 .IsRequired(true);
 
             entity.HasMany(x => x.VehicleImages)

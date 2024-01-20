@@ -67,7 +67,10 @@
         {
             try
             {
-                List<Model> models = await _modelRepository.GetAll().ToListAsync();
+                List<Model> models = await _modelRepository
+                    .GetAll()
+                    .Include(x => x.Mark)
+                    .ToListAsync();
 
                 return _mapper.Map<List<ModelDTO>>(models);
             }
@@ -81,7 +84,11 @@
         {
             try
             {
-                Model model = await _modelRepository.FindByIdAsync(modelId);
+                Model model = await _modelRepository
+                    .GetAll()
+                    .Where(x => x.Id == modelId)
+                    .Include(x => x.Mark)
+                    .FirstOrDefaultAsync();
 
                 if (model == null) throw new Exception("Modelo não encontrado.");
 

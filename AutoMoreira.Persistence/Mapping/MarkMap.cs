@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Mark> entity)
         {
-            entity.ToTable("mark");
+            entity.ToTable("marks");
 
             entity.HasKey(x => x.Id);
 
@@ -21,11 +21,6 @@
                .WithOne(x => x.Mark)
                .HasForeignKey(x => x.Id)
                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasMany(x => x.Vehicles)
-                .WithOne(x => x.Mark)
-                .HasForeignKey(x => x.Id)
-                .OnDelete(DeleteBehavior.Cascade);
 
         }
 

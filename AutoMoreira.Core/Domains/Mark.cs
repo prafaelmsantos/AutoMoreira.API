@@ -4,16 +4,11 @@
     {
         public string Name { get; private set; }
 
-        private readonly List<Model> _models;
-        public virtual ICollection<Model> Models => _models;
-
-        private readonly List<Vehicle> _vehicles;
-        public virtual ICollection<Vehicle> Vehicles => _vehicles;
+        public virtual ICollection<Model> Models { get; private set; }
 
         public Mark()
         {
-            _models = new List<Model>();
-            _vehicles = new List<Vehicle>();
+            Models = new List<Model>();
         }
 
         public Mark(int id, string name)
@@ -21,8 +16,7 @@
             Id = id;
             Name = name;
 
-            _models = new List<Model>();
-            _vehicles = new List<Vehicle>();
+            Models = new List<Model>();
         }
     }
 }

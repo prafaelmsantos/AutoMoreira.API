@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Model> entity)
         {
-            entity.ToTable("model");
+            entity.ToTable("models");
 
             entity.HasKey(x => x.Id);
 
@@ -24,7 +24,7 @@
             entity.HasMany(x => x.Vehicles)
                 .WithOne(x => x.Model)
                 .HasForeignKey(x => x.Id)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
         }

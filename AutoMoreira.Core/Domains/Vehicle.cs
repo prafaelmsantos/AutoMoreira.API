@@ -2,10 +2,6 @@
 {
     public class Vehicle : EntityBase
     {
-
-        public int MarkId { get; private set; }
-        public virtual Mark Mark { get; private set; }
-
         public int ModelId { get; private set; }
         public virtual Model Model { get; private set; }
 
@@ -21,23 +17,21 @@
         public int EngineSize { get; private set; }
         public int Power { get; private set; }
         public string Observations { get; private set; }
-        public bool Opportunity { get; set; }
-        public bool Sold { get; set; }
+        public bool Opportunity { get; private set; }
+        public bool Sold { get; private set; }
 
-        private readonly List<VehicleImage> _vehicleImages;
-        public virtual ICollection<VehicleImage> VehicleImages => _vehicleImages;
+        public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
 
         public Vehicle() 
         {
-            _vehicleImages = new List<VehicleImage>();
+            VehicleImages = new List<VehicleImage>();
         }
 
-        public Vehicle(int id, int markId, int modelId, string version, FUEL fuelType, 
+        public Vehicle(int id, int modelId, string version, FUEL fuelType, 
             double price, double mileage, int year, string color, int doors, TRANSMISSION transmission, 
             int engineSize, int power, string observations, bool opportunity, bool sold)
         {
             Id = id;
-            MarkId = markId;
             ModelId = modelId;
             Version = version;
             FuelType = fuelType;
@@ -53,7 +47,7 @@
             Opportunity = opportunity;
             Sold = sold;
 
-            _vehicleImages = new List<VehicleImage>();
+            VehicleImages = new List<VehicleImage>();
         }
        
     }

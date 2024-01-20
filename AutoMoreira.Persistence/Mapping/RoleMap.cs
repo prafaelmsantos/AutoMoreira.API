@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Role> entity)
         {
-            entity.ToTable("role");
+            entity.ToTable("roles");
 
             entity.HasKey(x => x.Id);
 

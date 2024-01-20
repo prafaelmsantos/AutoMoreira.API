@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231223183057_migration01")]
-    partial class migration01
+    [Migration("20240120114930_Migrations_000")]
+    partial class Migrations_000
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("contact", (string)null);
+                    b.ToTable("contacts", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.Role", b =>
@@ -90,7 +90,7 @@ namespace AutoMoreira.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("role", (string)null);
+                    b.ToTable("roles", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.User", b =>
@@ -108,6 +108,12 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<bool>("DarkMode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("dark_mode");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -176,22 +182,24 @@ namespace AutoMoreira.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("user", (string)null);
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.UserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("user_role", (string)null);
+                    b.ToTable("user_roles", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>
@@ -210,7 +218,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("mark", (string)null);
+                    b.ToTable("marks", (string)null);
 
                     b.HasData(
                         new
@@ -268,7 +276,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("id");
 
                     b.Property<int>("MarkId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("mark_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -277,7 +286,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("model", (string)null);
+                    b.ToTable("models", (string)null);
 
                     b.HasData(
                         new
@@ -360,10 +369,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("fuel_type");
 
-                    b.Property<int>("MarkId")
-                        .HasColumnType("integer")
-                        .HasColumnName("mark_id");
-
                     b.Property<double>("Mileage")
                         .HasColumnType("double precision")
                         .HasColumnName("mileage");
@@ -378,7 +383,9 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("observations");
 
                     b.Property<bool>("Opportunity")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("opportunity");
 
                     b.Property<int>("Power")
@@ -390,7 +397,9 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("price");
 
                     b.Property<bool>("Sold")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("sold");
 
                     b.Property<int>("Transmission")
@@ -408,7 +417,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("vehicle", (string)null);
+                    b.ToTable("vehicles", (string)null);
 
                     b.HasData(
                         new
@@ -418,7 +427,6 @@ namespace AutoMoreira.Persistence.Migrations
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 1,
-                            MarkId = 1,
                             Mileage = 20000.0,
                             ModelId = 1,
                             Observations = "Garantia de 2 anos",
@@ -427,7 +435,7 @@ namespace AutoMoreira.Persistence.Migrations
                             Price = 20000.0,
                             Sold = false,
                             Transmission = 0,
-                            Version = "Sport",
+                            Version = "Sportline",
                             Year = 2020
                         },
                         new
@@ -437,7 +445,6 @@ namespace AutoMoreira.Persistence.Migrations
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 2,
-                            MarkId = 2,
                             Mileage = 20000.0,
                             ModelId = 2,
                             Observations = "Garantia de 2 anos",
@@ -446,7 +453,7 @@ namespace AutoMoreira.Persistence.Migrations
                             Price = 20000.0,
                             Sold = false,
                             Transmission = 1,
-                            Version = "Sport",
+                            Version = "AMG",
                             Year = 2020
                         },
                         new
@@ -456,7 +463,6 @@ namespace AutoMoreira.Persistence.Migrations
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 0,
-                            MarkId = 3,
                             Mileage = 20000.0,
                             ModelId = 3,
                             Observations = "Garantia de 2 anos",
@@ -477,10 +483,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("integer")
-                        .HasColumnName("order");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text")
@@ -491,7 +493,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("vehicle_image", (string)null);
+                    b.ToTable("vehicle_images", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -614,19 +616,11 @@ namespace AutoMoreira.Persistence.Migrations
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Vehicle", b =>
                 {
-                    b.HasOne("AutoMoreira.Core.Domains.Mark", "Mark")
+                    b.HasOne("AutoMoreira.Core.Domains.Model", "Model")
                         .WithMany("Vehicles")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AutoMoreira.Core.Domains.Model", "Model")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Mark");
 
                     b.Navigation("Model");
                 });
@@ -691,8 +685,6 @@ namespace AutoMoreira.Persistence.Migrations
             modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>
                 {
                     b.Navigation("Models");
-
-                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Model", b =>

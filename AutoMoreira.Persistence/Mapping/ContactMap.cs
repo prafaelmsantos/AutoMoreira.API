@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Contact> entity)
         {
-            entity.ToTable("contact");
+            entity.ToTable("contacts");
 
             entity.HasKey(x => x.Id);
 
