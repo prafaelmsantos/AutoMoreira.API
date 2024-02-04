@@ -19,7 +19,7 @@
 
             CreateMap<User, UserUpdateDTO>().ReverseMap();
 
-            CreateMap<Contact, ContactDTO>().ReverseMap();
+            CreateMap<ClientMessage, ClientMessageDTO>().ReverseMap();
 
         }
     }

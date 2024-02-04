@@ -16,12 +16,11 @@
                 new Mark(9, "Fiat")
                 );
 
-
             modelBuilder.Entity<Model>().HasData(
               new Model(1, "A3", 1),
               new Model(2, "Classe A", 2),
               new Model(3, "Serie 1", 3),
-              new Model(4, "208", 4),
+              new Model(4, "308", 4),
               new Model(5, "Golf", 5),
               new Model(6, "C4", 6),
               new Model(7, "Megane", 7),
@@ -29,11 +28,12 @@
               new Model(9, "Punto", 9)
               );
 
-            Vehicle vehicle = new (1, 1, "Sportline", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false);
-            Vehicle vehicle1 = new (2, 2, "AMG", FUEL.Hybrid, 20000, 20000, 2020, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", false, false);
-            Vehicle vehicle2 = new (3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", false, false);
-
-            modelBuilder.Entity<Vehicle>().HasData(vehicle, vehicle1, vehicle2);
+            modelBuilder.Entity<Vehicle>().HasData(
+              new(1, 1, "Sportline", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", true, false),
+              new(2, 2, "AMG", FUEL.Hybrid, 20000, 20000, 2020, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
+              new(3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
+              new(4, 4, "GTI", FUEL.Petrol, 10000, 20000, 2020, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false)
+              );
         }
     }
 }

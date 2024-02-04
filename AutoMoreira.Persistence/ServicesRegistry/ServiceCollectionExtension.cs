@@ -14,7 +14,7 @@
             services.AddScoped<IMarkRepository, MarkRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IClientMessageRepository, ClientMessageRepository>();
 
             //Services
             services.AddScoped<IVehicleService, VehicleService>();
@@ -22,7 +22,7 @@
             services.AddScoped<IModelService, ModelService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IClientMessageService, ClientMessageService>();
 
             //JWT
             //Para facilitar a criação de password. Nao Requerer Letras maisculuas, minusculas e numeros. Apenas requer uma password de tamanho 6
@@ -48,7 +48,7 @@
             .AddType<MarkType>()
             .AddType<ModelType>()
             .AddType<VehicleType>()
-            .AddType<ContactType>()
+            .AddType<ClientMessageType>()
             .AddQueryType<Query>()
             .AddFiltering()
             .AddSorting()

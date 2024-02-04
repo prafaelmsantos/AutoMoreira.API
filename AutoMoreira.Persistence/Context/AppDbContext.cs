@@ -13,7 +13,7 @@
         public DbSet<VehicleImage> VehicleImages { get; set; }
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Model> Models { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ClientMessage> Contacts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@
             modelBuilder.ApplyConfiguration(new VehicleImageMap());
             modelBuilder.ApplyConfiguration(new MarkMap());
             modelBuilder.ApplyConfiguration(new ModelMap());
-            modelBuilder.ApplyConfiguration(new ContactMap());
+            modelBuilder.ApplyConfiguration(new ClientMessageMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new UserRoleMap());

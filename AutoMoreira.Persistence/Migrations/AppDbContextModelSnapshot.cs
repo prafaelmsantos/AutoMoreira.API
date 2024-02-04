@@ -22,7 +22,7 @@ namespace AutoMoreira.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Contact", b =>
+            modelBuilder.Entity("AutoMoreira.Core.Domains.ClientMessage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("contacts", (string)null);
+                    b.ToTable("client_messages", (string)null);
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.Role", b =>
@@ -309,7 +309,7 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 4,
                             MarkId = 4,
-                            Name = "208"
+                            Name = "308"
                         },
                         new
                         {
@@ -376,7 +376,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("model_id");
 
                     b.Property<string>("Observations")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("observations");
 
@@ -405,7 +404,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("transmission");
 
                     b.Property<string>("Version")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("version");
 
@@ -424,15 +422,15 @@ namespace AutoMoreira.Persistence.Migrations
                             Color = "Azul",
                             Doors = 5,
                             EngineSize = 1999,
-                            FuelType = 1,
+                            FuelType = 2,
                             Mileage = 20000.0,
                             ModelId = 1,
                             Observations = "Garantia de 2 anos",
-                            Opportunity = false,
+                            Opportunity = true,
                             Power = 140,
                             Price = 20000.0,
                             Sold = false,
-                            Transmission = 0,
+                            Transmission = 1,
                             Version = "Sportline",
                             Year = 2020
                         },
@@ -442,15 +440,15 @@ namespace AutoMoreira.Persistence.Migrations
                             Color = "Cinza",
                             Doors = 5,
                             EngineSize = 1999,
-                            FuelType = 2,
+                            FuelType = 3,
                             Mileage = 20000.0,
                             ModelId = 2,
                             Observations = "Garantia de 2 anos",
-                            Opportunity = false,
+                            Opportunity = true,
                             Power = 140,
                             Price = 20000.0,
                             Sold = false,
-                            Transmission = 1,
+                            Transmission = 2,
                             Version = "AMG",
                             Year = 2020
                         },
@@ -460,16 +458,34 @@ namespace AutoMoreira.Persistence.Migrations
                             Color = "Vermelho",
                             Doors = 5,
                             EngineSize = 1999,
-                            FuelType = 0,
+                            FuelType = 1,
                             Mileage = 20000.0,
                             ModelId = 3,
                             Observations = "Garantia de 2 anos",
-                            Opportunity = false,
+                            Opportunity = true,
                             Power = 140,
                             Price = 20000.0,
                             Sold = false,
-                            Transmission = 1,
+                            Transmission = 2,
                             Version = "Sport",
+                            Year = 2020
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Color = "Verde",
+                            Doors = 5,
+                            EngineSize = 1999,
+                            FuelType = 1,
+                            Mileage = 20000.0,
+                            ModelId = 4,
+                            Observations = "Garantia de 2 anos",
+                            Opportunity = false,
+                            Power = 140,
+                            Price = 10000.0,
+                            Sold = false,
+                            Transmission = 1,
+                            Version = "GTI",
                             Year = 2020
                         });
                 });

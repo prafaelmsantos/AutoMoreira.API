@@ -26,7 +26,7 @@
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Contact> GetContacts([Service] IContactRepository _repo)
+        public IQueryable<ClientMessage> GetClientMessages([Service] IClientMessageRepository _repo)
         {
             return _repo.GetAll();
         }
