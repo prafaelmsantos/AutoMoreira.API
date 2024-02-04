@@ -41,7 +41,7 @@
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar users. Erro: {ex.Message}");
+                    $"Erro ao tentar encontrar utilizadores. Erro: {ex.Message}");
             }
 
         }
@@ -136,8 +136,8 @@
                     userName = user.UserName,
                     firstName = user.FirstName,
                     lastName = user.LastName,
+                    darkMode = user.DarkMode,
                     token = _tokenService.CreateToken(user).Result
-
                 });
 
             }
@@ -175,6 +175,7 @@
                     userName = userReturn.UserName,
                     firstName = user.FirstName,
                     lastName = user.LastName,
+                    darkMode = user.DarkMode,
                     token = _tokenService.CreateToken(userReturn).Result
                 });
             }

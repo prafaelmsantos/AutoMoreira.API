@@ -5,7 +5,7 @@
         public int ModelId { get; private set; }
         public virtual Model Model { get; private set; }
 
-        public string Version { get; private set; }
+        public string? Version { get; private set; }
         public FUEL FuelType { get; private set; }
         public double Price { get; private set; }
         public double Mileage { get; private set; }
@@ -16,7 +16,7 @@
         public TRANSMISSION Transmission { get; private set; }
         public int EngineSize { get; private set; }
         public int Power { get; private set; }
-        public string Observations { get; private set; }
+        public string? Observations { get; private set; }
         public bool Opportunity { get; private set; }
         public bool Sold { get; private set; }
 

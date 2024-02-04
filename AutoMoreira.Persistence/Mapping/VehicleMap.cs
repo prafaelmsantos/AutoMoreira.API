@@ -19,7 +19,7 @@
 
             entity.Property(x => x.Version)
                 .HasColumnName("version")
-                .IsRequired(true);
+                .IsRequired(false);
 
             entity.Property(x => x.FuelType)
                 .HasColumnName("fuel_type")
@@ -35,7 +35,7 @@
 
             entity.Property(x => x.Year)
                 .HasColumnName("year")
-                .IsRequired();
+                .IsRequired(true);
 
             entity.Property(x => x.Color)
                 .HasColumnName("color")
@@ -59,7 +59,7 @@
 
             entity.Property(x => x.Observations)
                 .HasColumnName("observations")
-                .IsRequired(true);
+                .IsRequired(false);
 
             entity.Property(x => x.Opportunity)
                 .HasColumnName("opportunity")
