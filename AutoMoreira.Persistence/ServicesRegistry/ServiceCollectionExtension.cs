@@ -45,6 +45,7 @@
             services
             .AddGraphQLServer()
             .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.Always)
+            .AddType<UserType>()
             .AddType<MarkType>()
             .AddType<ModelType>()
             .AddType<VehicleType>()
