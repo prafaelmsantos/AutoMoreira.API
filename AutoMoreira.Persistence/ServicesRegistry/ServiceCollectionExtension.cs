@@ -4,6 +4,11 @@
     {
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
+            return services.AddCustomServices(services.BuildServiceProvider().GetRequiredService<IConfiguration>());
+        }
+
+        public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
+        {
             //Repositories
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IMarkRepository, MarkRepository>();

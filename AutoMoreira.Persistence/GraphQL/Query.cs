@@ -5,28 +5,28 @@
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public static IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
+        public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
         {
             return _repo.GetAll().Include(x => x.Model).ThenInclude(x => x.Mark);
         }
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public static IQueryable<Mark> GetMarks([Service] IMarkRepository _repo)
+        public IQueryable<Mark> GetMarks([Service] IMarkRepository _repo)
         {
             return _repo.GetAll();
         }
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public static IQueryable<Model> GetModels([Service] IModelRepository _repo)
+        public IQueryable<Model> GetModels([Service] IModelRepository _repo)
         {
             return _repo.GetAll().Include(x => x.Mark);
         }
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public static IQueryable<Contact> GetContacts([Service] IContactRepository _repo)
+        public IQueryable<Contact> GetContacts([Service] IContactRepository _repo)
         {
             return _repo.GetAll();
         }
