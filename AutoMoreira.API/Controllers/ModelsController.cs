@@ -1,6 +1,5 @@
 ﻿namespace AutoMoreira.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ModelsController : ControllerBase
@@ -26,7 +25,6 @@
         /// Get All Models
         /// </summary>
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             try
@@ -49,7 +47,6 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -72,7 +69,6 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("Mark/{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetByMarkId(int id)
         {
             try

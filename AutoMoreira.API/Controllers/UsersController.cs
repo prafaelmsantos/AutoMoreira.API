@@ -1,6 +1,5 @@
 ﻿namespace AutoMoreira.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -28,7 +27,6 @@
         /// Get All Users
         /// </summary>
         [HttpGet()]
-        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             try
@@ -75,7 +73,6 @@
         /// </summary>
         /// <param name="userDTO"></param>
         [HttpPost("CreateUser")]
-        [AllowAnonymous]
         public async Task<IActionResult> CreateUser(UserDTO userDTO)
         {
             try
@@ -114,7 +111,6 @@
         /// </summary>
         /// <param name="userLoginDTO"></param>
         [HttpPost("Login")]
-        [AllowAnonymous]
         public async Task<IActionResult> LoginUser(UserUpdateDTO userLoginDTO)
         {
             try
@@ -146,9 +142,7 @@
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar fazer Login. Erro: {ex.Message}");
             }
-
         }
-
 
         /// <summary>
         /// Update User

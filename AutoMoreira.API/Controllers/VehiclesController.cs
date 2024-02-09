@@ -1,6 +1,5 @@
 ﻿namespace AutoMoreira.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class VehiclesController : ControllerBase
@@ -28,7 +27,6 @@
         /// </summary>
         /// <param name="pageParams"></param>
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Get([FromQuery] PageParams pageParams)
         {
             try
@@ -53,7 +51,6 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
             try

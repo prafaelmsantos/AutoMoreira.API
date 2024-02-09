@@ -1,6 +1,5 @@
 ﻿namespace AutoMoreira.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientMessagesController : ControllerBase
@@ -21,7 +20,7 @@
         #region CRUD Methods
 
         /// <summary>
-        /// Get All Contacts
+        /// Get All Client Messages
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -42,7 +41,7 @@
 
 
         /// <summary>
-        /// Get Contact
+        /// Get Client Message
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
@@ -64,11 +63,10 @@
 
 
         /// <summary>
-        /// Create Contact
+        /// Create Client Message
         /// </summary>
         /// <param name="clientMessageDTO"></param>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Post(ClientMessageDTO clientMessageDTO)
         {
             try
@@ -87,7 +85,7 @@
 
 
         /// <summary>
-        /// Delete Contact
+        /// Delete Client Message
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

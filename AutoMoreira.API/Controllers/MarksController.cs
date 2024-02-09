@@ -1,6 +1,5 @@
 ﻿namespace AutoMoreira.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MarksController : ControllerBase
@@ -26,7 +25,6 @@
         /// Get All Marks
         /// </summary>
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             try
@@ -49,7 +47,6 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -72,7 +69,6 @@
         /// </summary>
         /// <param name="markDTO"></param>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Post(MarkDTO markDTO)
         {
             try
@@ -96,7 +92,6 @@
         /// <param name="id"></param>
         /// <param name="markDTO"></param>
         [HttpPut("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> Put(int id, MarkDTO markDTO)
         {
             try
@@ -119,7 +114,6 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             try
