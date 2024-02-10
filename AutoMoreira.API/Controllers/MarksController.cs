@@ -73,7 +73,7 @@
         {
             try
             {
-                var mark = await _markService.AddMark(markDTO);
+                var mark = await _markService.AddMarkAsync(markDTO);
                 if (mark == null) return NotFound("Erro a criar a marca!");
 
                 return Ok(mark);
@@ -96,7 +96,7 @@
         {
             try
             {
-                var mark = await _markService.UpdateMark(id, markDTO);
+                var mark = await _markService.UpdateMarkAsync(id, markDTO);
                 if (mark == null) return NoContent();
 
                 return Ok(mark);

@@ -30,7 +30,7 @@
             }
         }
 
-        public async Task<UserUpdateDTO> CreateAccountAsync(UserDTO userDTO)
+        public async Task<UserUpdateDTO> CreateUserAsync(UserDTO userDTO)
         {
             try
             {
@@ -104,16 +104,14 @@
             }
         }
 
-
-        public async Task<UserUpdateDTO> UpdateAccount(UserUpdateDTO userUpdateDTO)
+        public async Task<UserUpdateDTO> UpdateUserAsync(int userId, UserUpdateDTO userUpdateDTO)
         {
             try
             {
-                User user = await _userRepository.FindByCondition(x=> x.UserName == userUpdateDTO.UserName).FirstOrDefaultAsync();
+                User user = await _userRepository.FindByIdAsync(userId);
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                //Para não colocar o "id" no model user update no FE
                 userUpdateDTO.Id = user.Id;
 
                 _mapper.Map(userUpdateDTO, user);

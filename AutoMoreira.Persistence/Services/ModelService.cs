@@ -9,7 +9,7 @@
             _modelRepository = modelRepository;
             _mapper = mapper;
         }
-        public async Task<ModelDTO> AddModel(ModelDTO modelDTO)
+        public async Task<ModelDTO> AddModelAsync(ModelDTO modelDTO)
         {
             try
             {
@@ -25,7 +25,7 @@
             }
         }
 
-        public async Task<ModelDTO> UpdateModel(int modelId, ModelDTO modelDTO)
+        public async Task<ModelDTO> UpdateModelAsync(int modelId, ModelDTO modelDTO)
         {
             try
             {

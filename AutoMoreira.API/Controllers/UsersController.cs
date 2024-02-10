@@ -44,27 +44,25 @@
 
         }
 
-
         /// <summary>
         /// Get User
         /// </summary>
-        [HttpGet("GetUser")]
-        public async Task<IActionResult> GetUserByUserName()
+        /// <param name="id"></param>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                //var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-                var userName = User.GetUserName();
-                var user = await _userService.GetUserByUserNameAsync(userName);
-                return Ok(user);
+                UserUpdateDTO userUpdateDTO = await _userService.GetUserByIdAsync(id);
+                if (userUpdateDTO == null) return NoContent();
 
+                return Ok(userUpdateDTO);
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar conta utilizador. Erro: {ex.Message}");
+                    $"Erro ao tentar encontrar o utilizador. Erro: {ex.Message}");
             }
-
         }
 
 
@@ -72,7 +70,7 @@
         /// Create User
         /// </summary>
         /// <param name="userDTO"></param>
-        [HttpPost("CreateUser")]
+        [HttpPost()]
         public async Task<IActionResult> CreateUser(UserDTO userDTO)
         {
             try
@@ -81,7 +79,7 @@
                 {
                     return BadRequest("O utilizador já existe!");
                 }
-                var user = await _userService.CreateAccountAsync(userDTO);
+                var user = await _userService.CreateUserAsync(userDTO);
                 if (user != null)
                 {
                     return Ok(new
@@ -129,6 +127,7 @@
                 }
                 return Ok(new
                 {
+                    id = user.Id,
                     userName = user.UserName,
                     firstName = user.FirstName,
                     lastName = user.LastName,
@@ -148,29 +147,22 @@
         /// Update User
         /// </summary>
         /// <param name="userUpdateDTO"></param>
-        [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
+        /// <param name="id"></param>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserUpdateDTO userUpdateDTO)
         {
             try
             {
-                //Caso o userName não tente passar um token diferente
-                if (userUpdateDTO.UserName != User.GetUserName())
-                {
-                    return Unauthorized("O Utilizador é invalido!");
-                }
-                var user = await _userService.GetUserByUserNameAsync(User.GetUserName());
-                if (user == null) return Unauthorized("Utilizador Inválido!");
-
-                var userReturn = await _userService.UpdateAccount(userUpdateDTO);
-                if (userReturn == null) return NoContent();
+                UserUpdateDTO userUpdate = await _userService.UpdateUserAsync(id, userUpdateDTO);
+                if (userUpdate == null) return NoContent();
 
                 return Ok(new
                 {
-                    userName = userReturn.UserName,
-                    firstName = user.FirstName,
-                    lastName = user.LastName,
-                    darkMode = user.DarkMode,
-                    token = _tokenService.CreateToken(userReturn).Result
+                    userName = userUpdate.UserName,
+                    firstName = userUpdate.FirstName,
+                    lastName = userUpdate.LastName,
+                    darkMode = userUpdate.DarkMode,
+                    token = _tokenService.CreateToken(userUpdate).Result
                 });
             }
             catch (Exception ex)

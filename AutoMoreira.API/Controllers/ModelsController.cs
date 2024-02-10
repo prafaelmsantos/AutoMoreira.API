@@ -95,7 +95,7 @@
         {
             try
             {
-                var model = await _modelService.AddModel(modelDTO);
+                var model = await _modelService.AddModelAsync(modelDTO);
                 if (model == null) return NoContent();
 
                 return Ok(model);
@@ -118,7 +118,7 @@
         {
             try
             {
-                var model = await _modelService.UpdateModel(id, modelDTO);
+                var model = await _modelService.UpdateModelAsync(id, modelDTO);
                 if (model == null) return NoContent();
 
                 return Ok(model);

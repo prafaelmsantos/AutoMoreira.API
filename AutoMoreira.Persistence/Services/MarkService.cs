@@ -11,7 +11,7 @@
             _mapper = mapper;
         }
 
-        public async Task<MarkDTO> AddMark(MarkDTO markDTO)
+        public async Task<MarkDTO> AddMarkAsync(MarkDTO markDTO)
         {
             try
             {
@@ -27,7 +27,7 @@
             }
         }
 
-        public async Task<MarkDTO> UpdateMark(int markId, MarkDTO markDTO)
+        public async Task<MarkDTO> UpdateMarkAsync(int markId, MarkDTO markDTO)
         {
             try
             {

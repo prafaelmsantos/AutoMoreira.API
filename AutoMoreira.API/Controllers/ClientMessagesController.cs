@@ -71,7 +71,7 @@
         {
             try
             {
-                var clientMessage = await _clientMessageService.AddClientMessage(clientMessageDTO);
+                var clientMessage = await _clientMessageService.AddClientMessageAsync(clientMessageDTO);
                 if (clientMessage == null) return NotFound("Erro ao tentar criar a mensagem de cliente!");
 
                 return Ok(clientMessage);

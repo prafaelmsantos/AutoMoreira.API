@@ -77,7 +77,7 @@
         {
             try
             {
-                var vehicle = await _vehicleService.AddVehicle(vehicleDTO);
+                var vehicle = await _vehicleService.AddVehicleAsync(vehicleDTO);
                 if (vehicle == null) return NoContent();
 
                 return Ok(vehicle);
@@ -100,7 +100,7 @@
         {
             try
             {
-                var vehicle = await _vehicleService.UpdateVehicle(id, vehicleDTO);
+                var vehicle = await _vehicleService.UpdateVehicleAsync(id, vehicleDTO);
                 if (vehicle == null) return NoContent();
 
                 return Ok(vehicle);

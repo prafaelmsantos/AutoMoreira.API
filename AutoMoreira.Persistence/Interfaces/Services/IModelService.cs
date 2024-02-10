@@ -2,8 +2,8 @@
 {
     public interface IModelService
     {
-        Task<ModelDTO> AddModel(ModelDTO modelDTO);
-        Task<ModelDTO> UpdateModel(int modelId, ModelDTO modelDTO);
+        Task<ModelDTO> AddModelAsync(ModelDTO modelDTO);
+        Task<ModelDTO> UpdateModelAsync(int modelId, ModelDTO modelDTO);
         Task<bool> DeleteModel(int modelId);
 
         Task<List<ModelDTO>> GetAllModelsAsync();

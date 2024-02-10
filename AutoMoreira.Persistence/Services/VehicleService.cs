@@ -10,7 +10,7 @@
             _mapper = mapper;
         }
 
-        public async Task<VehicleDTO> AddVehicle(VehicleDTO vehicleDTO)
+        public async Task<VehicleDTO> AddVehicleAsync(VehicleDTO vehicleDTO)
         {
             try
             {
@@ -25,7 +25,7 @@
             }
         }
 
-        public async Task<VehicleDTO> UpdateVehicle(int vehicleId, VehicleDTO vehicleDTO)
+        public async Task<VehicleDTO> UpdateVehicleAsync(int vehicleId, VehicleDTO vehicleDTO)
         {
             try
             {

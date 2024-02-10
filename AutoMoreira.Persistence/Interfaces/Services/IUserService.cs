@@ -7,7 +7,7 @@
         Task<UserUpdateDTO> GetUserByIdAsync(int id);
         Task<UserUpdateDTO> GetUserByUserNameAsync(string username);
         Task<SignInResult> CheckUserPasswordAsync(UserUpdateDTO userUpdateDto, string password);
-        Task<UserUpdateDTO> CreateAccountAsync(UserDTO userDto);
-        Task<UserUpdateDTO> UpdateAccount(UserUpdateDTO userUpdateDto);
+        Task<UserUpdateDTO> CreateUserAsync(UserDTO userDto);
+        Task<UserUpdateDTO> UpdateUserAsync(int userId, UserUpdateDTO userUpdateDTO);
     }
 }

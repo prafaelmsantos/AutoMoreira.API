@@ -10,7 +10,7 @@
             _clientMessageRepository = clientMessageRepository;
             _mapper = mapper;
         }
-        public async Task<ClientMessageDTO> AddClientMessage(ClientMessageDTO clientMessageDTO)
+        public async Task<ClientMessageDTO> AddClientMessageAsync(ClientMessageDTO clientMessageDTO)
         {
             try
             {
