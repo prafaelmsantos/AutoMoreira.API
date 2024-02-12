@@ -8,5 +8,12 @@
         public bool DarkMode { get; private set; }
 
         public virtual ICollection<Role> Roles { get; private set; }
+
+        public void SetDarkMode(bool darkMode)
+        {
+            DarkMode = darkMode;
+        }
+
+
     }
 }

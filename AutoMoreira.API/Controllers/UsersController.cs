@@ -71,7 +71,7 @@
         /// </summary>
         /// <param name="userDTO"></param>
         [HttpPost()]
-        public async Task<IActionResult> CreateUser(UserDTO userDTO)
+        public async Task<IActionResult> CreateUser([FromBody] UserDTO userDTO)
         {
             try
             {
@@ -109,7 +109,7 @@
         /// </summary>
         /// <param name="userLoginDTO"></param>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser(UserUpdateDTO userLoginDTO)
+        public async Task<IActionResult> LoginUser([FromBody] UserUpdateDTO userLoginDTO)
         {
             try
             {
@@ -149,21 +149,38 @@
         /// <param name="userUpdateDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserUpdateDTO userUpdateDTO)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDTO userUpdateDTO)
         {
             try
             {
-                UserUpdateDTO userUpdate = await _userService.UpdateUserAsync(id, userUpdateDTO);
+                userUpdateDTO.Id = id;
+                UserUpdateDTO userUpdate = await _userService.UpdateUserAsync(userUpdateDTO);
                 if (userUpdate == null) return NoContent();
 
-                return Ok(new
-                {
-                    userName = userUpdate.UserName,
-                    firstName = userUpdate.FirstName,
-                    lastName = userUpdate.LastName,
-                    darkMode = userUpdate.DarkMode,
-                    token = _tokenService.CreateToken(userUpdate).Result
-                });
+                return Ok(userUpdate);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar atualizar Utilizador. Erro: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <param name="userUpdateModeDTO"></param>
+        /// <param name="id"></param>
+        [HttpPut("UpdateMode/{id}")]
+        public async Task<IActionResult> UpdateUserMode(int id, [FromBody] UserUpdateModeDTO userUpdateModeDTO)
+        {
+            try
+            {
+                userUpdateModeDTO.Id = id;
+                UserUpdateDTO userUpdate = await _userService.UpdateUserModeAsync(userUpdateModeDTO);
+                if (userUpdate == null) return NoContent();
+
+                return Ok(userUpdate);
             }
             catch (Exception ex)
             {

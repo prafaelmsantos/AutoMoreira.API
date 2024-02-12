@@ -3,7 +3,7 @@
     public interface IMarkService
     {
         Task<MarkDTO> AddMarkAsync(MarkDTO markDTO);
-        Task<MarkDTO> UpdateMarkAsync(int markId, MarkDTO markDTO);
+        Task<MarkDTO> UpdateMarkAsync(MarkDTO markDTO);
         Task<bool> DeleteMark(int markId);
 
         Task<List<MarkDTO>> GetAllMarksAsync();

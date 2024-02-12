@@ -33,6 +33,11 @@
                 .HasColumnName("date_time")
                 .IsRequired(true);
 
+            entity.Property(x => x.Open)
+                .HasColumnName("open")
+                .HasDefaultValue(false)
+                .IsRequired(false);
+
         }
 
     }

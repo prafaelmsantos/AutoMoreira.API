@@ -104,11 +104,11 @@
             }
         }
 
-        public async Task<UserUpdateDTO> UpdateUserAsync(int userId, UserUpdateDTO userUpdateDTO)
+        public async Task<UserUpdateDTO> UpdateUserAsync(UserUpdateDTO userUpdateDTO)
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(userId);
+                User user = await _userRepository.FindByIdAsync(userUpdateDTO.Id);
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
@@ -130,6 +130,26 @@
             catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar atualizar utilizador. Erro: {ex.Message}");
+            }
+        }
+
+        public async Task<UserUpdateDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO)
+        {
+            try
+            {
+                User user = await _userRepository.FindByIdAsync(userUpdateModeDTO.Id);
+
+                if (user == null) throw new Exception("Utilizador não encontrado.");
+
+                user.SetDarkMode(userUpdateModeDTO.DarkMode);
+
+                await _userRepository.UpdateAsync(user);
+
+                return _mapper.Map<UserUpdateDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao tentar atualizar o modo utilizador. Erro: {ex.Message}");
             }
         }
 
