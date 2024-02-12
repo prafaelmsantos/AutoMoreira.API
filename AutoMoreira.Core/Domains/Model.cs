@@ -10,7 +10,8 @@
         public virtual ICollection<Vehicle> Vehicles { get; private set; }
 
         public Model()
-        { 
+        {
+            Vehicles = new List<Vehicle>();
         }
 
         public Model(string name, int markId)

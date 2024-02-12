@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240212215331_Migrations_0001")]
+    [Migration("20240212234445_Migrations_0001")]
     partial class Migrations_0001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

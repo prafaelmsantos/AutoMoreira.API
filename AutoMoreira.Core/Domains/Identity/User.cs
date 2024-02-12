@@ -9,6 +9,11 @@
 
         public virtual ICollection<Role> Roles { get; private set; }
 
+        public User()
+        {
+            Roles = new List<Role>();
+        }
+
         public void SetDarkMode(bool darkMode)
         {
             DarkMode = darkMode;
