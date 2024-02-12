@@ -5,6 +5,13 @@
         [UsePaging]
         [UseFiltering]
         [UseSorting]
+        public IQueryable<User> GetUsers([Service] IUserRepository _repo)
+        {
+            return _repo.GetAll();
+        }
+        [UsePaging]
+        [UseFiltering]
+        [UseSorting]
         public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
         {
             return _repo.GetAll().Include(x => x.Model).ThenInclude(x => x.Mark);
