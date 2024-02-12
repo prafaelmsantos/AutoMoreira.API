@@ -25,11 +25,11 @@
             }
         }
 
-        public async Task<ModelDTO> UpdateModelAsync(int modelId, ModelDTO modelDTO)
+        public async Task<ModelDTO> UpdateModelAsync(ModelDTO modelDTO)
         {
             try
             {
-                Model model = await _modelRepository.FindByIdAsync(modelId);
+                Model model = await _modelRepository.FindByIdAsync(modelDTO.Id);
 
                 if (model == null) throw new Exception("Modelo não encontrado.");
 

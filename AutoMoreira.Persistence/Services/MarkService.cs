@@ -27,11 +27,11 @@
             }
         }
 
-        public async Task<MarkDTO> UpdateMarkAsync(int markId, MarkDTO markDTO)
+        public async Task<MarkDTO> UpdateMarkAsync(MarkDTO markDTO)
         {
             try
             {
-                var mark = await _markRepository.FindByIdAsync(markId);
+                var mark = await _markRepository.FindByIdAsync(markDTO.Id);
 
                 if (mark == null) throw new Exception("Marca não encontrada.");
 

@@ -36,7 +36,7 @@
             entity.Property(x => x.Open)
                 .HasColumnName("open")
                 .HasDefaultValue(false)
-                .IsRequired(false);
+                .IsRequired(true);
 
         }
 

@@ -118,7 +118,8 @@
         {
             try
             {
-                var model = await _modelService.UpdateModelAsync(id, modelDTO);
+                modelDTO.Id = id;
+                var model = await _modelService.UpdateModelAsync(modelDTO);
                 if (model == null) return NoContent();
 
                 return Ok(model);

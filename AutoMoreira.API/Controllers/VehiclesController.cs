@@ -100,7 +100,8 @@
         {
             try
             {
-                var vehicle = await _vehicleService.UpdateVehicleAsync(id, vehicleDTO);
+                vehicleDTO.Id = id;
+                var vehicle = await _vehicleService.UpdateVehicleAsync(vehicleDTO);
                 if (vehicle == null) return NoContent();
 
                 return Ok(vehicle);

@@ -96,7 +96,8 @@
         {
             try
             {
-                var mark = await _markService.UpdateMarkAsync(id, markDTO);
+                markDTO.Id = id;
+                var mark = await _markService.UpdateMarkAsync(markDTO);
                 if (mark == null) return NoContent();
 
                 return Ok(mark);
