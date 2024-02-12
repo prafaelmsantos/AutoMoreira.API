@@ -21,10 +21,6 @@
                 .HasColumnName("last_name")
                 .IsRequired(true);
 
-            entity.Property(x => x.Description)
-                .HasColumnName("description")
-                .IsRequired(false);
-
             entity.Property(x => x.ImageUrl)
                 .HasColumnName("image_url")
                 .IsRequired(false);
@@ -34,6 +30,13 @@
                 .HasDefaultValue(false)
                 .IsRequired(true);
 
+            entity.HasMany(x => x.Roles)
+               .WithMany(x => x.Users)
+               .UsingEntity<UserRole>(
+                   x => x.HasOne(x => x.Role)
+                   .WithMany().HasForeignKey(x => x.RoleId),
+                   x => x.HasOne(x => x.User)
+                  .WithMany().HasForeignKey(x => x.UserId));
 
         }
 

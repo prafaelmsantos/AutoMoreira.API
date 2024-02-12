@@ -23,7 +23,7 @@
 
             entity.HasMany(x => x.Vehicles)
                 .WithOne(x => x.Model)
-                .HasForeignKey(x => x.Id)
+                .HasForeignKey(x => x.ModelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 

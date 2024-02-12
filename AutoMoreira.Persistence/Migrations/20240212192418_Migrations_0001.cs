@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class Migrations_001 : Migration
+    public partial class Migrations_0001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: true),
                     image_url = table.Column<string>(type: "text", nullable: true),
                     dark_mode = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -90,7 +89,8 @@ namespace AutoMoreira.Persistence.Migrations
                 name: "models",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
                     mark_id = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -98,8 +98,8 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_models", x => x.id);
                     table.ForeignKey(
-                        name: "FK_models_marks_id",
-                        column: x => x.id,
+                        name: "FK_models_marks_mark_id",
+                        column: x => x.mark_id,
                         principalTable: "marks",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -215,7 +215,8 @@ namespace AutoMoreira.Persistence.Migrations
                 name: "vehicles",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     model_id = table.Column<int>(type: "integer", nullable: false),
                     version = table.Column<string>(type: "text", nullable: true),
                     fuel_type = table.Column<int>(type: "integer", nullable: false),
@@ -235,8 +236,8 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_vehicles", x => x.id);
                     table.ForeignKey(
-                        name: "FK_vehicles_models_id",
-                        column: x => x.id,
+                        name: "FK_vehicles_models_model_id",
+                        column: x => x.model_id,
                         principalTable: "models",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -246,7 +247,8 @@ namespace AutoMoreira.Persistence.Migrations
                 name: "vehicle_images",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     url = table.Column<string>(type: "text", nullable: false),
                     VehicleId = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -254,8 +256,8 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_vehicle_images", x => x.id);
                     table.ForeignKey(
-                        name: "FK_vehicle_images_vehicles_id",
-                        column: x => x.id,
+                        name: "FK_vehicle_images_vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "vehicles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -324,6 +326,11 @@ namespace AutoMoreira.Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_models_mark_id",
+                table: "models",
+                column: "mark_id");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "roles",
                 column: "NormalizedName",
@@ -344,6 +351,16 @@ namespace AutoMoreira.Persistence.Migrations
                 table: "users",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_vehicle_images_VehicleId",
+                table: "vehicle_images",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_vehicles_model_id",
+                table: "vehicles",
+                column: "model_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

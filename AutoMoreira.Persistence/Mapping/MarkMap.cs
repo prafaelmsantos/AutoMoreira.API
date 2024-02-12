@@ -18,9 +18,9 @@
                 .IsRequired(true);
 
             entity.HasMany(x => x.Models)
-               .WithOne(x => x.Mark)
-               .HasForeignKey(x => x.Id)
-               .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(x => x.Mark)
+                .HasForeignKey(x => x.MarkId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 

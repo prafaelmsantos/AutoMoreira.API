@@ -15,15 +15,6 @@
             entity.Property(x => x.RoleId)
                 .HasColumnName("role_id")
                 .IsRequired(true);
-
-            entity.HasOne(userRole => userRole.Role)
-                .WithMany(role => role.UserRoles)
-                .HasForeignKey(userRole => userRole.RoleId);
-
-            entity.HasOne(userRole => userRole.User)
-                .WithMany(role => role.UserRoles)
-                .HasForeignKey(userRole => userRole.UserId);
-
         }
 
     }

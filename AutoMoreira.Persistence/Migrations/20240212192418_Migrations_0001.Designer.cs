@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240204120120_Migrations_001")]
-    partial class Migrations_001
+    [Migration("20240212192418_Migrations_0001")]
+    partial class Migrations_0001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,10 +114,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false)
                         .HasColumnName("dark_mode");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -275,6 +271,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<int>("MarkId")
                         .HasColumnType("integer")
                         .HasColumnName("mark_id");
@@ -285,6 +283,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MarkId");
 
                     b.ToTable("models", (string)null);
 
@@ -352,6 +352,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("text")
@@ -414,6 +416,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("year");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModelId");
 
                     b.ToTable("vehicles", (string)null);
 
@@ -499,6 +503,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text")
@@ -508,6 +514,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("vehicle_images", (string)null);
                 });
@@ -603,13 +611,13 @@ namespace AutoMoreira.Persistence.Migrations
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.UserRole", b =>
                 {
                     b.HasOne("AutoMoreira.Core.Domains.Identity.Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoMoreira.Core.Domains.Identity.User", "User")
-                        .WithMany("UserRoles")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -623,7 +631,7 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     b.HasOne("AutoMoreira.Core.Domains.Mark", "Mark")
                         .WithMany("Models")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("MarkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -634,7 +642,7 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     b.HasOne("AutoMoreira.Core.Domains.Model", "Model")
                         .WithMany("Vehicles")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -645,7 +653,7 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     b.HasOne("AutoMoreira.Core.Domains.Vehicle", "Vehicle")
                         .WithMany("VehicleImages")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -686,16 +694,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.Role", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.User", b =>
-                {
-                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>

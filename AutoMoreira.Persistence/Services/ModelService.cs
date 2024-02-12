@@ -13,7 +13,7 @@
         {
             try
             {
-                Model model = _mapper.Map<Model>(modelDTO);
+                Model model = new Model(modelDTO.Name, modelDTO.MarkId);
 
                 await _modelRepository.AddAsync(model);
 

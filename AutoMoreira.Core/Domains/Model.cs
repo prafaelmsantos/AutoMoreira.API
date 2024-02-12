@@ -13,6 +13,12 @@
         { 
         }
 
+        public Model(string name, int markId)
+        {
+            Name = name;
+            MarkId = markId;
+        }
+
         public Model(int id, string name, int markId)
         {
             Id = id;
