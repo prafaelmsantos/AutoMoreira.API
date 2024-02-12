@@ -113,6 +113,29 @@
                     $"Erro ao tentar apagar a mensagem de cliente. Erro: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Update Client Message Status
+        /// </summary>
+        /// <param name="clientMessageUpdateStatusDTO"></param>
+        /// <param name="id"></param>
+        [HttpPut("UpdateStatus/{id}")]
+        public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO)
+        {
+            try
+            {
+                clientMessageUpdateStatusDTO.Id = id;
+                ClientMessageDTO clientMessageDTO = await _clientMessageService.UpdateClientMessageStatusAsync(clientMessageUpdateStatusDTO);
+                if (clientMessageDTO == null) return NoContent();
+
+                return Ok(clientMessageDTO);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar atualizar o status da mensagem de cliente. Erro: {ex.Message}");
+            }
+        }
         #endregion
     }
 }

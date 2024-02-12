@@ -25,11 +25,11 @@
             }
         }
 
-        public async Task<VehicleDTO> UpdateVehicleAsync(int vehicleId, VehicleDTO vehicleDTO)
+        public async Task<VehicleDTO> UpdateVehicleAsync(VehicleDTO vehicleDTO)
         {
             try
             {
-                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleDTO.Id);
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 

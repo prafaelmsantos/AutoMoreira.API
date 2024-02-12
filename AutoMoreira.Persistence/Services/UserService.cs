@@ -149,7 +149,7 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar o modo utilizador. Erro: {ex.Message}");
+                throw new Exception($"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
             }
         }
 

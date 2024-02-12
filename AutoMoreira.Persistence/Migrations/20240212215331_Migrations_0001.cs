@@ -20,7 +20,8 @@ namespace AutoMoreira.Persistence.Migrations
                     email = table.Column<string>(type: "text", nullable: false),
                     phone_number = table.Column<long>(type: "bigint", nullable: false),
                     message = table.Column<string>(type: "text", nullable: false),
-                    date_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    date_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    open = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {

@@ -13,7 +13,7 @@
         public DbSet<VehicleImage> VehicleImages { get; set; }
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Model> Models { get; set; }
-        public DbSet<ClientMessage> Contacts { get; set; }
+        public DbSet<ClientMessage> ClientMessages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

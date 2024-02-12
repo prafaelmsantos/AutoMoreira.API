@@ -4,16 +4,12 @@
     {
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
-            return services.AddCustomServices(services.BuildServiceProvider().GetRequiredService<IConfiguration>());
-        }
-
-        public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
-        {
             //Repositories
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IMarkRepository, MarkRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IClientMessageRepository, ClientMessageRepository>();
 
             //Services
@@ -39,12 +35,14 @@
             .AddSignInManager<SignInManager<User>>()
             .AddRoleValidator<RoleValidator<Role>>()
             .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();//Se nao adicionar o Defaul Token, o no UserService, ele não faz o Generate/reset token
+            .AddDefaultTokenProviders();//Se nao adicionar o Default Token, o no UserService, ele não faz o Generate/reset token
 
             
             services
             .AddGraphQLServer()
             .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.Always)
+            .AddType<UserType>()
+            .AddType<RoleType>()
             .AddType<MarkType>()
             .AddType<ModelType>()
             .AddType<VehicleType>()

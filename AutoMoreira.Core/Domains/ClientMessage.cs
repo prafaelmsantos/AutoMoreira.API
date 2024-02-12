@@ -10,5 +10,11 @@
         public bool Open { get; private set; }
 
         public ClientMessage() { }
+
+        public void SetOpen(bool open)
+        {
+            Open = open;
+        }
+
     }
 }

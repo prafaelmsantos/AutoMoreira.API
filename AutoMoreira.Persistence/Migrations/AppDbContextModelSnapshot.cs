@@ -50,6 +50,12 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<bool>("Open")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("open");
+
                     b.Property<long>("PhoneNumber")
                         .HasColumnType("bigint")
                         .HasColumnName("phone_number");

@@ -7,5 +7,6 @@
 
         Task<List<ClientMessageDTO>> GetAllClientMessagesAsync();
         Task<ClientMessageDTO> GetClientMessageByIdAsync(int clientMessageId);
+        Task<ClientMessageDTO> UpdateClientMessageStatusAsync(ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO);
     }
 }

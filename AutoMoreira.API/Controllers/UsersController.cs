@@ -185,7 +185,7 @@
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar Utilizador. Erro: {ex.Message}");
+                    $"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
             }
         }
         #endregion

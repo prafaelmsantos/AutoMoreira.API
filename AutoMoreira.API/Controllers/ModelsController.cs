@@ -91,7 +91,7 @@
         /// </summary>
         /// <param name="modelDTO"></param>
         [HttpPost]
-        public async Task<IActionResult> Post(ModelDTO modelDTO)
+        public async Task<IActionResult> Post([FromBody] ModelDTO modelDTO)
         {
             try
             {
@@ -114,11 +114,12 @@
         /// <param name="id"></param>
         /// <param name="modelDTO></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, ModelDTO modelDTO)
+        public async Task<IActionResult> Put(int id, [FromBody] ModelDTO modelDTO)
         {
             try
             {
-                var model = await _modelService.UpdateModelAsync(id, modelDTO);
+                modelDTO.Id = id;
+                var model = await _modelService.UpdateModelAsync(modelDTO);
                 if (model == null) return NoContent();
 
                 return Ok(model);

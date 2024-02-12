@@ -73,5 +73,25 @@
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<ClientMessageDTO> UpdateClientMessageStatusAsync(ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO)
+        {
+            try
+            {
+                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageUpdateStatusDTO.Id);
+
+                if (clientMessage == null) throw new Exception("Mensagem de cliente não encontrada.");
+
+                clientMessage.SetOpen(clientMessageUpdateStatusDTO.Open);
+
+                await _clientMessageRepository.UpdateAsync(clientMessage);
+
+                return _mapper.Map<ClientMessageDTO>(clientMessage);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao tentar atualizar o status da mensagem de cliente. Erro: {ex.Message}");
+            }
+        }
     }
 }

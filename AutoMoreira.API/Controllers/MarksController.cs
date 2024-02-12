@@ -69,7 +69,7 @@
         /// </summary>
         /// <param name="markDTO"></param>
         [HttpPost]
-        public async Task<IActionResult> Post(MarkDTO markDTO)
+        public async Task<IActionResult> Post([FromBody] MarkDTO markDTO)
         {
             try
             {
@@ -92,11 +92,12 @@
         /// <param name="id"></param>
         /// <param name="markDTO"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, MarkDTO markDTO)
+        public async Task<IActionResult> Put(int id, [FromBody] MarkDTO markDTO)
         {
             try
             {
-                var mark = await _markService.UpdateMarkAsync(id, markDTO);
+                markDTO.Id = id;
+                var mark = await _markService.UpdateMarkAsync(markDTO);
                 if (mark == null) return NoContent();
 
                 return Ok(mark);

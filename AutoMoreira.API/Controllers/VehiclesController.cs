@@ -73,7 +73,7 @@
         /// </summary>
         /// <param name="vehicleDTO"></param>
         [HttpPost]
-        public async Task<IActionResult> Post(VehicleDTO vehicleDTO)
+        public async Task<IActionResult> Post([FromBody] VehicleDTO vehicleDTO)
         {
             try
             {
@@ -96,11 +96,11 @@
         /// <param name="vehicleDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, VehicleDTO vehicleDTO)
+        public async Task<IActionResult> Put(int id, [FromBody] VehicleDTO vehicleDTO)
         {
             try
             {
-                var vehicle = await _vehicleService.UpdateVehicleAsync(id, vehicleDTO);
+                var vehicle = await _vehicleService.UpdateVehicleAsync(vehicleDTO);
                 if (vehicle == null) return NoContent();
 
                 return Ok(vehicle);
