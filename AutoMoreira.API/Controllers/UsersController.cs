@@ -13,8 +13,7 @@
 
 
         #region Constructors
-        public UsersController(IUserService userService,
-                                 ITokenService tokenService)
+        public UsersController(IUserService userService, ITokenService tokenService)
         {
             _userService = userService;
             _tokenService = tokenService;
@@ -53,10 +52,10 @@
         {
             try
             {
-                UserUpdateDTO userUpdateDTO = await _userService.GetUserByIdAsync(id);
-                if (userUpdateDTO == null) return NoContent();
+                UserDTO userDTO = await _userService.GetUserByIdAsync(id);
+                if (userDTO == null) return NoContent();
 
-                return Ok(userUpdateDTO);
+                return Ok(userDTO);
             }
             catch (Exception ex)
             {
@@ -109,7 +108,7 @@
         /// </summary>
         /// <param name="userLoginDTO"></param>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] UserUpdateDTO userLoginDTO)
+        public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLoginDTO)
         {
             try
             {
@@ -125,14 +124,14 @@
                 {
                     return Unauthorized();
                 }
-                return Ok(new
+                return Ok(new UserDTO
                 {
-                    id = user.Id,
-                    userName = user.UserName,
-                    firstName = user.FirstName,
-                    lastName = user.LastName,
-                    darkMode = user.DarkMode,
-                    token = _tokenService.CreateToken(user).Result
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    DarkMode = user.DarkMode,
+                    Token = _tokenService.CreateToken(user).Result
                 });
 
             }
@@ -149,12 +148,12 @@
         /// <param name="userUpdateDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDTO userUpdateDTO)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)
         {
             try
             {
-                userUpdateDTO.Id = id;
-                UserUpdateDTO userUpdate = await _userService.UpdateUserAsync(userUpdateDTO);
+                userDTO.Id = id;
+                UserDTO userUpdate = await _userService.UpdateUserAsync(userDTO);
                 if (userUpdate == null) return NoContent();
 
                 return Ok(userUpdate);
@@ -177,10 +176,10 @@
             try
             {
                 userUpdateModeDTO.Id = id;
-                UserUpdateDTO userUpdate = await _userService.UpdateUserModeAsync(userUpdateModeDTO);
-                if (userUpdate == null) return NoContent();
+                UserDTO userDTO = await _userService.UpdateUserModeAsync(userUpdateModeDTO);
+                if (userDTO == null) return NoContent();
 
-                return Ok(userUpdate);
+                return Ok(userDTO);
             }
             catch (Exception ex)
             {

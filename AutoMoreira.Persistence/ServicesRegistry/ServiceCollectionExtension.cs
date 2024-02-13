@@ -18,6 +18,7 @@
             services.AddScoped<IModelService, ModelService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IClientMessageService, ClientMessageService>();
 
             //JWT

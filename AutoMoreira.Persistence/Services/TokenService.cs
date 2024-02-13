@@ -17,20 +17,20 @@
             _mapper = mapper;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
         }
-        public async Task<string> CreateToken(UserUpdateDTO userUpdateDTO)
+        public async Task<string> CreateToken(UserDTO userDTO)
         {
             //Podia mapiar o userDto em vez do userupdateDto. 
             //Mass como mais a frente onde vai ser usado o createToken é necessario mapiar o userUpdateDTO,
             //entao coloca-se ja aqui
-            var user = _mapper.Map<User>(userUpdateDTO);
+            var user = _mapper.Map<User>(userDTO);
 
             //Claims são afirmações sobre o utilizador ( nome, idade, foto, ...).
             //Neste caso estou a adicionar para dentro das claims, uma claim do userId e outra do UserName,
             //ou seja, estou a criar claims baseadas no meu utilizador
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.UserName)
             };
             //Vou buscar todas as roles do utilizador
             var roles = await _userManager.GetRolesAsync(user);

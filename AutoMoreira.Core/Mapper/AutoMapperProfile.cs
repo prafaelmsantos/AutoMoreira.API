@@ -17,7 +17,7 @@
 
             CreateMap<User, UserLoginDTO>().ReverseMap();
 
-            CreateMap<User, UserUpdateDTO>().ReverseMap();
+            CreateMap<Role, RoleDTO>().ReverseMap();
 
             CreateMap<ClientMessage, ClientMessageDTO>().ReverseMap();
 

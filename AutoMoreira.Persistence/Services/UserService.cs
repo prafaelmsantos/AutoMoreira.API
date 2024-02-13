@@ -14,11 +14,11 @@
             _mapper = mapper;
             _userRepository = userRepository;
         }
-        public async Task<SignInResult> CheckUserPasswordAsync(UserUpdateDTO userUpdateDto, string password)
+        public async Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password)
         {
             try
             {
-                User user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
+                User user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userDTO.UserName.ToLower());
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
@@ -30,7 +30,7 @@
             }
         }
 
-        public async Task<UserUpdateDTO> CreateUserAsync(UserDTO userDTO)
+        public async Task<UserDTO> CreateUserAsync(UserDTO userDTO)
         {
             try
             {
@@ -40,8 +40,7 @@
 
                 if (identityResult.Succeeded)
                 {
-                    UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
-                    return userUpdateDTO;
+                    return _mapper.Map<UserDTO>(user);
                 }
                 return null;
 
@@ -53,7 +52,7 @@
             }
         }
 
-        public async Task<UserUpdateDTO> GetUserByUserNameAsync(string userName)
+        public async Task<UserDTO> GetUserByUserNameAsync(string userName)
         {
             try
             {
@@ -61,8 +60,7 @@
                 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
-                return userUpdateDTO;
+                return _mapper.Map<UserDTO>(user);
 
             }
             catch (Exception ex)
@@ -72,7 +70,7 @@
             }
         }
 
-        public async Task<UserUpdateDTO> GetUserByIdAsync(int id)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
             try
             {
@@ -80,23 +78,21 @@
                 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                UserUpdateDTO userUpdateDTO = _mapper.Map<UserUpdateDTO>(user);
-                return userUpdateDTO;
+                return _mapper.Map<UserDTO>(user);
 
             }
             catch (Exception ex)
             {
                 throw new Exception($"Erro ao tentar procurar utilizador por Username. Erro: {ex.Message}");
-
             }
         }
-        public async Task<List<UserUpdateDTO>> GetAllUsersAsync()
+        public async Task<List<UserDTO>> GetAllUsersAsync()
         {
             try
             {
                 List<User> users = await _userRepository.GetAll().ToListAsync();
 
-                return _mapper.Map<List<UserUpdateDTO>>(users);
+                return _mapper.Map<List<UserDTO>>(users);
             }
             catch (Exception ex)
             {
@@ -104,28 +100,26 @@
             }
         }
 
-        public async Task<UserUpdateDTO> UpdateUserAsync(UserUpdateDTO userUpdateDTO)
+        public async Task<UserDTO> UpdateUserAsync(UserDTO userDTO)
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(userUpdateDTO.Id);
+                User user = await _userRepository.FindByIdAsync(userDTO.Id);
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                userUpdateDTO.Id = user.Id;
+                _mapper.Map(userDTO, user);
 
-                _mapper.Map(userUpdateDTO, user);
-
-                if (userUpdateDTO.Password != null)
+                if (userDTO.Password != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                    await _userManager.ResetPasswordAsync(user, token, userUpdateDTO.Password);
+                    await _userManager.ResetPasswordAsync(user, token, userDTO.Password);
                 }
                 
                 await _userRepository.UpdateAsync(user);
 
-                return _mapper.Map<UserUpdateDTO>(user);
+                return _mapper.Map<UserDTO>(user);
             }
             catch (Exception ex)
             {
@@ -133,7 +127,7 @@
             }
         }
 
-        public async Task<UserUpdateDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO)
+        public async Task<UserDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO)
         {
             try
             {
@@ -145,7 +139,7 @@
 
                 await _userRepository.UpdateAsync(user);
 
-                return _mapper.Map<UserUpdateDTO>(user);
+                return _mapper.Map<UserDTO>(user);
             }
             catch (Exception ex)
             {
