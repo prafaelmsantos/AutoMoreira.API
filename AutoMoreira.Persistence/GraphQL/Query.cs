@@ -7,7 +7,7 @@
         [UseSorting]
         public IQueryable<User> GetUsers([Service] IUserRepository _repo)
         {
-            return _repo.GetAll();
+            return _repo.GetAll().Include(x => x.Roles);
         }
         [UsePaging]
         [UseFiltering]
