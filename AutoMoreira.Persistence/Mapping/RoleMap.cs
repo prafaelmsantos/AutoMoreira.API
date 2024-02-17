@@ -16,6 +16,18 @@
             entity.Property(x => x.Name)
                 .HasColumnName("name")
                 .IsRequired(true);
+
+            /* ------------------- IdentityRole ------------------- */
+
+            entity.Property(x => x.NormalizedName)
+               .HasColumnName("normalized_name")
+               .IsRequired(false);
+
+            entity.Property(x => x.ConcurrencyStamp)
+               .HasColumnName("concurrency_stamp")
+               .IsRequired(false);
+
+            /* ---------------------------------------------------- */
         }
 
     }

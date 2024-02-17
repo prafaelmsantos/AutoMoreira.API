@@ -8,10 +8,67 @@
 
             entity.HasKey(x => x.Id);
 
+            /* ------------------- IdentityUser ------------------- */
+            
             entity.Property(x => x.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd()
                 .IsRequired(true);
+
+            entity.Property(x => x.UserName)
+               .HasColumnName("user_name")
+               .IsRequired(true);
+
+            entity.Property(x => x.NormalizedUserName)
+               .HasColumnName("normalized_user_name")
+               .IsRequired(false);
+
+            entity.Property(x => x.Email)
+               .HasColumnName("email")
+               .IsRequired(true);
+
+            entity.Property(x => x.NormalizedEmail)
+               .HasColumnName("normalized_email")
+               .IsRequired(false);
+
+            entity.Property(x => x.EmailConfirmed)
+                .HasColumnName("email_confirmed")
+                .HasDefaultValue(false)
+                .IsRequired(true);
+
+            entity.Property(x => x.PasswordHash)
+               .HasColumnName("password_hash")
+               .IsRequired(true);
+
+            entity.Property(x => x.SecurityStamp)
+               .HasColumnName("security_stamp")
+               .IsRequired(false);
+
+            entity.Property(x => x.PhoneNumber)
+               .HasColumnName("phone_number")
+               .IsRequired(true);
+
+            entity.Property(x => x.PhoneNumberConfirmed)
+               .HasColumnName("phone_number_confirmed")
+               .IsRequired(false);
+
+            entity.Property(x => x.TwoFactorEnabled)
+               .HasColumnName("two_factor_enabled")
+               .IsRequired(false);
+
+            entity.Property(x => x.LockoutEnd)
+               .HasColumnName("lockout_end")
+               .IsRequired(false);
+
+            entity.Property(x => x.LockoutEnabled)
+               .HasColumnName("lockout_enabled")
+               .IsRequired(false);
+
+            entity.Property(x => x.AccessFailedCount)
+               .HasColumnName("access_failed_count")
+               .IsRequired(false);
+
+            /* ---------------------------------------------------- */
 
             entity.Property(x => x.FirstName)
                 .HasColumnName("first_name")
@@ -21,8 +78,8 @@
                 .HasColumnName("last_name")
                 .IsRequired(true);
 
-            entity.Property(x => x.ImageUrl)
-                .HasColumnName("image_url")
+            entity.Property(x => x.Image)
+                .HasColumnName("image")
                 .IsRequired(false);
 
             entity.Property(x => x.DarkMode)

@@ -4,7 +4,7 @@
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
-        public string? ImageUrl { get; private set; }
+        public string? Image { get; private set; }
         public bool DarkMode { get; private set; }
 
         public virtual ICollection<Role> Roles { get; private set; }
