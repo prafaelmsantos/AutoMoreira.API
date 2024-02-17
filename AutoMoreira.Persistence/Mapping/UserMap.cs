@@ -50,11 +50,13 @@
 
             entity.Property(x => x.PhoneNumberConfirmed)
                .HasColumnName("phone_number_confirmed")
-               .IsRequired(false);
+               .HasDefaultValue(false)
+               .IsRequired(true);
 
             entity.Property(x => x.TwoFactorEnabled)
                .HasColumnName("two_factor_enabled")
-               .IsRequired(false);
+               .HasDefaultValue(false)
+               .IsRequired(true);
 
             entity.Property(x => x.LockoutEnd)
                .HasColumnName("lockout_end")
@@ -62,7 +64,8 @@
 
             entity.Property(x => x.LockoutEnabled)
                .HasColumnName("lockout_enabled")
-               .IsRequired(false);
+               .HasDefaultValue(false)
+               .IsRequired(true);
 
             entity.Property(x => x.AccessFailedCount)
                .HasColumnName("access_failed_count")
