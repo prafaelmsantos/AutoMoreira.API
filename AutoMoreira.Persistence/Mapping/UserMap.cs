@@ -42,7 +42,7 @@
 
             entity.Property(x => x.SecurityStamp)
                .HasColumnName("security_stamp")
-               .IsRequired(false);
+               .IsRequired(true);
 
             entity.Property(x => x.PhoneNumber)
                .HasColumnName("phone_number")
@@ -69,7 +69,7 @@
 
             entity.Property(x => x.AccessFailedCount)
                .HasColumnName("access_failed_count")
-               .IsRequired(false);
+               .IsRequired(true);
 
             /* ---------------------------------------------------- */
 
