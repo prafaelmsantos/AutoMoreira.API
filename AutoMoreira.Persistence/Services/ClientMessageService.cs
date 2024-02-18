@@ -14,7 +14,7 @@
         {
             try
             {
-                ClientMessage clientMessage = _mapper.Map<ClientMessage>(clientMessageDTO);
+                ClientMessage clientMessage = new(clientMessageDTO.Name, clientMessageDTO.Email, clientMessageDTO.PhoneNumber, clientMessageDTO.Message);
 
                 await _clientMessageRepository.AddAsync(clientMessage);
 
@@ -47,7 +47,7 @@
         {
             try
             {
-                List<ClientMessage> clientMessages = await _clientMessageRepository.GetAll().ToListAsync();
+                List<ClientMessage> clientMessages = await _clientMessageRepository.GetAll().OrderBy(x => x.Id).ToListAsync();
 
                 return _mapper.Map<List<ClientMessageDTO>>(clientMessages);
 
@@ -80,7 +80,7 @@
             {
                 ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageUpdateStatusDTO.Id);
 
-                if (clientMessage == null) throw new Exception("Mensagem de cliente não encontrada.");
+                if (clientMessage is null) throw new Exception("Mensagem de cliente não encontrada.");
 
                 clientMessage.SetOpen(clientMessageUpdateStatusDTO.Open);
 

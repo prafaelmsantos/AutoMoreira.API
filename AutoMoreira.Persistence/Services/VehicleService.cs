@@ -14,7 +14,10 @@
         {
             try
             {
-                Vehicle vehicle = _mapper.Map<Vehicle>(vehicleDTO);
+                Vehicle vehicle = new(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage, 
+                    vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
+                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
+
                  await _vehicleRepository.AddAsync(vehicle);
 
                 return _mapper.Map<VehicleDTO>(vehicle);
@@ -33,9 +36,9 @@
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
-                vehicleDTO.Id = vehicle.Id;
-
-                _mapper.Map(vehicleDTO, vehicle);
+                vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
+                    vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
+                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
 
                 await _vehicleRepository.UpdateAsync(vehicle);
 
@@ -63,20 +66,16 @@
             }
         }
 
-        public async Task<PageList<VehicleDTO>> GetAllVehiclesAsync(PageParams pageParams)
+        public async Task<List<VehicleDTO>> GetAllVehiclesAsync()
         {
             try
             {
-                PageList<Vehicle> vehicles = await _vehicleRepository.GetAllByPageParamsAsync(pageParams);
+                List<Vehicle> vehicles = await _vehicleRepository
+                    .GetAll()
+                    .OrderBy(x => x.Id)
+                    .ToListAsync();
 
-                PageList<VehicleDTO> vehicleDTOs = _mapper.Map<PageList<VehicleDTO>>(vehicles);
-
-                //Manual Mapper
-                vehicleDTOs.CurrentPage = vehicles.CurrentPage;
-                vehicleDTOs.TotalPages = vehicles.TotalPages;
-                vehicleDTOs.PageSize = vehicles.PageSize;
-                vehicleDTOs.TotalCount = vehicles.TotalCount;
-                return vehicleDTOs;
+                return _mapper.Map<List<VehicleDTO>>(vehicles);
 
             }
             catch (Exception ex)

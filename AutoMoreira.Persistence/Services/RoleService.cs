@@ -1,7 +1,4 @@
-﻿using AutoMoreira.Core.Domains;
-using AutoMoreira.Core.Dto;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class RoleService : IRoleService
     {
@@ -18,7 +15,7 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                Role role = _mapper.Map<Role>(roleDTO);
+                Role role = new(roleDTO.Name);
 
                 await _roleRepository.AddAsync(role);
 
@@ -38,7 +35,7 @@ namespace AutoMoreira.Persistence.Services
 
                 if (role == null) throw new Exception("Cargo não encontrado.");
 
-                _mapper.Map(roleDTO, role);
+                role.UpdateRole(roleDTO.Name);
 
                 await _roleRepository.UpdateAsync(role);
 
@@ -54,7 +51,10 @@ namespace AutoMoreira.Persistence.Services
         {
             try
             {
-                List<Role> roles = await _roleRepository.GetAll().ToListAsync();
+                List<Role> roles = await _roleRepository
+                    .GetAll()
+                    .OrderBy(x => x.Id)
+                    .ToListAsync();
 
                 return _mapper.Map<List<RoleDTO>>(roles);
 

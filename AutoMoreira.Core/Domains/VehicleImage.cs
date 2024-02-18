@@ -1,6 +1,6 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class VehicleImage : EntityBase
+    public class VehicleImage : AuditableEntity
     {
         public string Url { get; private set; }
 

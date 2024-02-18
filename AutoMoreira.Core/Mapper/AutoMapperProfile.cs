@@ -21,6 +21,8 @@
 
             CreateMap<ClientMessage, ClientMessageDTO>().ReverseMap();
 
+            CreateMap<Visitor, VisitorDTO>().ReverseMap();
+
         }
     }
 }

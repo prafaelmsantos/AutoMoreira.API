@@ -11,6 +11,7 @@
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IClientMessageRepository, ClientMessageRepository>();
+            services.AddScoped<IVisitorRepository, VisitorRepository>();
 
             //Services
             services.AddScoped<IVehicleService, VehicleService>();
@@ -20,6 +21,7 @@
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IClientMessageService, ClientMessageService>();
+            services.AddScoped<IVisitorService, VisitorService>();
 
             //JWT
             //Para facilitar a criação de password. Nao Requerer Letras maisculuas, minusculas e numeros. Apenas requer uma password de tamanho 6

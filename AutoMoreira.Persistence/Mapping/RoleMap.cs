@@ -17,6 +17,19 @@
                 .HasColumnName("name")
                 .IsRequired(true);
 
+            entity.Property(x => x.IsDefault)
+                .HasColumnName("is_default")
+                .HasDefaultValue(false)
+                .IsRequired(true);
+
+            entity.Property(x => x.CreatedDate)
+                .HasColumnName("created_date")
+                .IsRequired(false);
+
+            entity.Property(x => x.LastModifiedDate)
+                .HasColumnName("last_modified_date")
+                .IsRequired(false);
+
             /* ------------------- IdentityRole ------------------- */
 
             entity.Property(x => x.NormalizedName)

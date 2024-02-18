@@ -1,6 +1,6 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Mark : EntityBase
+    public class Mark : AuditableEntity
     {
         public string Name { get; private set; }
 
@@ -15,8 +15,25 @@
         {
             Id = id;
             Name = name;
+            CreatedDate = DateTime.UtcNow;
+            LastModifiedDate = DateTime.UtcNow;
 
             Models = new List<Model>();
+        }
+
+        public Mark(string name)
+        {
+            Name = name;
+            CreatedDate = DateTime.UtcNow;
+            LastModifiedDate = DateTime.UtcNow;
+
+            Models = new List<Model>();
+        }
+
+        public void SetName(string name)
+        {
+            Name = name;
+            LastModifiedDate = DateTime.UtcNow;
         }
     }
 }

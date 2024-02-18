@@ -15,7 +15,7 @@
         {
             try
             {
-                Mark mark = _mapper.Map<Mark>(markDTO);
+                Mark mark = new(markDTO.Name);
 
                 await _markRepository.AddAsync(mark);
 
@@ -35,9 +35,7 @@
 
                 if (mark == null) throw new Exception("Marca não encontrada.");
 
-                markDTO.Id = mark.Id;
-
-                _mapper.Map(markDTO, mark);
+                mark.SetName(markDTO.Name);
 
                 await _markRepository.UpdateAsync(mark);
 
@@ -70,7 +68,7 @@
         {
             try
             {
-                List<Mark> marks = await _markRepository.GetAll().ToListAsync();
+                List<Mark> marks = await _markRepository.GetAll().OrderBy(x => x.Id).ToListAsync();
 
                 return _mapper.Map<List<MarkDTO>>(marks);
 

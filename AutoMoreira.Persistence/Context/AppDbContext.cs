@@ -14,6 +14,7 @@
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<ClientMessage> ClientMessages { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

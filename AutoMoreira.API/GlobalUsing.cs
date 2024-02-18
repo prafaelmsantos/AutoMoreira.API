@@ -1,13 +1,10 @@
 ﻿global using AutoMoreira.Core.Dto;
 global using AutoMoreira.Persistence.Interfaces.Services;
-global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using System;
 global using System.Threading.Tasks;
-global using AutoMoreira.API.Extensions;
 global using AutoMoreira.Core.Dto.Identity;
-global using AutoMoreira.Persistence.Helpers;
 global using Microsoft.AspNetCore.Hosting;
 global using System.Security.Claims;
 global using AutoMoreira.API.Helpers;

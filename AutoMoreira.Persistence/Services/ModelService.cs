@@ -13,7 +13,7 @@
         {
             try
             {
-                Model model = new Model(modelDTO.Name, modelDTO.MarkId);
+                Model model = new(modelDTO.Name, modelDTO.MarkId);
 
                 await _modelRepository.AddAsync(model);
 
@@ -33,9 +33,7 @@
 
                 if (model == null) throw new Exception("Modelo não encontrado.");
 
-                modelDTO.Id = model.Id;
-
-                _mapper.Map(modelDTO, model);
+                model.UpdateModel(modelDTO.Name, modelDTO.MarkId);
 
                 await _modelRepository.UpdateAsync(model);
 
@@ -70,6 +68,7 @@
                 List<Model> models = await _modelRepository
                     .GetAll()
                     .Include(x => x.Mark)
+                    .OrderBy(x => x.Id)
                     .ToListAsync();
 
                 return _mapper.Map<List<ModelDTO>>(models);
@@ -107,6 +106,7 @@
                 List<Model> models = await _modelRepository
                     .GetAll()
                     .Where(x=> x.MarkId == markId)
+                    .OrderBy(x => x.Id)
                     .ToListAsync();
 
                 return _mapper.Map<List<ModelDTO>>(models);

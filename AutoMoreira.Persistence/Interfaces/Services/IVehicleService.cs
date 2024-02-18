@@ -6,7 +6,7 @@
         Task<VehicleDTO> UpdateVehicleAsync(VehicleDTO vehicleDTO);
         Task<bool> DeleteVehicle(int vehicleId);
 
-        Task<PageList<VehicleDTO>> GetAllVehiclesAsync(PageParams pageParams);
+        Task<List<VehicleDTO>> GetAllVehiclesAsync();
         Task<VehicleDTO> GetVehicleByIdAsync(int vehicleId);
     }
 }

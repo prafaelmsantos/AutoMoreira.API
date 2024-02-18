@@ -7,7 +7,6 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.Threading.Tasks;
 global using System;
-global using AutoMoreira.Persistence.Helpers;
 global using AutoMoreira.Core.Dto;
 global using AutoMoreira.Core.Dto.Identity;
 global using AutoMoreira.Persistence.Context;

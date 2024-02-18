@@ -34,6 +34,8 @@
               new(3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
               new(4, 4, "GTI", FUEL.Petrol, 10000, 20000, 2020, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false)
               );
+
+            modelBuilder.Entity<Role>().HasData(new(1,"Administrador"), new(2, "Colaborador"));
         }
     }
 }

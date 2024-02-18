@@ -29,9 +29,9 @@
                 .HasColumnName("message")
                 .IsRequired(true);
 
-            entity.Property(x => x.DateTime)
-                .HasColumnName("date_time")
-                .IsRequired(true);
+            entity.Property(x => x.CreatedDate)
+                .HasColumnName("created_date")
+                .IsRequired(false);
 
             entity.Property(x => x.Open)
                 .HasColumnName("open")

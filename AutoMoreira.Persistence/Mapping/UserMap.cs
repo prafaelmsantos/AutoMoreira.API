@@ -44,6 +44,10 @@
                .HasColumnName("security_stamp")
                .IsRequired(true);
 
+            entity.Property(x => x.ConcurrencyStamp)
+               .HasColumnName("concurrency_stamp")
+               .IsRequired(true);
+
             entity.Property(x => x.PhoneNumber)
                .HasColumnName("phone_number")
                .IsRequired(true);
@@ -89,6 +93,14 @@
                 .HasColumnName("dark_mode")
                 .HasDefaultValue(false)
                 .IsRequired(true);
+
+            entity.Property(x => x.CreatedDate)
+                .HasColumnName("created_date")
+                .IsRequired(false);
+
+            entity.Property(x => x.LastModifiedDate)
+                .HasColumnName("last_modified_date")
+                .IsRequired(false);
 
             entity.HasMany(x => x.Roles)
                .WithMany(x => x.Users)

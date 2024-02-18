@@ -25,16 +25,13 @@
         /// <summary>
         /// Get All Vehicles
         /// </summary>
-        /// <param name="pageParams"></param>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] PageParams pageParams)
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var vehicles = await _vehicleService.GetAllVehiclesAsync(pageParams);
+                var vehicles = await _vehicleService.GetAllVehiclesAsync();
                 if (vehicles == null) return NoContent();
-
-                Response.AddPagination(vehicles.CurrentPage, vehicles.PageSize, vehicles.TotalCount, vehicles.TotalPages);
 
                 return Ok(vehicles);
             }

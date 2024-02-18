@@ -1,6 +1,6 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Vehicle : EntityBase
+    public class Vehicle : AuditableEntity
     {
         public int ModelId { get; private set; }
         public virtual Model Model { get; private set; }
@@ -46,9 +46,52 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-
+            CreatedDate = DateTime.UtcNow;
+            LastModifiedDate = DateTime.UtcNow;
             VehicleImages = new List<VehicleImage>();
         }
-       
+
+        public Vehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors, 
+            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold)
+        {
+            ModelId = modelId;
+            Version = version;
+            FuelType = fuelType;
+            Price = price;
+            Mileage = mileage;
+            Year = year;
+            Color = color;
+            Doors = doors;
+            Transmission = transmission;
+            EngineSize = engineSize;
+            Power = power;
+            Observations = observations;
+            Opportunity = opportunity;
+            Sold = sold;
+            CreatedDate = DateTime.UtcNow;
+            LastModifiedDate = DateTime.UtcNow;
+            VehicleImages = new List<VehicleImage>();
+        }
+
+        public void UpdateVehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors,
+            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold)
+        {
+            ModelId = modelId;
+            Version = version;
+            FuelType = fuelType;
+            Price = price;
+            Mileage = mileage;
+            Year = year;
+            Color = color;
+            Doors = doors;
+            Transmission = transmission;
+            EngineSize = engineSize;
+            Power = power;
+            Observations = observations;
+            Opportunity = opportunity;
+            Sold = sold;
+            LastModifiedDate = DateTime.UtcNow;
+        }
+
     }
 }

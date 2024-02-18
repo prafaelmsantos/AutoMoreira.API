@@ -6,7 +6,6 @@
         public string Email { get; set; }
         public long PhoneNumber { get; set; }
         public string Message { get; set; }
-        public DateTime DateTime { get; set; }
         public bool Open { get; set; }
     }
 }

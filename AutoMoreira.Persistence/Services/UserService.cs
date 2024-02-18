@@ -34,7 +34,7 @@
         {
             try
             {
-                User user = _mapper.Map<User>(userDTO);
+                User user = new(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image, userDTO.DarkMode);
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, userDTO.Password);
 
@@ -90,7 +90,7 @@
         {
             try
             {
-                List<User> users = await _userRepository.GetAll().ToListAsync();
+                List<User> users = await _userRepository.GetAll().OrderBy(x => x.Id).ToListAsync();
 
                 return _mapper.Map<List<UserDTO>>(users);
             }
@@ -108,7 +108,7 @@
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                _mapper.Map(userDTO, user);
+                user.UpdateUser(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image, userDTO.DarkMode);
 
                 if (userDTO.Password != null)
                 {
