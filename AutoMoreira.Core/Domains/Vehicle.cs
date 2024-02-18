@@ -19,6 +19,7 @@
         public string? Observations { get; private set; }
         public bool Opportunity { get; private set; }
         public bool Sold { get; private set; }
+        public DateTime? SoldDate { get; private set; }
 
         public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
 
@@ -48,6 +49,12 @@
             Sold = sold;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
+
+            if (sold)
+            {
+                SoldDate = DateTime.UtcNow;
+            }
+
             VehicleImages = new List<VehicleImage>();
         }
 
@@ -70,6 +77,12 @@
             Sold = sold;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
+
+            if (sold)
+            {
+                SoldDate = DateTime.UtcNow;
+            }
+
             VehicleImages = new List<VehicleImage>();
         }
 
@@ -91,6 +104,12 @@
             Opportunity = opportunity;
             Sold = sold;
             LastModifiedDate = DateTime.UtcNow;
+
+            if (sold)
+            {
+                SoldDate = DateTime.UtcNow;
+            }
+
         }
 
     }

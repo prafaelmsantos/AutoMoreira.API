@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Domains.Enum;
-
-namespace AutoMoreira.API.Controllers
+﻿namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

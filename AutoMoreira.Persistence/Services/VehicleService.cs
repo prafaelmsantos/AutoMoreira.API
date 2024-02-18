@@ -105,5 +105,52 @@
             }
         }
 
+        public async Task<VehicleCounterDTO> GetCounters()
+        {
+            var soldVehiclesByMonth = await GetCountersValues(true, true);
+            var soldVehicles = await GetCountersValues(true);
+            var stockVehicles = await GetCountersValues();
+
+            return new VehicleCounterDTO
+            {
+                Month = new SoldVehicleDTO
+                {
+                    Units = soldVehiclesByMonth.Item1,
+                    Values = soldVehiclesByMonth.Item2
+                },
+                Total = new SoldVehicleDTO
+                {
+                    Units = soldVehicles.Item1,
+                    Values = soldVehicles.Item2
+                },
+                StockVehiclesUnits = stockVehicles.Item1,
+                StockVehiclesValues = stockVehicles.Item2,
+                
+            };
+
+        }
+
+        private async Task<(int, double)> GetCountersValues(bool sold = false, bool byMonth = false)
+        {
+            try
+            {
+                var vehicles = await _vehicleRepository
+                    .GetAll()
+                    .Where(x=> x.Sold == sold)
+                    .ToListAsync();
+
+                if (byMonth is true)
+                {
+                    vehicles = vehicles.Where(x => x.SoldDate?.Month == DateTime.UtcNow.Month).ToList();
+                }
+
+                return (vehicles.Count(), vehicles.Select(x => x.Price).Sum());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

@@ -9,13 +9,13 @@
 
         public Role() { }
 
-        public Role(int id, string name) 
+        public Role(int id, string name, bool isDefault = false) 
         {
             Id = id;
             Name = name;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
-            IsDefault = true;
+            IsDefault = isDefault;
 
             Users = new List<User>();
         }

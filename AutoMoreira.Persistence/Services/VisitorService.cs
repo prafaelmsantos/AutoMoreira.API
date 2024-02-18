@@ -11,7 +11,7 @@
             _mapper = mapper;
         }
 
-        public async Task<List<VisitorDTO>> GetAllVisitoresAsync()
+        public async Task<ResponseVisitorDTO> GetAllVisitoresAsync()
         {
             try
             {
@@ -38,7 +38,7 @@
                     visitorsDTO.Add( new VisitorDTO() { Id = visitorsDTO.LastOrDefault().Id + 1, Month = month, Year = year, Value = 0 });
                 }*/
 
-                return visitorsDTO;
+                return new ResponseVisitorDTO() { Visitors = visitorsDTO, Value = valuePerc };
 
             }
             catch (Exception ex)

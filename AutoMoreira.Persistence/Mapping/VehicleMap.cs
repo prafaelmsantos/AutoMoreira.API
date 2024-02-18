@@ -71,6 +71,10 @@
                 .HasDefaultValue("false")
                 .IsRequired(true);
 
+            entity.Property(x => x.SoldDate)
+                .HasColumnName("sold_date")
+                .IsRequired(false);
+
             entity.Property(x => x.CreatedDate)
                 .HasColumnName("created_date")
                 .IsRequired(false);

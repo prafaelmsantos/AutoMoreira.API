@@ -25,3 +25,4 @@ global using System.Text.Json.Serialization;
 global using AutoMoreira.Persistence.ServicesRegistry;
 global using HotChocolate.AspNetCore.Playground;
 global using HotChocolate.AspNetCore;
+global using AutoMoreira.Core.Domains.Enum;

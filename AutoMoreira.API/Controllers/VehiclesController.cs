@@ -42,6 +42,26 @@
             }
         }
 
+        /// <summary>
+        /// Get Vehicle Counters
+        /// </summary>
+        [HttpGet("Counters")]
+        public async Task<IActionResult> GetCounters()
+        {
+            try
+            {
+                var vehicles = await _vehicleService.GetCounters();
+                if (vehicles == null) return NoContent();
+
+                return Ok(vehicles);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+            }
+        }
+
 
         /// <summary>
         /// Get Vehicle

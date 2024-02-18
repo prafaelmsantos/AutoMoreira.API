@@ -8,5 +8,6 @@
 
         Task<List<VehicleDTO>> GetAllVehiclesAsync();
         Task<VehicleDTO> GetVehicleByIdAsync(int vehicleId);
+        Task<VehicleCounterDTO> GetCounters();
     }
 }
