@@ -48,6 +48,12 @@
             LastModifiedDate = DateTime.UtcNow;
         }
 
+        public void SetImage(string image)
+        {
+            Image = image;
+            LastModifiedDate = DateTime.UtcNow;
+        }
+
 
     }
 }

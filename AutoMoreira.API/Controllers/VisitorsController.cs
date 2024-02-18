@@ -25,11 +25,11 @@
         /// Get All Visitors
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int? year)
         {
             try
             {
-                var visitors = await _visitorService.GetAllVisitoresAsync();
+                var visitors = await _visitorService.GetAllVisitoresAsync(year);
                 if (visitors == null) return NoContent();
 
                 return Ok(visitors);

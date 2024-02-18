@@ -147,6 +147,26 @@
             }
         }
 
+        public async Task<UserDTO> UpdateUserImageAsync(UserUpdateImageDTO userUpdateImageDTO)
+        {
+            try
+            {
+                User user = await _userRepository.FindByIdAsync(userUpdateImageDTO.Id);
+
+                if (user == null) throw new Exception("Utilizador não encontrado.");
+
+                user.SetImage(userUpdateImageDTO.Image);
+
+                await _userRepository.UpdateAsync(user);
+
+                return _mapper.Map<UserDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+            }
+        }
+
         public async Task<bool> UserExists(string userName)
         {
             try

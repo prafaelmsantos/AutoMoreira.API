@@ -26,6 +26,7 @@
             modelBuilder.ApplyConfiguration(new MarkMap());
             modelBuilder.ApplyConfiguration(new ModelMap());
             modelBuilder.ApplyConfiguration(new ClientMessageMap());
+            modelBuilder.ApplyConfiguration(new VisitorMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new UserRoleMap());

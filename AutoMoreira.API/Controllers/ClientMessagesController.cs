@@ -121,7 +121,7 @@ namespace AutoMoreira.API.Controllers
         /// </summary>
         /// <param name="clientMessageUpdateStatusDTO"></param>
         /// <param name="id"></param>
-        [HttpPut("UpdateStatus/{id}")]
+        [HttpPut("Status/{id}")]
         public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO)
         {
             try

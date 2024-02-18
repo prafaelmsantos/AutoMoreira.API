@@ -166,17 +166,40 @@
         }
 
         /// <summary>
-        /// Update User
+        /// Update User Mode
         /// </summary>
         /// <param name="userUpdateModeDTO"></param>
         /// <param name="id"></param>
-        [HttpPut("UpdateMode/{id}")]
+        [HttpPut("Mode/{id}")]
         public async Task<IActionResult> UpdateUserMode(int id, [FromBody] UserUpdateModeDTO userUpdateModeDTO)
         {
             try
             {
                 userUpdateModeDTO.Id = id;
                 UserDTO userDTO = await _userService.UpdateUserModeAsync(userUpdateModeDTO);
+                if (userDTO == null) return NoContent();
+
+                return Ok(userDTO);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Update User Image
+        /// </summary>
+        /// <param name="userUpdateImageDTO"></param>
+        /// <param name="id"></param>
+        [HttpPut("Image/{id}")]
+        public async Task<IActionResult> UpdateUserImage(int id, [FromBody] UserUpdateImageDTO userUpdateImageDTO)
+        {
+            try
+            {
+                userUpdateImageDTO.Id = id;
+                UserDTO userDTO = await _userService.UpdateUserImageAsync(userUpdateImageDTO);
                 if (userDTO == null) return NoContent();
 
                 return Ok(userDTO);

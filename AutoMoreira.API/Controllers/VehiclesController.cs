@@ -86,8 +86,8 @@
         /// <summary>
         /// Get Vehicle Statistics
         /// </summary>
-        [HttpGet("Statistics/{year}")]
-        public async Task<IActionResult> GetVehicleStatistics(int? year)
+        [HttpGet("Statistics")]
+        public async Task<IActionResult> GetVehicleStatistics([FromQuery]int? year)
         {
             try
             {
@@ -106,12 +106,12 @@
         /// <summary>
         /// Get Vehicle Circular Statistics
         /// </summary>
-        [HttpGet("CircularStatistics/{year}")]
-        public async Task<IActionResult> GetVehicleCircularStatistics(int? year)
+        [HttpGet("CircularStatistics")]
+        public async Task<IActionResult> GetVehicleCircularStatistics()
         {
             try
             {
-                var vehicleCounters = await _vehicleService.GetVehicleCircularStatisticsAsync(year);
+                var vehicleCounters = await _vehicleService.GetVehicleCircularStatisticsAsync();
                 if (vehicleCounters == null) return NoContent();
 
                 return Ok(vehicleCounters);

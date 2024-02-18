@@ -10,5 +10,6 @@
         Task<UserDTO> CreateUserAsync(UserDTO userDTO);
         Task<UserDTO> UpdateUserAsync(UserDTO userDTO);
         Task<UserDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO);
+        Task<UserDTO> UpdateUserImageAsync(UserUpdateImageDTO userUpdateImageDTO);
     }
 }

@@ -11,13 +11,13 @@
             _mapper = mapper;
         }
 
-        public async Task<ResponseVisitorDTO> GetAllVisitoresAsync()
+        public async Task<ResponseVisitorDTO> GetAllVisitoresAsync(int? year)
         {
             try
             {
                 List<Visitor> visitors = await _visitorRepository
                     .GetAll()
-                    .Where(x => x.Year == DateTime.UtcNow.Year)
+                    .Where(x => x.Year == (year ?? DateTime.UtcNow.Year))
                     .OrderBy( x=> x.Month)
                     .ToListAsync();
 
