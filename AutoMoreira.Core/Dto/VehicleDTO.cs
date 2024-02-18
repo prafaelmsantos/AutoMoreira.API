@@ -20,6 +20,7 @@
 
         public bool Opportunity { get; set; }
         public bool Sold { get; set; }
+        public DateTime? SoldDate { get; set; }
 
     }
 }

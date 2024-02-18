@@ -32,3 +32,4 @@ global using AutoMoreira.Persistence.GraphQL;
 global using Equipments.Data.EF.GraphQL.DomainsMap;
 global using System.Linq.Expressions;
 global using AutoMoreira.Persistence.Mapping.Seed;
+global using AutoMoreira.Core.Dto.Statistic;

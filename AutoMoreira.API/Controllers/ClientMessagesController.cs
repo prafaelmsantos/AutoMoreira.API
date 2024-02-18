@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.API.Controllers
+﻿using AutoMoreira.Core.Dto.ClientMessage;
+
+namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

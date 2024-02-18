@@ -31,14 +31,20 @@ namespace AutoMoreira.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_time");
+                        .HasColumnName("created_date");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -79,6 +85,22 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("concurrency_stamp");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
+                    b.Property<bool>("IsDefault")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_default");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -97,6 +119,26 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "cfda54fb-1f9c-4f69-8dd8-196faff79798",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8650),
+                            IsDefault = true,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8650),
+                            Name = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "f4504180-c650-464c-abbc-fc37a6f24868",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8657),
+                            IsDefault = false,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8657),
+                            Name = "Colaborador"
+                        });
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.User", b =>
@@ -117,6 +159,10 @@ namespace AutoMoreira.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("concurrency_stamp");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
 
                     b.Property<bool>("DarkMode")
                         .ValueGeneratedOnAdd()
@@ -144,6 +190,10 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("text")
                         .HasColumnName("image");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -241,6 +291,16 @@ namespace AutoMoreira.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
@@ -254,46 +314,64 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8272),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8276),
                             Name = "Audi"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8281),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8281),
                             Name = "Mercedes"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8282),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8283),
                             Name = "BMW"
                         },
                         new
                         {
                             Id = 4,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8284),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8284),
                             Name = "Peugeot"
                         },
                         new
                         {
                             Id = 5,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8285),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8286),
                             Name = "Volkswagen"
                         },
                         new
                         {
                             Id = 6,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8286),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8287),
                             Name = "Citroën"
                         },
                         new
                         {
                             Id = 7,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8288),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8288),
                             Name = "Renault"
                         },
                         new
                         {
                             Id = 8,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8289),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8290),
                             Name = "Volvo"
                         },
                         new
                         {
                             Id = 9,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8291),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8291),
                             Name = "Fiat"
                         });
                 });
@@ -306,6 +384,16 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<int>("MarkId")
                         .HasColumnType("integer")
@@ -326,54 +414,72 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8433),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8434),
                             MarkId = 1,
                             Name = "A3"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8435),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8436),
                             MarkId = 2,
                             Name = "Classe A"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8437),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8437),
                             MarkId = 3,
                             Name = "Serie 1"
                         },
                         new
                         {
                             Id = 4,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8438),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8439),
                             MarkId = 4,
                             Name = "308"
                         },
                         new
                         {
                             Id = 5,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8440),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8440),
                             MarkId = 5,
                             Name = "Golf"
                         },
                         new
                         {
                             Id = 6,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8441),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8442),
                             MarkId = 6,
                             Name = "C4"
                         },
                         new
                         {
                             Id = 7,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8442),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8443),
                             MarkId = 7,
                             Name = "Megane"
                         },
                         new
                         {
                             Id = 8,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8444),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8444),
                             MarkId = 8,
                             Name = "V40"
                         },
                         new
                         {
                             Id = 9,
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8445),
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8445),
                             MarkId = 9,
                             Name = "Punto"
                         });
@@ -393,6 +499,11 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("color");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
                     b.Property<int>("Doors")
                         .HasColumnType("integer")
                         .HasColumnName("doors");
@@ -404,6 +515,11 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<int>("FuelType")
                         .HasColumnType("integer")
                         .HasColumnName("fuel_type");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<double>("Mileage")
                         .HasColumnType("double precision")
@@ -437,6 +553,10 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("sold");
 
+                    b.Property<DateTime?>("SoldDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("sold_date");
+
                     b.Property<int>("Transmission")
                         .HasColumnType("integer")
                         .HasColumnName("transmission");
@@ -460,9 +580,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 1,
                             Color = "Azul",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8472),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 2,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8472),
                             Mileage = 20000.0,
                             ModelId = 1,
                             Observations = "Garantia de 2 anos",
@@ -478,9 +600,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 2,
                             Color = "Cinza",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8476),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 3,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8477),
                             Mileage = 20000.0,
                             ModelId = 2,
                             Observations = "Garantia de 2 anos",
@@ -496,9 +620,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 3,
                             Color = "Vermelho",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8478),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 1,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8479),
                             Mileage = 20000.0,
                             ModelId = 3,
                             Observations = "Garantia de 2 anos",
@@ -514,9 +640,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 4,
                             Color = "Verde",
+                            CreatedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8480),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 1,
+                            LastModifiedDate = new DateTime(2024, 2, 18, 11, 55, 39, 319, DateTimeKind.Utc).AddTicks(8481),
                             Mileage = 20000.0,
                             ModelId = 4,
                             Observations = "Garantia de 2 anos",
@@ -538,6 +666,16 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<string>("Url")
                         .IsRequired()

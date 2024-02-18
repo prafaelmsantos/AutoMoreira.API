@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Interfaces.Services
+﻿using AutoMoreira.Core.Dto.ClientMessage;
+
+namespace AutoMoreira.Persistence.Interfaces.Services
 {
     public interface IClientMessageService
     {

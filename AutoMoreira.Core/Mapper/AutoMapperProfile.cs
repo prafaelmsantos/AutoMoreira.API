@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Core.Mapper
+﻿using AutoMoreira.Core.Dto.ClientMessage;
+
+namespace AutoMoreira.Core.Mapper
 {
     public class AutoMapperProfile : Profile
     {

@@ -31,7 +31,11 @@
 
             entity.Property(x => x.CreatedDate)
                 .HasColumnName("created_date")
-                .IsRequired(false);
+                .IsRequired(true);
+
+            entity.Property(x => x.LastModifiedDate)
+                .HasColumnName("last_modified_date")
+                .IsRequired(true);
 
             entity.Property(x => x.Open)
                 .HasColumnName("open")

@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Services
+﻿using AutoMoreira.Core.Dto.Statistic;
+
+namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
@@ -105,7 +107,7 @@
             }
         }
 
-        public async Task<VehicleCounterDTO> GetCounters()
+        public async Task<VehicleCounterDTO> GetVehicleCountersAsync()
         {
             var soldVehiclesByMonth = await GetCountersValues(true, true);
             var soldVehicles = await GetCountersValues(true);
@@ -130,6 +132,32 @@
 
         }
 
+        public async Task<List<StatisticDTO>> GetVehicleStatisticsAsync(int? year)
+        {
+            try
+            {
+                return await GetStatisticValues(year);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<CircularStatisticDTO> GetVehicleCircularStatisticsAsync(int? year)
+        {
+            try
+            {
+                var circularValues = await GetCircularStatisticValues(year);
+                return new CircularStatisticDTO() { SoldVehiclesUnits = circularValues.Item1, StockVehiclesUnits = circularValues.Item2 };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         private async Task<(int, double)> GetCountersValues(bool sold = false, bool byMonth = false)
         {
             try
@@ -145,6 +173,48 @@
                 }
 
                 return (vehicles.Count(), vehicles.Select(x => x.Price).Sum());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private async Task<List<StatisticDTO>> GetStatisticValues(int? year)
+        {
+            try
+            {
+                List<Vehicle> vehicles = await _vehicleRepository
+                   .GetAll()
+                   .Where(x => x.Year == (year ?? DateTime.UtcNow.Year))
+                   .ToListAsync();
+
+                List<VehicleDTO> vehiclesDTO = _mapper.Map<List<VehicleDTO>>(vehicles);
+
+                List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
+                List<StatisticDTO> statisticsDTO = new();
+
+                monthList.ForEach(month =>
+                    statisticsDTO.Add(new StatisticDTO() { Month = month, Value = vehiclesDTO.Where(x => x.SoldDate.Value.Month == (int)month).Select(x => x.Price).Sum() }));
+
+                return statisticsDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private async Task<(int, int)> GetCircularStatisticValues(int? year)
+        {
+            try
+            {
+                List<Vehicle> vehicles = await _vehicleRepository
+                   .GetAll()
+                   .Where(x => x.Year == (year ?? DateTime.UtcNow.Year))
+                   .ToListAsync();
+
+                return (vehicles.Where( x=> x.Sold).Count(), vehicles.Where(x => !x.Sold).Count());
             }
             catch (Exception ex)
             {
