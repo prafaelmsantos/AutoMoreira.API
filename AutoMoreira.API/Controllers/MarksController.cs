@@ -7,14 +7,16 @@
         #region Properties
 
         private readonly IMarkService _markService;
+        private readonly IEmailService _emailService;
 
         #endregion
 
         #region Constructors
 
-        public MarksController(IMarkService markService)
+        public MarksController(IMarkService markService, IEmailService emailService)
         {
             _markService = markService;
+            _emailService = emailService;
         }
 
         #endregion
@@ -31,6 +33,8 @@
             {
                 var marks = await _markService.GetAllMarksAsync();
                 if (marks == null) return NoContent();
+
+                //await _emailService.SendEmailAsync("Joana", "joanajesuscarvalheiro@gmail.com", "AA", "dd");
 
                 return Ok(marks);
             }
@@ -53,6 +57,8 @@
             {
                 var mark = await _markService.GetMarkByIdAsync(id);
                 if (mark == null) return NoContent();
+
+
 
                 return Ok(mark);
             }

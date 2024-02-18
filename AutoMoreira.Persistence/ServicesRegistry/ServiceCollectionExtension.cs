@@ -1,8 +1,14 @@
-﻿namespace AutoMoreira.Persistence.ServicesRegistry
+﻿using Microsoft.Extensions.Configuration;
+
+namespace AutoMoreira.Persistence.ServicesRegistry
 {
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
+        {
+            return services.AddCustomServices(services.BuildServiceProvider().GetRequiredService<IConfiguration>());
+        }
+        public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
             //Repositories
             services.AddScoped<IVehicleRepository, VehicleRepository>();
@@ -22,6 +28,9 @@
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IClientMessageService, ClientMessageService>();
             services.AddScoped<IVisitorService, VisitorService>();
+
+            var emailSettings = configuration.GetSection("EmailSettings").Get<EmailSettings>();
+            services.AddScoped<IEmailService, EmailService>(x => new EmailService(emailSettings));
 
             //JWT
             //Para facilitar a criação de password. Nao Requerer Letras maisculuas, minusculas e numeros. Apenas requer uma password de tamanho 6
