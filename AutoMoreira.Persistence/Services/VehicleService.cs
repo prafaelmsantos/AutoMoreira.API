@@ -155,6 +155,7 @@
             }
         }
 
+        #region Private methods
 
         private async Task<(int, double)> GetCountersValues(bool sold = false, bool byMonth = false)
         {
@@ -219,5 +220,6 @@
             }
         }
 
+        #endregion
     }
 }
