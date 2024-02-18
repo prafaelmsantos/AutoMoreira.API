@@ -142,12 +142,12 @@
             }
         }
 
-        public async Task<CircularStatisticDTO> GetVehicleCircularStatisticsAsync()
+        public async Task<PieStatisticDTO> GetVehiclePieStatisticsAsync()
         {
             try
             {
-                var circularValues = await GetCircularStatisticValues();
-                return new CircularStatisticDTO() { SoldVehiclesUnits = circularValues.Item1, StockVehiclesUnits = circularValues.Item2 };
+                var pieValues = await GetPieStatisticValues();
+                return new PieStatisticDTO() { SoldVehiclesUnits = pieValues.Item1, StockVehiclesUnits = pieValues.Item2 };
             }
             catch (Exception ex)
             {
@@ -204,7 +204,7 @@
             }
         }
 
-        private async Task<(int, int)> GetCircularStatisticValues()
+        private async Task<(int, int)> GetPieStatisticValues()
         {
             try
             {

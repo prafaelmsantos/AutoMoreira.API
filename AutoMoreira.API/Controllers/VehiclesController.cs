@@ -106,12 +106,12 @@
         /// <summary>
         /// Get Vehicle Circular Statistics
         /// </summary>
-        [HttpGet("CircularStatistics")]
-        public async Task<IActionResult> GetVehicleCircularStatistics()
+        [HttpGet("PieStatistics")]
+        public async Task<IActionResult> GetVehiclePieStatistics()
         {
             try
             {
-                var vehicleCounters = await _vehicleService.GetVehicleCircularStatisticsAsync();
+                var vehicleCounters = await _vehicleService.GetVehiclePieStatisticsAsync();
                 if (vehicleCounters == null) return NoContent();
 
                 return Ok(vehicleCounters);
