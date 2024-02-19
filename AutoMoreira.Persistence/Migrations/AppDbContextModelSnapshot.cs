@@ -124,19 +124,19 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "7e35ec1e-eb17-418f-adbd-f88f5b13fcca",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7769),
+                            ConcurrencyStamp = "2e67b9ee-704a-49b1-bd76-0a8d322720c3",
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(611),
                             IsDefault = true,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7771),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(616),
                             Name = "Administrador"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "4772c90e-2e3e-469a-abda-d48d35e90932",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7781),
+                            ConcurrencyStamp = "0cec9660-2662-4997-858d-699bc454a5b0",
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(800),
                             IsDefault = false,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7782),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(801),
                             Name = "Colaborador"
                         });
                 });
@@ -314,64 +314,64 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7211),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7217),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9904),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9909),
                             Name = "Audi"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7224),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7226),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9915),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9916),
                             Name = "Mercedes"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7228),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7229),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9917),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9918),
                             Name = "BMW"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7230),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7231),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9919),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9920),
                             Name = "Peugeot"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7233),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7233),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9921),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9921),
                             Name = "Volkswagen"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7235),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7236),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9923),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9923),
                             Name = "Citroën"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7237),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7239),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9924),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9924),
                             Name = "Renault"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7240),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7241),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9925),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9926),
                             Name = "Volvo"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7243),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7244),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9927),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9927),
                             Name = "Fiat"
                         });
                 });
@@ -414,72 +414,72 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7596),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7597),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(263),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(263),
                             MarkId = 1,
                             Name = "A3"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7600),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7601),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(265),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(265),
                             MarkId = 2,
                             Name = "Classe A"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7602),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7603),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(266),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(266),
                             MarkId = 3,
                             Name = "Serie 1"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7605),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7605),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(267),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(268),
                             MarkId = 4,
                             Name = "308"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7607),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7608),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(268),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(269),
                             MarkId = 5,
                             Name = "Golf"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7609),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7610),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(270),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(270),
                             MarkId = 6,
                             Name = "C4"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7611),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7612),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(271),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(271),
                             MarkId = 7,
                             Name = "Megane"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7613),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7614),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(272),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(272),
                             MarkId = 8,
                             Name = "V40"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7616),
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7616),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(273),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(273),
                             MarkId = 9,
                             Name = "Punto"
                         });
@@ -580,11 +580,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 1,
                             Color = "Azul",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7663),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(314),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 2,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7664),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(314),
                             Mileage = 20000.0,
                             ModelId = 1,
                             Observations = "Garantia de 2 anos",
@@ -600,11 +600,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 2,
                             Color = "Cinza",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7671),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(320),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 3,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7672),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(321),
                             Mileage = 20000.0,
                             ModelId = 2,
                             Observations = "Garantia de 2 anos",
@@ -620,11 +620,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 3,
                             Color = "Vermelho",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7675),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(323),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 1,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7676),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(324),
                             Mileage = 20000.0,
                             ModelId = 3,
                             Observations = "Garantia de 2 anos",
@@ -640,11 +640,11 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 4,
                             Color = "Verde",
-                            CreatedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7679),
+                            CreatedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(328),
                             Doors = 5,
                             EngineSize = 1999,
                             FuelType = 1,
-                            LastModifiedDate = new DateTime(2024, 2, 18, 17, 7, 31, 515, DateTimeKind.Utc).AddTicks(7680),
+                            LastModifiedDate = new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(328),
                             Mileage = 20000.0,
                             ModelId = 4,
                             Observations = "Garantia de 2 anos",
@@ -706,8 +706,8 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("month");
 
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Year")
                         .HasColumnType("integer")

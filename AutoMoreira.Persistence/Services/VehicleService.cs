@@ -107,34 +107,50 @@
 
         public async Task<VehicleCounterDTO> GetVehicleCountersAsync()
         {
-            var soldVehiclesByMonth = await GetCountersValues(true, true);
-            var soldVehicles = await GetCountersValues(true);
+            var salesVehiclesByMonth = await GetCountersValues(true, true);
+            var salesVehicles = await GetCountersValues(true);
             var stockVehicles = await GetCountersValues();
 
             return new VehicleCounterDTO
             {
-                Month = new SoldVehicleDTO
+                TotalSalesMonth = new CounterDTO
                 {
-                    Units = soldVehiclesByMonth.Item1,
-                    Values = soldVehiclesByMonth.Item2
+                    Units = salesVehiclesByMonth.Item1,
+                    Values = salesVehiclesByMonth.Item2
                 },
-                Total = new SoldVehicleDTO
+                TotalSales = new CounterDTO
                 {
-                    Units = soldVehicles.Item1,
-                    Values = soldVehicles.Item2
+                    Units = salesVehicles.Item1,
+                    Values = salesVehicles.Item2
                 },
-                StockVehiclesUnits = stockVehicles.Item1,
-                StockVehiclesValues = stockVehicles.Item2,
-                
+                TotalStock = new CounterDTO
+                {
+                    Units = stockVehicles.Item1,
+                    Values = stockVehicles.Item2
+                }              
             };
 
         }
 
-        public async Task<List<StatisticDTO>> GetVehicleStatisticsAsync(int? year)
+        public async Task<ResponseCompleteStatisticDTO> GetAllVisitoresWithYearComparisonAsync()
         {
             try
             {
-                return await GetStatisticValues(year);
+                List<StatisticDTO> currentStatisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year);
+                List<StatisticDTO> lastStatisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year - 1);
+
+                double lastValue = lastStatisticsDTO.Select(x => x.Value).Sum();
+                double currentValue = currentStatisticsDTO.Select(x => x.Value).Sum();
+                double valuePerc = lastValue != 0 ? (double)(currentValue - lastValue) / lastValue * 100 : 0;
+
+                return new ResponseCompleteStatisticDTO
+                {
+                    Statistics = currentStatisticsDTO,
+                    LastStatistics = lastStatisticsDTO,
+                    Value = currentValue,
+                    ValuePerc = valuePerc
+
+                };
             }
             catch (Exception ex)
             {
@@ -142,12 +158,37 @@
             }
         }
 
+        public async Task<ResponseStatisticDTO> GetAllVehiclesWithMonthComparisonAsync()
+        {
+            try
+            {
+                List<StatisticDTO> statisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year);
+
+                double currentMonthValue = statisticsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.Select(x => x.Value)?.Sum() ?? 0;
+                double lastMonthValue = statisticsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month - 1)?.Select(x => x.Value)?.Sum() ?? 0;
+                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : 0;
+
+                return new ResponseStatisticDTO
+                {
+                    Statistics = statisticsDTO,
+                    Value = currentMonthValue,
+                    ValuePerc = valuePerc
+
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         public async Task<PieStatisticDTO> GetVehiclePieStatisticsAsync()
         {
             try
             {
                 var pieValues = await GetPieStatisticValues();
-                return new PieStatisticDTO() { SoldVehiclesUnits = pieValues.Item1, StockVehiclesUnits = pieValues.Item2 };
+                return new PieStatisticDTO() { TotalSales = pieValues.Item1, TotalStock = pieValues.Item2 };
             }
             catch (Exception ex)
             {
@@ -179,22 +220,26 @@
             }
         }
 
-        private async Task<List<StatisticDTO>> GetStatisticValues(int? year)
+        private async Task<List<StatisticDTO>> GetStatisticsByYear(int year)
         {
             try
             {
                 List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
-                   .Where(x => x.SoldDate.Value.Year == (year ?? DateTime.UtcNow.Year))
+                   .Where(x => x.SoldDate.Value.Year == year)
                    .ToListAsync();
 
-                List<VehicleDTO> vehiclesDTO = _mapper.Map<List<VehicleDTO>>(vehicles);
-
-                List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
                 List<StatisticDTO> statisticsDTO = new();
 
+                List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
+
                 monthList.ForEach(month =>
-                    statisticsDTO.Add(new StatisticDTO() { Month = month, Value = vehiclesDTO.Where(x => x.SoldDate?.Month == (int)month).Select(x => x.Price).Sum() }));
+                    statisticsDTO.Add(new StatisticDTO()
+                    {
+                        Month = month,
+                        Year = year,
+                        Value = vehicles.Where(x => x.SoldDate?.Month == (int)month).Select(x => x.Price).Sum()
+                    }));
 
                 return statisticsDTO;
             }

@@ -4,14 +4,12 @@
     {
         public int Year { get; private set; }
         public MONTH Month { get; private set; }
-        public int Value { get; private set; }
+        public long Value { get; private set; }
 
-        public Visitor() { }
-
-        public Visitor(MONTH month)
+        public Visitor()
         {
-            Year = DateTime.Now.Year;
-            Month = month;
+            Year = DateTime.UtcNow.Year;
+            Month = (MONTH)DateTime.UtcNow.Month;
             Value = 1;
         }
 

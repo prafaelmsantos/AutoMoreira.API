@@ -64,57 +64,78 @@
         }
 
         /// <summary>
-        /// Get Vehicle Counters
+        /// Get Vehicles Line Chart
+        /// </summary>
+        [HttpGet("LineChart")]
+        public async Task<IActionResult> GetLineChart()
+        {
+            try
+            {
+                var vehicles = await _vehicleService.GetAllVisitoresWithYearComparisonAsync();
+                if (vehicles == null) return NoContent();
+
+                return Ok(vehicles);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Get Vehicles Bar Chart
+        /// </summary>
+        [HttpGet("BarChart")]
+        public async Task<IActionResult> GetBarChart()
+        {
+            try
+            {
+                var vehicles = await _vehicleService.GetAllVehiclesWithMonthComparisonAsync();
+                if (vehicles == null) return NoContent();
+
+                return Ok(vehicles);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Get Counters
         /// </summary>
         [HttpGet("Counters")]
-        public async Task<IActionResult> GetVehicleCounters()
+        public async Task<IActionResult> GetCounters()
         {
             try
             {
-                var vehicleCounters = await _vehicleService.GetVehicleCountersAsync();
-                if (vehicleCounters == null) return NoContent();
+                var vehicles = await _vehicleService.GetVehicleCountersAsync();
+                if (vehicles == null) return NoContent();
 
-                return Ok(vehicleCounters);
+                return Ok(vehicles);
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar os veiculos em stock e vendidos. Erro: {ex.Message}");
+                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
             }
         }
 
+
         /// <summary>
-        /// Get Vehicle Statistics
+        /// Get Pie Chart
         /// </summary>
-        [HttpGet("Statistics")]
-        public async Task<IActionResult> GetVehicleStatistics([FromQuery]int? year)
+        [HttpGet("PieChart")]
+        public async Task<IActionResult> GetPieChart()
         {
             try
             {
-                var vehicleCounters = await _vehicleService.GetVehicleStatisticsAsync(year);
-                if (vehicleCounters == null) return NoContent();
+                var vehicles = await _vehicleService.GetVehiclePieStatisticsAsync();
+                if (vehicles == null) return NoContent();
 
-                return Ok(vehicleCounters);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar as estatisticas dos veiculos. Erro: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Get Vehicle Circular Statistics
-        /// </summary>
-        [HttpGet("PieStatistics")]
-        public async Task<IActionResult> GetVehiclePieStatistics()
-        {
-            try
-            {
-                var vehicleCounters = await _vehicleService.GetVehiclePieStatisticsAsync();
-                if (vehicleCounters == null) return NoContent();
-
-                return Ok(vehicleCounters);
+                return Ok(vehicles);
             }
             catch (Exception ex)
             {

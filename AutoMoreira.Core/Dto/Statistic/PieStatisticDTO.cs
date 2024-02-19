@@ -2,7 +2,7 @@
 {
     public class PieStatisticDTO
     {
-        public int StockVehiclesUnits { get; set; }
-        public int SoldVehiclesUnits { get; set; }
+        public int TotalStock { get; set; }
+        public int TotalSales { get; set; }
     }
 }

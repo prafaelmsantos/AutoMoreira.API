@@ -1,4 +1,5 @@
 ﻿using AutoMoreira.Core.Dto.ClientMessage;
+using AutoMoreira.Core.Dto.Visitor;
 
 namespace AutoMoreira.Core.Mapper
 {
