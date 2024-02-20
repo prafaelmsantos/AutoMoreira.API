@@ -238,7 +238,7 @@
                     {
                         Month = month,
                         Year = year,
-                        Value = vehicles.Where(x => x.SoldDate?.Month == (int)month).Select(x => x.Price).Sum()
+                        Value = vehicles.Where(x => x.Sold && x.SoldDate?.Month == (int)month).Select(x => x.Price).Sum()
                     }));
 
                 return statisticsDTO;

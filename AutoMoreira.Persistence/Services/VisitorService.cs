@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Services
+﻿using HotChocolate.Data.Sorting.Expressions;
+
+namespace AutoMoreira.Persistence.Services
 {
     public class VisitorService : IVisitorService
     {
@@ -118,19 +120,18 @@
                 List<Visitor> visitors = await _visitorRepository
                     .GetAll()
                     .Where(x => x.Year == year)
-                    .OrderBy(x => x.Month)
                     .ToListAsync();
 
                 List<VisitorDTO> visitorsDTO = _mapper.Map<List<VisitorDTO>>(visitors);
 
                 List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
 
-                var visitorsEmpty = visitorsDTO.Select(x => x.Month).Except(monthList).ToList();
+                var visitorsEmpty = monthList.Except(visitorsDTO.Select(x => x.Month)).ToList();
 
                 visitorsEmpty.ForEach(month => 
-                    visitorsDTO.Add(new VisitorDTO() { Month = month, Year = DateTime.UtcNow.Year, Value = visitorsDTO.Where(x => x.Month == month)?.FirstOrDefault()?.Value ?? 0 }));
+                    visitorsDTO.Add(new VisitorDTO() { Month = month, Year = DateTime.UtcNow.Year, Value = 0 }));
 
-                return visitorsDTO;
+                return visitorsDTO.OrderBy(x => x.Month).ToList();
 
             }
             catch (Exception ex)

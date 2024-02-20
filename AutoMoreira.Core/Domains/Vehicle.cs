@@ -49,11 +49,7 @@
             Sold = sold;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
-
-            if (sold)
-            {
-                SoldDate = DateTime.UtcNow;
-            }
+            SoldDate = sold ? DateTime.UtcNow : null;
 
             VehicleImages = new List<VehicleImage>();
         }
@@ -77,12 +73,8 @@
             Sold = sold;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
-
-            if (sold)
-            {
-                SoldDate = DateTime.UtcNow;
-            }
-
+            SoldDate = sold? DateTime.UtcNow : null;
+ 
             VehicleImages = new List<VehicleImage>();
         }
 
@@ -104,12 +96,7 @@
             Opportunity = opportunity;
             Sold = sold;
             LastModifiedDate = DateTime.UtcNow;
-
-            if (sold)
-            {
-                SoldDate = DateTime.UtcNow;
-            }
-
+            SoldDate = sold ? DateTime.UtcNow : null;
         }
 
     }
