@@ -141,7 +141,7 @@
 
                 double lastValue = lastStatisticsDTO.Select(x => x.Value).Sum();
                 double currentValue = currentStatisticsDTO.Select(x => x.Value).Sum();
-                double valuePerc = lastValue != 0 ? (double)(currentValue - lastValue) / lastValue * 100 : 0;
+                double valuePerc = lastValue != 0 ? (double)(currentValue - lastValue) / lastValue * 100 : currentValue != 0 ? 100 : 0;
 
                 return new ResponseCompleteStatisticDTO
                 {
@@ -166,7 +166,7 @@
 
                 double currentMonthValue = statisticsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.Select(x => x.Value)?.Sum() ?? 0;
                 double lastMonthValue = statisticsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month - 1)?.Select(x => x.Value)?.Sum() ?? 0;
-                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : 0;
+                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : currentMonthValue != 0 ? 100 : 0;
 
                 return new ResponseStatisticDTO
                 {
