@@ -2,7 +2,7 @@
 {
     public class PieStatisticDTO
     {
-        public int TotalStock { get; set; }
-        public int TotalSales { get; set; }
+        public double TotalStock { get; set; }
+        public double TotalSales { get; set; }
     }
 }

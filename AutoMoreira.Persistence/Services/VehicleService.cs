@@ -249,7 +249,7 @@
             }
         }
 
-        private async Task<(int, int)> GetPieStatisticValues()
+        private async Task<(double, double)> GetPieStatisticValues()
         {
             try
             {
@@ -257,7 +257,14 @@
                    .GetAll()
                    .ToListAsync();
 
-                return (vehicles.Where( x=> x.Sold).Count(), vehicles.Where(x => !x.Sold).Count());
+                int vehiclesSoldCount = vehicles.Where(x => x.Sold).Count();
+                int vehiclesCount = vehicles.Where(x => !x.Sold).Count();
+                double vehiclesSum = vehiclesSoldCount + vehiclesCount;
+
+                double vehiclesSoldPerc = vehiclesSum != 0 ? (vehiclesSoldCount / vehiclesSum * 100) : 0;
+                double vehiclesPerc = vehiclesSum != 0 ? (vehiclesCount / vehiclesSum * 100) : 0;
+
+                return (vehiclesSoldPerc, vehiclesPerc);
             }
             catch (Exception ex)
             {

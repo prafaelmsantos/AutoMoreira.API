@@ -45,7 +45,7 @@
 
                 long currentMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.FirstOrDefault()?.Value ?? 0;
                 long lastMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month - 1)?.FirstOrDefault()?.Value ?? 0;
-                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : currentMonthValue !=0 ? 100 : 0;
+                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : currentMonthValue != 0 ? 100 : 0;
 
                 return new ResponseVisitorDTO() 
                 { 
