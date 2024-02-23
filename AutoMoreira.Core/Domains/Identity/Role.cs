@@ -7,7 +7,10 @@
         public DateTime? LastModifiedDate { get; private set; }
         public bool IsDefault { get; private set; }
 
-        public Role() { }
+        public Role() 
+        {
+            Users = new List<User>();
+        }
 
         public Role(int id, string name, bool isDefault = false) 
         {

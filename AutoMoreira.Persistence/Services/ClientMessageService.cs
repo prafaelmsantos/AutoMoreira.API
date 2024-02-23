@@ -5,12 +5,14 @@ namespace AutoMoreira.Persistence.Services
     public class ClientMessageService : IClientMessageService
     {
         private readonly IClientMessageRepository _clientMessageRepository;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
 
-        public ClientMessageService(IClientMessageRepository clientMessageRepository, IMapper mapper)
+        public ClientMessageService(IClientMessageRepository clientMessageRepository, IMapper mapper, IEmailService emailService)
         {
             _clientMessageRepository = clientMessageRepository;
             _mapper = mapper;
+            _emailService = emailService;
         }
         public async Task<ClientMessageDTO> AddClientMessageAsync(ClientMessageDTO clientMessageDTO)
         {
@@ -19,6 +21,8 @@ namespace AutoMoreira.Persistence.Services
                 ClientMessage clientMessage = new(clientMessageDTO.Name, clientMessageDTO.Email, clientMessageDTO.PhoneNumber, clientMessageDTO.Message);
 
                 await _clientMessageRepository.AddAsync(clientMessage);
+
+                await _emailService.SendEmailToClientAsync(clientMessageDTO.Name, clientMessageDTO.Email);
 
                 return _mapper.Map<ClientMessageDTO>(clientMessage);
             }

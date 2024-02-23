@@ -2,7 +2,7 @@
 {
     public class Mark : AuditableEntity
     {
-        public string Name { get; private set; }
+        public string Name { get; private set; } = null!;
 
         public virtual ICollection<Model> Models { get; private set; }
 

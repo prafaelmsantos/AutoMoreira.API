@@ -2,10 +2,10 @@
 {
     public class ClientMessage : AuditableEntity
     {
-        public string Name { get; private set; }
-        public string Email { get; private set; }
+        public string Name { get; private set; } = null!;
+        public string Email { get; private set; } = null!;
         public long PhoneNumber { get; private set; }
-        public string Message { get; private set; }
+        public string Message { get; private set; } = null!;
         public STATUS Status { get; private set; }
 
         public ClientMessage() { }

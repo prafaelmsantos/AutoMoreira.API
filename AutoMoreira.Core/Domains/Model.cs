@@ -2,10 +2,10 @@
 {
     public class Model : AuditableEntity
     {
-        public string Name { get; private set; }
+        public string Name { get; private set; } = null!;
         public int MarkId { get; private set; }
 
-        public virtual Mark Mark { get; private set; }
+        public virtual Mark Mark { get; private set; } = null!;
 
         public virtual ICollection<Vehicle> Vehicles { get; private set; }
 
