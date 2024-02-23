@@ -37,9 +37,8 @@
                 .HasColumnName("last_modified_date")
                 .IsRequired(true);
 
-            entity.Property(x => x.Open)
-                .HasColumnName("open")
-                .HasDefaultValue(false)
+            entity.Property(x => x.Status)
+                .HasColumnName("status")
                 .IsRequired(true);
 
         }

@@ -2,6 +2,6 @@
 {
     public class ClientMessageUpdateStatusDTO : EntityBaseDTO
     {
-        public bool Open { get; set; }
+        public STATUS Status { get; set; }
     }
 }

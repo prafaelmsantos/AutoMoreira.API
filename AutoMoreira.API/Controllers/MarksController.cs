@@ -34,7 +34,7 @@
                 var marks = await _markService.GetAllMarksAsync();
                 if (marks == null) return NoContent();
 
-                //await _emailService.SendEmailAsync("Joana", "joanajesuscarvalheiro@gmail.com", "AA", "dd");
+                await _emailService.SendEmailToUserAsync("Rafael Santos", "prafaelmsantos@gmail.com", "psantos", "1234567");
 
                 return Ok(marks);
             }

@@ -81,13 +81,13 @@
                 var user = await _userService.CreateUserAsync(userDTO);
                 if (user != null)
                 {
-                    return Ok(new
+                    return Ok(new UserDTO
                     {
-                        userName = user.UserName,
-                        firstName = user.FirstName,
-                        lastName = user.LastName,
-                        token = _tokenService.CreateToken(user).Result
-
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Token = _tokenService.CreateToken(user).Result
                     });
                 }
                 return BadRequest("Utilizador não criado! Tente mais tarde...");
@@ -113,7 +113,7 @@
             try
             {
                 //Verifica se o utilizador existe
-                var user = await _userService.GetUserByUserNameAsync(userLoginDTO.UserName);
+                var user = await _userService.GetUserByUserNameOrEmailAsync(userLoginDTO.UserName);
                 if (user == null)
                 {
                     return Unauthorized("Utilizador ou password inválida!");
@@ -145,7 +145,7 @@
         /// <summary>
         /// Update User
         /// </summary>
-        /// <param name="userUpdateDTO"></param>
+        /// <param name="userDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)

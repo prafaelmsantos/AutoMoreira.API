@@ -6,7 +6,7 @@
         public string Email { get; private set; }
         public long PhoneNumber { get; private set; }
         public string Message { get; private set; }
-        public bool Open { get; private set; }
+        public STATUS Status { get; private set; }
 
         public ClientMessage() { }
 
@@ -16,14 +16,14 @@
             Email = email;
             PhoneNumber = phoneNumber;
             Message = message;
-            Open = true;
+            Status = STATUS.Open;
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
         }
 
-        public void SetOpen(bool open)
+        public void SetStatus(STATUS status)
         {
-            Open = open;
+            Status = status;
             LastModifiedDate = DateTime.UtcNow;
         }
 

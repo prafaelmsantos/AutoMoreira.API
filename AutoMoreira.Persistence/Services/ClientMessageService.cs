@@ -84,7 +84,7 @@ namespace AutoMoreira.Persistence.Services
 
                 if (clientMessage is null) throw new Exception("Mensagem de cliente não encontrada.");
 
-                clientMessage.SetOpen(clientMessageUpdateStatusDTO.Open);
+                clientMessage.SetStatus(clientMessageUpdateStatusDTO.Status);
 
                 await _clientMessageRepository.UpdateAsync(clientMessage);
 

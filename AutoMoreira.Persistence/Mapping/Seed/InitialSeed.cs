@@ -29,13 +29,17 @@
               );
 
             modelBuilder.Entity<Vehicle>().HasData(
-              new(1, 1, "Sportline", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", true, false),
-              new(2, 2, "AMG", FUEL.Hybrid, 20000, 20000, 2020, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
-              new(3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
-              new(4, 4, "GTI", FUEL.Petrol, 10000, 20000, 2020, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false)
+              new Vehicle(1, 1, "Sportline", FUEL.Diesel, 20000, 20000, 2020, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", true, false),
+              new Vehicle(2, 2, "AMG", FUEL.Hybrid, 20000, 20000, 2020, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
+              new Vehicle(3, 3, "Sport", FUEL.Petrol, 20000, 20000, 2020, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
+              new Vehicle(4, 4, "GTI", FUEL.Petrol, 10000, 20000, 2020, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false)
               );
 
-            modelBuilder.Entity<Role>().HasData(new(1,"Administrador", true), new(2, "Colaborador"));
+            Role role = new (1, "Administrador", true);
+
+            modelBuilder.Entity<Role>().HasData(role, new(2, "Colaborador"));
+
+            modelBuilder.Entity<User>().HasData(new User(1, "automoreira", "automoreiraportugal@gamil.com", "231472555", "Auto", "Moreira", role));
         }
     }
 }

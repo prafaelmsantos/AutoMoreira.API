@@ -12,7 +12,7 @@
         public string? Password { get; set; }
         public string? Token { get; set; }
         public bool DarkMode { get; set; }
-        public List<Role> Roles { get; set; }
+        public List<RoleDTO> Roles { get; set; }
 
     }
 }

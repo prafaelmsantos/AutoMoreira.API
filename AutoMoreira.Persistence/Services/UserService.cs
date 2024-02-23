@@ -6,13 +6,15 @@
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private readonly IEmailService _emailService;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUserRepository userRepository)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUserRepository userRepository, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _userRepository = userRepository;
+            _emailService = emailService;
         }
         public async Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password)
         {
@@ -34,7 +36,13 @@
         {
             try
             {
-                User user = new(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image, userDTO.DarkMode);
+                User user = new(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
+
+                if (userDTO.Roles.Count() != 0)
+                {
+                    Role role = _mapper.Map<Role>(userDTO.Roles.FirstOrDefault());
+                    user.SetRole(role);
+                }
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, userDTO.Password);
 
@@ -52,11 +60,11 @@
             }
         }
 
-        public async Task<UserDTO> GetUserByUserNameAsync(string userName)
+        public async Task<UserDTO> GetUserByUserNameOrEmailAsync(string userName)
         {
             try
             {
-                User user = await _userRepository.FindByCondition(x=> x.UserName == userName).FirstOrDefaultAsync();
+                User user = await _userRepository.FindByCondition(x=> x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
                 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
