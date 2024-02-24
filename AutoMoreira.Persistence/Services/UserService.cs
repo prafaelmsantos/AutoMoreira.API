@@ -52,8 +52,7 @@
                 user.SetRoles(new List<Role> { role });
 
 
-                Random rnd = new();
-                string password = new Guid().ToString();
+                string password = GenerateNewPassword();
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, password);
 
@@ -74,20 +73,11 @@
 
         public async Task<UserDTO> GetUserByUserNameOrEmailAsync(string userName)
         {
-            try
-            {
-                User? user = await _userRepository.FindByCondition(x=> x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
-                
-                if (user == null) throw new Exception("Utilizador não encontrado.");
+            User? user = await _userRepository.FindByCondition(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
 
-                return _mapper.Map<UserDTO>(user);
+            if (user == null) throw new Exception("Utilizador não encontrado.");
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao tentar procurar utilizador por Username. Erro: {ex.Message}");
-
-            }
+            return _mapper.Map<UserDTO>(user);
         }
 
         public async Task<UserDTO> GetUserByIdAsync(int id)
@@ -202,6 +192,20 @@
             }
         }
 
+        public async Task UserResetPasswordAsync(string username)
+        {
+            try
+            {
+                UserDTO userDTO = await GetUserByUserNameOrEmailAsync(username);
+
+                await _emailService.SendEmailToUserNewPasswordAsync($"{userDTO.FirstName} {userDTO.LastName}", userDTO.Email, GenerateNewPassword());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao tentar enviar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
+            }
+        }
+
         public async Task<bool> UserExists(string userName)
         {
             try
@@ -215,5 +219,12 @@
 
             }
         }
+
+        private static string GenerateNewPassword()
+        {
+            Random rnd = new();
+            return  rnd.Next(100000, 1000000000).ToString();
+        }
+
     }
 }

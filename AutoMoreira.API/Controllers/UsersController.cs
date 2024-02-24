@@ -141,6 +141,27 @@
         }
 
         /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="username"></param>
+        [HttpGet("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(string username)
+        {
+            try
+            {
+                await _userService.UserResetPasswordAsync(username);
+
+                return Ok(username);
+
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar fazer Login. Erro: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Update User
         /// </summary>
         /// <param name="userDTO"></param>
@@ -208,6 +229,7 @@
                     $"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
             }
         }
+
         #endregion
 
     }
