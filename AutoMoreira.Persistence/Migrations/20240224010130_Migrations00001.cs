@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class Migrations000001 : Migration
+    public partial class Migrations00001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,7 @@ namespace AutoMoreira.Persistence.Migrations
                     email = table.Column<string>(type: "text", nullable: false),
                     phone_number = table.Column<long>(type: "bigint", nullable: false),
                     message = table.Column<string>(type: "text", nullable: false),
-                    open = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -299,41 +299,41 @@ namespace AutoMoreira.Persistence.Migrations
                 columns: new[] { "id", "created_date", "last_modified_date", "name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9904), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9909), "Audi" },
-                    { 2, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9915), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9916), "Mercedes" },
-                    { 3, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9917), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9918), "BMW" },
-                    { 4, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9919), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9920), "Peugeot" },
-                    { 5, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9921), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9921), "Volkswagen" },
-                    { 6, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9923), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9923), "Citroën" },
-                    { 7, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9924), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9924), "Renault" },
-                    { 8, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9925), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9926), "Volvo" },
-                    { 9, new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9927), new DateTime(2024, 2, 19, 23, 26, 52, 631, DateTimeKind.Utc).AddTicks(9927), "Fiat" }
+                    { 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2422), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2429), "Audi" },
+                    { 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2433), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2434), "Mercedes" },
+                    { 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2435), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2435), "BMW" },
+                    { 4, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2436), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2436), "Peugeot" },
+                    { 5, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2437), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2437), "Volkswagen" },
+                    { 6, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2438), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2438), "Citroën" },
+                    { 7, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2439), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2439), "Renault" },
+                    { 8, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2440), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2440), "Volvo" },
+                    { 9, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2441), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2441), "Fiat" }
                 });
 
             migrationBuilder.InsertData(
                 table: "roles",
                 columns: new[] { "id", "concurrency_stamp", "created_date", "is_default", "last_modified_date", "name", "normalized_name" },
-                values: new object[] { 1, "2e67b9ee-704a-49b1-bd76-0a8d322720c3", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(611), true, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(616), "Administrador", null });
+                values: new object[] { 1, "4ea18120-b0d4-4831-acaa-746b5113a82a", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2662), true, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2663), "Administrador", null });
 
             migrationBuilder.InsertData(
                 table: "roles",
                 columns: new[] { "id", "concurrency_stamp", "created_date", "last_modified_date", "name", "normalized_name" },
-                values: new object[] { 2, "0cec9660-2662-4997-858d-699bc454a5b0", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(800), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(801), "Colaborador", null });
+                values: new object[] { 2, "02a26881-2789-4229-ae90-ddfa9ba6a15f", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2669), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2670), "Colaborador", null });
 
             migrationBuilder.InsertData(
                 table: "models",
                 columns: new[] { "id", "created_date", "last_modified_date", "mark_id", "name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(263), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(263), 1, "A3" },
-                    { 2, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(265), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(265), 2, "Classe A" },
-                    { 3, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(266), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(266), 3, "Serie 1" },
-                    { 4, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(267), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(268), 4, "308" },
-                    { 5, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(268), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(269), 5, "Golf" },
-                    { 6, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(270), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(270), 6, "C4" },
-                    { 7, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(271), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(271), 7, "Megane" },
-                    { 8, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(272), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(272), 8, "V40" },
-                    { 9, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(273), new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(273), 9, "Punto" }
+                    { 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2574), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2575), 1, "A3" },
+                    { 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2575), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2576), 2, "Classe A" },
+                    { 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), 3, "Serie 1" },
+                    { 4, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2578), 4, "308" },
+                    { 5, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2578), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2579), 5, "Golf" },
+                    { 6, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2579), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), 6, "C4" },
+                    { 7, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), 7, "Megane" },
+                    { 8, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2581), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2581), 8, "V40" },
+                    { 9, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2582), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2583), 9, "Punto" }
                 });
 
             migrationBuilder.InsertData(
@@ -341,15 +341,15 @@ namespace AutoMoreira.Persistence.Migrations
                 columns: new[] { "id", "color", "created_date", "doors", "engine_size", "fuel_type", "last_modified_date", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold_date", "transmission", "version", "year" },
                 values: new object[,]
                 {
-                    { 1, "Azul", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(314), 5, 1999, 2, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(314), 20000.0, 1, "Garantia de 2 anos", true, 140, 20000.0, null, 1, "Sportline", 2020 },
-                    { 2, "Cinza", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(320), 5, 1999, 3, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(321), 20000.0, 2, "Garantia de 2 anos", true, 140, 20000.0, null, 2, "AMG", 2020 },
-                    { 3, "Vermelho", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(323), 5, 1999, 1, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(324), 20000.0, 3, "Garantia de 2 anos", true, 140, 20000.0, null, 2, "Sport", 2020 }
+                    { 1, "Azul", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2603), 5, 1999, 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2603), 2000.0, 1, "Garantia de 2 anos", true, 140, 40000.0, null, 1, "Sportline", 2022 },
+                    { 2, "Cinza", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2608), 5, 1999, 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2608), 7000.0, 2, "Garantia de 2 anos", true, 140, 27000.0, null, 2, "AMG", 2021 },
+                    { 3, "Vermelho", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2609), 5, 1999, 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2610), 0.0, 3, "Garantia de 2 anos", true, 140, 29000.0, null, 2, "Sport", 2023 }
                 });
 
             migrationBuilder.InsertData(
                 table: "vehicles",
                 columns: new[] { "id", "color", "created_date", "doors", "engine_size", "fuel_type", "last_modified_date", "mileage", "model_id", "observations", "power", "price", "sold_date", "transmission", "version", "year" },
-                values: new object[] { 4, "Verde", new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(328), 5, 1999, 1, new DateTime(2024, 2, 19, 23, 26, 52, 632, DateTimeKind.Utc).AddTicks(328), 20000.0, 4, "Garantia de 2 anos", 140, 10000.0, null, 1, "GTI", 2020 });
+                values: new object[] { 4, "Verde", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2611), 5, 1999, 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2611), 10000.0, 4, "Garantia de 2 anos", 140, 18000.0, null, 1, "GTI", 2022 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_identity_role_claim_role_id",

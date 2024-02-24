@@ -46,6 +46,43 @@
             }
         }
 
+        public async Task SendEmailToUpdatedUserAsync(string toName, string toAddress)
+        {
+            try
+            {
+                var message = new MimeMessage();
+
+                var userEmail = UserUpdateEmail(toName);
+
+                message.From.Add(new MailboxAddress(_emailSettings.Name, _emailSettings.Address));
+                message.To.Add(new MailboxAddress(toName, toAddress));
+                message.Subject = userEmail.Item1;
+                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text = string.Format(userEmail.Item2)
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
         public async Task SendEmailToClientAsync(string toName, string toAddress)
         {
             try
@@ -103,6 +140,25 @@
             return (subject, body);
         }
 
+        private static (string, string) UserUpdateEmail(string toName)
+        {
+            string subject = $"Auto Moreira: Recebemos a sua mensagem {toName}";
+            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:80px; width:100px\" /></p>";
+            body += $"<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Estimado(a) <strong>{toName}</strong>,</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Esta mensagem confirma que os seus dados foram atualizados com sucesso. </span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Se n&atilde;o requisitou nenhuma altera&ccedil;&atilde;o dos seus dados, por favor&nbsp;</span></span></span><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">contacte-nos por chamada telef&oacute;nica ou em resposta a este e-mail.</span></span></span></p>";
+            body += "<p style=\"text-align:center\">&nbsp;</p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\">Atentamente,</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\"><strong>Equipa Auto Moreira</strong></span></span></span></p>";
+            body += "<p style=\"text-align:center\">&nbsp;</p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">📞 (+351) 231 472 555</span></span></p>";
+            body += "<p style=\"text-align:center\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></p>";
+            body += "<p style=\"text-align:center\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></p>";
+            body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
+
+            return (subject, body);
+        }
+
         private static (string, string) ClientEmail(string toName)
         {
             string subject = $"Auto Moreira: Recebemos a sua mensagem {toName}";
@@ -121,20 +177,6 @@
             body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
 
             return (subject, body);
-        }
-
-        private static string GenericEmail()
-        {
-            string body = "<p style=\"text-align:center\">&nbsp;</p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\">Atentamente,</span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\"><strong>Equipa Auto Moreira</strong></span></span></span></p>";
-            body += "<p style=\"text-align:center\">&nbsp;</p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">📞 (+351) 231 472 555</span></span></p>";
-            body += "<p style=\"text-align:center\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></p>";
-            body += "<p style=\"text-align:center\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></p>";
-            body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
-
-            return body;
         }
     }
 }

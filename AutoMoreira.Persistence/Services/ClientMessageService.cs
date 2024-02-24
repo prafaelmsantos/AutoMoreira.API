@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto.ClientMessage;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class ClientMessageService : IClientMessageService
     {

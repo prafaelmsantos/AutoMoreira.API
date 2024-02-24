@@ -18,6 +18,7 @@ namespace AutoMoreira.Persistence.ServicesRegistry
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IClientMessageRepository, ClientMessageRepository>();
             services.AddScoped<IVisitorRepository, VisitorRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             //Services
             services.AddScoped<IVehicleService, VehicleService>();

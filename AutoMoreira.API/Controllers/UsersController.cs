@@ -112,13 +112,11 @@
         {
             try
             {
-                //Verifica se o utilizador existe
                 var user = await _userService.GetUserByUserNameOrEmailAsync(userLoginDTO.UserName);
                 if (user == null)
                 {
                     return Unauthorized("Utilizador ou password inválida!");
                 }
-                //Verificar se o username e a senha estao bem
                 var result = await _userService.CheckUserPasswordAsync(user, userLoginDTO.Password);
                 if (!result.Succeeded)
                 {
