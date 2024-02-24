@@ -53,7 +53,7 @@
 
 
                 Random rnd = new();
-                string password = rnd.Next(6, 6).ToString();
+                string password = new Guid().ToString();
 
                 IdentityResult identityResult = await _userManager.CreateAsync(user, password);
 

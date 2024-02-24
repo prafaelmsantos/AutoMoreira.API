@@ -123,9 +123,9 @@
         private static (string, string) UserEmail(string toName, string userName, string password)
         {
             string subject = "Auto Moreira: Registo de utilizador";
-            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:80px; width:100px\" /></p>";
-            body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\">Bem-vindo(a)&nbsp;<strong>{toName}</strong>. </span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\">Credenciais de acesso:</span></span></p>";
+            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:100px; width:140px\" /></p>";
+            body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">Bem-vindo(a)&nbsp;<strong>{toName}</strong>. </span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">Credenciais de acesso:</span></span></p>";
             body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\"><strong>Nome de Utilizador: </strong>{userName}</span></span></p>";
             body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\"><strong>Palavra-passe: </strong>{password}</span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
@@ -133,8 +133,8 @@
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\"><strong>Equipa Auto Moreira</strong></span></span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">📞 (+351) 231 472 555</span></span></p>";
-            body += "<p style=\"text-align:center\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></p>";
-            body += "<p style=\"text-align:center\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></span></span></p>";
             body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
 
             return (subject, body);
@@ -143,17 +143,17 @@
         private static (string, string) UserUpdateEmail(string toName)
         {
             string subject = $"Auto Moreira: Recebemos a sua mensagem {toName}";
-            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:80px; width:100px\" /></p>";
-            body += $"<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Estimado(a) <strong>{toName}</strong>,</span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Esta mensagem confirma que os seus dados foram atualizados com sucesso. </span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Se n&atilde;o requisitou nenhuma altera&ccedil;&atilde;o dos seus dados, por favor&nbsp;</span></span></span><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">contacte-nos por chamada telef&oacute;nica ou em resposta a este e-mail.</span></span></span></p>";
+            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:100px; width:140px\" /></p>";
+            body += $"<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Estimado(a) <strong>{toName}</strong>,</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Esta mensagem confirma que os seus dados foram atualizados com sucesso. </span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Se n&atilde;o requisitou nenhuma altera&ccedil;&atilde;o dos seus dados, por favor&nbsp;</span></span></span><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">contacte-nos por chamada telef&oacute;nica ou em resposta a este e-mail.</span></span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\">Atentamente,</span></span></span></p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\"><strong>Equipa Auto Moreira</strong></span></span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">📞 (+351) 231 472 555</span></span></p>";
-            body += "<p style=\"text-align:center\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></p>";
-            body += "<p style=\"text-align:center\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></p>";
+            body += "<p style=\"<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></span></span></p>";
             body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
 
             return (subject, body);
@@ -162,18 +162,18 @@
         private static (string, string) ClientEmail(string toName)
         {
             string subject = $"Auto Moreira: Recebemos a sua mensagem {toName}";
-            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:80px; width:100px\" /></p>";
-            body += $"<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Estimado(a) <strong>{toName}</strong>,</span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Agradecemos desde j&aacute; o interesse que manifestou em n&oacute;s, Auto Moreira.</span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Recebemos a sua mensagem e entraremos&nbsp;em&nbsp;contacto&nbsp;consigo assim que poss&iacute;vel para esclarecer todas as suas quest&otilde;es.</span></span></span></p>";
-            body += "<p style=\"text-align:center\"><span style=\"font-size:11px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">No caso de ter alguma quest&atilde;o que pretenda ver esclarecida no imediato, n&atilde;o hesite em contactar-nos, por chamada telef&oacute;nica ou em resposta a este e-mail.</span></span></span></p>";
+            string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:100px; width:140px\" /></p>";
+            body += $"<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Estimado(a) <strong>{toName}</strong>,</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Agradecemos desde j&aacute; o interesse que manifestou em n&oacute;s, Auto Moreira.</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">Recebemos a sua mensagem e entraremos&nbsp;em&nbsp;contacto&nbsp;consigo assim que poss&iacute;vel para esclarecer todas as suas quest&otilde;es.</span></span></span></p>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"color:#000000\">No caso de ter alguma quest&atilde;o que pretenda ver esclarecida no imediato, n&atilde;o hesite em contactar-nos, por chamada telef&oacute;nica ou em resposta a este e-mail.</span></span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\">Atentamente,</span></span></span></p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\"><strong>Equipa Auto Moreira</strong></span></span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">📞 (+351) 231 472 555</span></span></p>";
-            body += "<p style=\"text-align:center\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></p>";
-            body += "<p style=\"text-align:center\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></p>";
+            body += "<p style=\"<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">📧 <a href=\"mailto:automoreiraportugal@gmail.com\">automoreiraportugal@gmail.com</a></span></span></p>>";
+            body += "<p style=\"text-align:center\"><span style=\"font-size:12px\"><span style=\"font-family:Arial,Helvetica,sans-serif\">🏎&nbsp;<a href=\"https://auto-moreira-app.onrender.com/\">autoMoreira</a></span></span></p>";
             body += "<h3 style=\"text-align:center\"><span style=\"font-size:9px\">2024 @AutoMoreira | Todos os Direitos Reservados.</span></h3>";
 
             return (subject, body);
