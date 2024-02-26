@@ -144,7 +144,7 @@
         /// Login User
         /// </summary>
         /// <param name="username"></param>
-        [HttpGet("ResetPassword")]
+        [HttpGet("ResetPassword/{username}")]
         public async Task<IActionResult> ResetPassword(string username)
         {
             try
@@ -160,6 +160,29 @@
                     $"Erro ao tentar fazer Login. Erro: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="username"></param>
+        [HttpGet("UpdatePassword/{username}")]
+        public async Task<IActionResult>UpdatePassword(string username, [FromBody] string password)
+        {
+            try
+            {
+                await _userService.UserUpdateUserPasswordAsync(username, password);
+
+                return Ok(username);
+
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar fazer Login. Erro: {ex.Message}");
+            }
+        }
+
+
 
         /// <summary>
         /// Update User

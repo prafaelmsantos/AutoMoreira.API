@@ -21,13 +21,6 @@
                 .HasColumnName("mark_id")
                 .IsRequired(true);
 
-            entity.Property(x => x.CreatedDate)
-                .HasColumnName("created_date")
-                .IsRequired(true);
-
-            entity.Property(x => x.LastModifiedDate)
-                .HasColumnName("last_modified_date")
-                .IsRequired(true);
 
             entity.HasMany(x => x.Vehicles)
                 .WithOne(x => x.Model)

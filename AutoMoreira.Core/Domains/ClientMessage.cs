@@ -1,12 +1,13 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class ClientMessage : AuditableEntity
+    public class ClientMessage : EntityBase
     {
         public string Name { get; private set; } = null!;
         public string Email { get; private set; } = null!;
         public long PhoneNumber { get; private set; }
         public string Message { get; private set; } = null!;
         public STATUS Status { get; private set; }
+        public DateTime CreatedDate { get; private set; }
 
         public ClientMessage() { }
 
@@ -18,13 +19,11 @@
             Message = message;
             Status = STATUS.Open;
             CreatedDate = DateTime.UtcNow;
-            LastModifiedDate = DateTime.UtcNow;
         }
 
         public void SetStatus(STATUS status)
         {
             Status = status;
-            LastModifiedDate = DateTime.UtcNow;
         }
 
     }

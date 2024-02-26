@@ -2,8 +2,8 @@
 {
     public class VehicleCounterDTO
     {
-        public CounterDTO TotalSales { get; set; }
-        public CounterDTO TotalSalesMonth { get; set; }
-        public CounterDTO TotalStock { get; set; }
+        public CounterDTO TotalSales { get; set; } = null!;
+        public CounterDTO TotalSalesMonth { get; set; } = null!;
+        public CounterDTO TotalStock { get; set; } = null!;
     }
 }

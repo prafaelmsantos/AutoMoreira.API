@@ -17,14 +17,6 @@
                 .HasColumnName("name")
                 .IsRequired(true);
 
-            entity.Property(x => x.CreatedDate)
-                .HasColumnName("created_date")
-                .IsRequired(true);
-
-            entity.Property(x => x.LastModifiedDate)
-                .HasColumnName("last_modified_date")
-                .IsRequired(true);
-
             entity.HasMany(x => x.Models)
                 .WithOne(x => x.Mark)
                 .HasForeignKey(x => x.MarkId)

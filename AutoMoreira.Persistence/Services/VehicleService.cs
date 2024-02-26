@@ -3,11 +3,13 @@
     public class VehicleService : IVehicleService
     {
         private readonly IVehicleRepository _vehicleRepository;
+        private readonly IVehicleImageRepository _vehicleImageRepository;
         private readonly IMapper _mapper;
-        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
+        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper, IVehicleImageRepository vehicleImageRepository)
         {
             _vehicleRepository = vehicleRepository;
             _mapper = mapper;
+            _vehicleImageRepository = vehicleImageRepository;
         }
 
         public async Task<VehicleDTO> AddVehicleAsync(VehicleDTO vehicleDTO)
@@ -18,7 +20,14 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
 
-                 await _vehicleRepository.AddAsync(vehicle);
+                if (vehicleDTO.VehicleImages.Count != 0)
+                {
+                    var images = _mapper.Map<List<VehicleImage>>(vehicleDTO.VehicleImages);
+
+                    vehicle.SetVehicleImages(images);
+                }
+
+                await _vehicleRepository.AddAsync(vehicle);
 
                 return _mapper.Map<VehicleDTO>(vehicle);
             }
@@ -32,13 +41,20 @@
         {
             try
             {
-                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleDTO.Id);
+                Vehicle? vehicle = await _vehicleRepository.FindByIdAsync(vehicleDTO.Id);
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
+
+                if (vehicleDTO.VehicleImages.Count != 0)
+                {
+                    var images = _mapper.Map<List<VehicleImage>>(vehicleDTO.VehicleImages);
+
+                    vehicle.SetVehicleImages(images);
+                }
 
                 await _vehicleRepository.UpdateAsync(vehicle);
 
@@ -54,7 +70,7 @@
         {
             try
             {
-                Vehicle vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+                Vehicle? vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
@@ -88,7 +104,7 @@
         {
             try
             {
-                Vehicle vehicle = await _vehicleRepository
+                Vehicle? vehicle = await _vehicleRepository
                     .GetAll()
                     .Where( x=> x.Id == vehicleId)
                     .Include(x => x.Model)
@@ -226,7 +242,7 @@
             {
                 List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
-                   .Where(x => x.SoldDate.Value.Year == year)
+                   .Where(x => x.SoldDate!.Value.Year == year)
                    .ToListAsync();
 
                 List<StatisticDTO> statisticsDTO = new();

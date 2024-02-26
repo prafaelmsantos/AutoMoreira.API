@@ -7,16 +7,14 @@
         #region Properties
 
         private readonly IVehicleService _vehicleService;
-        private readonly IWebHostEnvironment _hostEnvironment;
 
         #endregion
 
         #region Constructors
 
-        public VehiclesController(IVehicleService vehicleService, IWebHostEnvironment hostEnvironment)
+        public VehiclesController(IVehicleService vehicleService)
         {
             _vehicleService = vehicleService;
-            _hostEnvironment = hostEnvironment;
         }
         #endregion
 

@@ -33,10 +33,6 @@
                 .HasColumnName("created_date")
                 .IsRequired(true);
 
-            entity.Property(x => x.LastModifiedDate)
-                .HasColumnName("last_modified_date")
-                .IsRequired(true);
-
             entity.Property(x => x.Status)
                 .HasColumnName("status")
                 .IsRequired(true);

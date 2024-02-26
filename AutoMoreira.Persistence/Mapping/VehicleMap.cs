@@ -75,13 +75,6 @@
                 .HasColumnName("sold_date")
                 .IsRequired(false);
 
-            entity.Property(x => x.CreatedDate)
-                .HasColumnName("created_date")
-                .IsRequired(true);
-
-            entity.Property(x => x.LastModifiedDate)
-                .HasColumnName("last_modified_date")
-                .IsRequired(true);
 
             entity.HasMany(x => x.VehicleImages)
                 .WithOne(x => x.Vehicle)

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace AutoMoreira.Persistence.ServicesRegistry
+﻿namespace AutoMoreira.Persistence.ServicesRegistry
 {
     public static class ServiceCollectionExtension
     {
@@ -12,6 +10,7 @@ namespace AutoMoreira.Persistence.ServicesRegistry
         {
             //Repositories
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IVehicleImageRepository, VehicleImageRepository>();
             services.AddScoped<IMarkRepository, MarkRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

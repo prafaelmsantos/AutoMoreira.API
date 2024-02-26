@@ -9,8 +9,9 @@
         Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password);
         Task<UserDTO> CreateUserAsync(UserDTO userDTO);
         Task<UserDTO> UpdateUserAsync(UserDTO userDTO);
+        Task UserResetPasswordAsync(string userName);
+        Task UserUpdateUserPasswordAsync(string userName, string password);
         Task<UserDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO);
         Task<UserDTO> UpdateUserImageAsync(UserUpdateImageDTO userUpdateImageDTO);
-        Task UserResetPasswordAsync(string email);
     }
 }

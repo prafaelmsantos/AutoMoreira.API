@@ -2,11 +2,9 @@
 {
     public class VehicleImageDTO : EntityBaseDTO
     {
-        public string Url { get; set; }
-        public int Order { get; set; }
+        public string Url { get; set; } = null!;
 
         public int VehicleId { get; set; }
-        public virtual VehicleDTO Vehicle { get; set; }
-
+        public VehicleDTO? Vehicle { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class MarkDTO : EntityBaseDTO
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

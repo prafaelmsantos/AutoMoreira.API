@@ -1,6 +1,6 @@
 ﻿namespace AutoMoreira.Core.Domains
 {
-    public class Vehicle : AuditableEntity
+    public class Vehicle : EntityBase
     {
         public int ModelId { get; private set; }
         public virtual Model Model { get; private set; } = null!;
@@ -21,11 +21,13 @@
         public bool Sold { get; private set; }
         public DateTime? SoldDate { get; private set; }
 
-        public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
+        private readonly List<VehicleImage> _vehicleImages;
+        public virtual ICollection<VehicleImage> VehicleImages => _vehicleImages;
+
 
         public Vehicle() 
         {
-            VehicleImages = new List<VehicleImage>();
+            _vehicleImages = new List<VehicleImage>();
         }
 
         public Vehicle(int id, int modelId, string version, FUEL fuelType, 
@@ -47,11 +49,9 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            CreatedDate = DateTime.UtcNow;
-            LastModifiedDate = DateTime.UtcNow;
             SoldDate = sold ? DateTime.UtcNow : null;
 
-            VehicleImages = new List<VehicleImage>();
+            _vehicleImages = new List<VehicleImage>();
         }
 
         public Vehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors, 
@@ -71,11 +71,9 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            CreatedDate = DateTime.UtcNow;
-            LastModifiedDate = DateTime.UtcNow;
             SoldDate = sold? DateTime.UtcNow : null;
- 
-            VehicleImages = new List<VehicleImage>();
+
+            _vehicleImages = new List<VehicleImage>();
         }
 
         public void UpdateVehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors,
@@ -95,8 +93,13 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            LastModifiedDate = DateTime.UtcNow;
             SoldDate = sold ? DateTime.UtcNow : null;
+        }
+
+        public void SetVehicleImages(List<VehicleImage> vehicleImages)
+        {
+            _vehicleImages.Clear();
+            //VehicleImages = vehicleImages;
         }
 
     }

@@ -3,7 +3,7 @@
     public class VehicleDTO : EntityBaseDTO
     {
         public int ModelId { get; set; }
-        public ModelDTO Model { get; set; }
+        public ModelDTO? Model { get; set; }
 
         public string? Version { get; set; }
         public FUEL FuelType { get; set; }
@@ -11,7 +11,7 @@
         public double Mileage { get; set; }
 
         public int Year { get; set; }
-        public string Color { get; set; }
+        public string Color { get; set; } = null!;
         public int Doors { get; set; }
         public TRANSMISSION Transmission { get; set; }
         public int EngineSize { get; set; }
@@ -21,6 +21,8 @@
         public bool Opportunity { get; set; }
         public bool Sold { get; set; }
         public DateTime? SoldDate { get; set; }
+
+        public List<VehicleImageDTO> VehicleImages { get; set; } = new List<VehicleImageDTO>();
 
     }
 }

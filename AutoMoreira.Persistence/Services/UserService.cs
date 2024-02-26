@@ -192,13 +192,37 @@
             }
         }
 
-        public async Task UserResetPasswordAsync(string username)
+        public async Task UserResetPasswordAsync(string userName)
         {
             try
             {
-                UserDTO userDTO = await GetUserByUserNameOrEmailAsync(username);
+                User? user = await _userRepository.FindByCondition(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
 
-                await _emailService.SendEmailToUserNewPasswordAsync($"{userDTO.FirstName} {userDTO.LastName}", userDTO.Email, GenerateNewPassword());
+                if (user == null) throw new Exception("Utilizador não encontrado.");
+
+                var password = GenerateNewPassword();
+
+                await UpdateUserPassword(user, password);
+
+                await _emailService.SendEmailToUserResetPasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao tentar enviar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
+            }
+        }
+
+        public async Task UserUpdateUserPasswordAsync(string userName, string password)
+        {
+            try
+            {
+                User? user = await _userRepository.FindByCondition(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
+
+                if (user == null) throw new Exception("Utilizador não encontrado.");
+
+                await UpdateUserPassword(user, password);
+
+                await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
             }
             catch (Exception ex)
             {
@@ -224,6 +248,13 @@
         {
             Random rnd = new();
             return  rnd.Next(100000, 1000000000).ToString();
+        }
+
+        private async Task UpdateUserPassword(User user, string password)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            await _userManager.ResetPasswordAsync(user, token, password);
         }
 
     }
