@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class UserService : IUserService
     {
@@ -154,15 +152,15 @@ namespace AutoMoreira.Persistence.Services
             }
         }
 
-        public async Task<UserDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO)
+        public async Task<UserDTO> UpdateUserModeAsync(int id, bool mode)
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(userUpdateModeDTO.Id);
+                User user = await _userRepository.FindByIdAsync(id);
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                user.SetDarkMode(userUpdateModeDTO.DarkMode);
+                user.SetDarkMode(mode);
 
                 await _userRepository.UpdateAsync(user);
 
@@ -174,15 +172,15 @@ namespace AutoMoreira.Persistence.Services
             }
         }
 
-        public async Task<UserDTO> UpdateUserImageAsync(UserUpdateImageDTO userUpdateImageDTO)
+        public async Task<UserDTO> UpdateUserImageAsync(int id, string image)
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(userUpdateImageDTO.Id);
+                User user = await _userRepository.FindByIdAsync(id);
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                user.SetImage(userUpdateImageDTO.Image);
+                user.SetImage(image);
 
                 await _userRepository.UpdateAsync(user);
 

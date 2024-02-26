@@ -141,7 +141,7 @@
         }
 
         /// <summary>
-        /// Login User
+        /// Reset User Password
         /// </summary>
         /// <param name="username"></param>
         [HttpPost("ResetPassword/{username}")]
@@ -162,7 +162,7 @@
         }
 
         /// <summary>
-        /// Update
+        /// Update User Password
         /// </summary>
         /// <param name="username"></param>
         [HttpPut("UpdatePassword/{username}")]
@@ -178,7 +178,7 @@
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar fazer Login. Erro: {ex.Message}");
+                    $"Erro ao tentar fazer atualização da palavra-passe. Erro: {ex.Message}");
             }
         }
 
@@ -210,15 +210,14 @@
         /// <summary>
         /// Update User Mode
         /// </summary>
-        /// <param name="userUpdateModeDTO"></param>
+        /// <param name="mode"></param>
         /// <param name="id"></param>
         [HttpPut("Mode/{id}")]
-        public async Task<IActionResult> UpdateUserMode(int id, [FromBody] UserUpdateModeDTO userUpdateModeDTO)
+        public async Task<IActionResult> UpdateUserMode(int id, [FromBody] bool mode)
         {
             try
             {
-                userUpdateModeDTO.Id = id;
-                UserDTO userDTO = await _userService.UpdateUserModeAsync(userUpdateModeDTO);
+                UserDTO userDTO = await _userService.UpdateUserModeAsync(id, mode);
                 if (userDTO == null) return NoContent();
 
                 return Ok(userDTO);
@@ -233,15 +232,14 @@
         /// <summary>
         /// Update User Image
         /// </summary>
-        /// <param name="userUpdateImageDTO"></param>
+        /// <param name="image"></param>
         /// <param name="id"></param>
         [HttpPut("Image/{id}")]
-        public async Task<IActionResult> UpdateUserImage(int id, [FromBody] UserUpdateImageDTO userUpdateImageDTO)
+        public async Task<IActionResult> UpdateUserImage(int id, [FromBody] string image)
         {
             try
             {
-                userUpdateImageDTO.Id = id;
-                UserDTO userDTO = await _userService.UpdateUserImageAsync(userUpdateImageDTO);
+                UserDTO userDTO = await _userService.UpdateUserImageAsync(id, image);
                 if (userDTO == null) return NoContent();
 
                 return Ok(userDTO);

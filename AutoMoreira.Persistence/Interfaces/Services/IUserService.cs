@@ -11,7 +11,7 @@
         Task<UserDTO> UpdateUserAsync(UserDTO userDTO);
         Task UserResetPasswordAsync(string userName);
         Task UserUpdateUserPasswordAsync(string userName, string password);
-        Task<UserDTO> UpdateUserModeAsync(UserUpdateModeDTO userUpdateModeDTO);
-        Task<UserDTO> UpdateUserImageAsync(UserUpdateImageDTO userUpdateImageDTO);
+        Task<UserDTO> UpdateUserModeAsync(int id, bool mode);
+        Task<UserDTO> UpdateUserImageAsync(int id, string image);
     }
 }

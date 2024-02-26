@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9535278415d81a335f787ea646aacfe95591e052")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fedf44076b86743f92a03e450aac23ce0f32016a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutoMoreira.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
