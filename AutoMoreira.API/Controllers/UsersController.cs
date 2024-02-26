@@ -144,7 +144,7 @@
         /// Login User
         /// </summary>
         /// <param name="username"></param>
-        [HttpGet("ResetPassword/{username}")]
+        [HttpPost("ResetPassword/{username}")]
         public async Task<IActionResult> ResetPassword(string username)
         {
             try
@@ -165,7 +165,7 @@
         /// Update
         /// </summary>
         /// <param name="username"></param>
-        [HttpGet("UpdatePassword/{username}")]
+        [HttpPut("UpdatePassword/{username}")]
         public async Task<IActionResult>UpdatePassword(string username, [FromBody] string password)
         {
             try

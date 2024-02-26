@@ -106,14 +106,14 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "386a1f9e-e8e3-42a3-82f6-388da30d15b1",
+                            ConcurrencyStamp = "e5a70ff8-d492-448c-b6f4-1aeffe9e985c",
                             IsDefault = true,
                             Name = "Administrador"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "47268876-3e16-4e20-923d-db1ee4773ace",
+                            ConcurrencyStamp = "4f941683-a3f7-446f-9dad-15f79c80af5f",
                             IsDefault = false,
                             Name = "Colaborador"
                         });

@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class Migrations00001 : Migration
+    public partial class Migrations0000001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,8 +21,7 @@ namespace AutoMoreira.Persistence.Migrations
                     phone_number = table.Column<long>(type: "bigint", nullable: false),
                     message = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,9 +34,7 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,8 +47,6 @@ namespace AutoMoreira.Persistence.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     is_default = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -72,8 +67,6 @@ namespace AutoMoreira.Persistence.Migrations
                     last_name = table.Column<string>(type: "text", nullable: false),
                     image = table.Column<string>(type: "text", nullable: true),
                     dark_mode = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
@@ -116,9 +109,7 @@ namespace AutoMoreira.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
-                    mark_id = table.Column<int>(type: "integer", nullable: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    mark_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,9 +248,7 @@ namespace AutoMoreira.Persistence.Migrations
                     observations = table.Column<string>(type: "text", nullable: true),
                     opportunity = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     sold = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    sold_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    sold_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -279,9 +268,7 @@ namespace AutoMoreira.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     url = table.Column<string>(type: "text", nullable: false),
-                    vehicleId = table.Column<int>(type: "integer", nullable: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_modified_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    vehicleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,60 +283,60 @@ namespace AutoMoreira.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "marks",
-                columns: new[] { "id", "created_date", "last_modified_date", "name" },
+                columns: new[] { "id", "name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2422), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2429), "Audi" },
-                    { 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2433), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2434), "Mercedes" },
-                    { 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2435), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2435), "BMW" },
-                    { 4, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2436), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2436), "Peugeot" },
-                    { 5, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2437), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2437), "Volkswagen" },
-                    { 6, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2438), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2438), "Citroën" },
-                    { 7, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2439), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2439), "Renault" },
-                    { 8, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2440), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2440), "Volvo" },
-                    { 9, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2441), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2441), "Fiat" }
+                    { 1, "Audi" },
+                    { 2, "Mercedes" },
+                    { 3, "BMW" },
+                    { 4, "Peugeot" },
+                    { 5, "Volkswagen" },
+                    { 6, "Citroën" },
+                    { 7, "Renault" },
+                    { 8, "Volvo" },
+                    { 9, "Fiat" }
                 });
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "created_date", "is_default", "last_modified_date", "name", "normalized_name" },
-                values: new object[] { 1, "4ea18120-b0d4-4831-acaa-746b5113a82a", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2662), true, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2663), "Administrador", null });
+                columns: new[] { "id", "concurrency_stamp", "is_default", "name", "normalized_name" },
+                values: new object[] { 1, "e5a70ff8-d492-448c-b6f4-1aeffe9e985c", true, "Administrador", null });
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "created_date", "last_modified_date", "name", "normalized_name" },
-                values: new object[] { 2, "02a26881-2789-4229-ae90-ddfa9ba6a15f", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2669), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2670), "Colaborador", null });
+                columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
+                values: new object[] { 2, "4f941683-a3f7-446f-9dad-15f79c80af5f", "Colaborador", null });
 
             migrationBuilder.InsertData(
                 table: "models",
-                columns: new[] { "id", "created_date", "last_modified_date", "mark_id", "name" },
+                columns: new[] { "id", "mark_id", "name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2574), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2575), 1, "A3" },
-                    { 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2575), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2576), 2, "Classe A" },
-                    { 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), 3, "Serie 1" },
-                    { 4, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2577), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2578), 4, "308" },
-                    { 5, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2578), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2579), 5, "Golf" },
-                    { 6, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2579), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), 6, "C4" },
-                    { 7, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2580), 7, "Megane" },
-                    { 8, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2581), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2581), 8, "V40" },
-                    { 9, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2582), new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2583), 9, "Punto" }
+                    { 1, 1, "A3" },
+                    { 2, 2, "Classe A" },
+                    { 3, 3, "Serie 1" },
+                    { 4, 4, "308" },
+                    { 5, 5, "Golf" },
+                    { 6, 6, "C4" },
+                    { 7, 7, "Megane" },
+                    { 8, 8, "V40" },
+                    { 9, 9, "Punto" }
                 });
 
             migrationBuilder.InsertData(
                 table: "vehicles",
-                columns: new[] { "id", "color", "created_date", "doors", "engine_size", "fuel_type", "last_modified_date", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold_date", "transmission", "version", "year" },
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold_date", "transmission", "version", "year" },
                 values: new object[,]
                 {
-                    { 1, "Azul", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2603), 5, 1999, 2, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2603), 2000.0, 1, "Garantia de 2 anos", true, 140, 40000.0, null, 1, "Sportline", 2022 },
-                    { 2, "Cinza", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2608), 5, 1999, 3, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2608), 7000.0, 2, "Garantia de 2 anos", true, 140, 27000.0, null, 2, "AMG", 2021 },
-                    { 3, "Vermelho", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2609), 5, 1999, 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2610), 0.0, 3, "Garantia de 2 anos", true, 140, 29000.0, null, 2, "Sport", 2023 }
+                    { 1, "Azul", 5, 1999, 2, 2000.0, 1, "Garantia de 2 anos", true, 140, 40000.0, null, 1, "Sportline", 2022 },
+                    { 2, "Cinza", 5, 1999, 3, 7000.0, 2, "Garantia de 2 anos", true, 140, 27000.0, null, 2, "AMG", 2021 },
+                    { 3, "Vermelho", 5, 1999, 1, 0.0, 3, "Garantia de 2 anos", true, 140, 29000.0, null, 2, "Sport", 2023 }
                 });
 
             migrationBuilder.InsertData(
                 table: "vehicles",
-                columns: new[] { "id", "color", "created_date", "doors", "engine_size", "fuel_type", "last_modified_date", "mileage", "model_id", "observations", "power", "price", "sold_date", "transmission", "version", "year" },
-                values: new object[] { 4, "Verde", new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2611), 5, 1999, 1, new DateTime(2024, 2, 24, 1, 1, 30, 388, DateTimeKind.Utc).AddTicks(2611), 10000.0, 4, "Garantia de 2 anos", 140, 18000.0, null, 1, "GTI", 2022 });
+                columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mileage", "model_id", "observations", "power", "price", "sold_date", "transmission", "version", "year" },
+                values: new object[] { 4, "Verde", 5, 1999, 1, 10000.0, 4, "Garantia de 2 anos", 140, 18000.0, null, 1, "GTI", 2022 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_identity_role_claim_role_id",

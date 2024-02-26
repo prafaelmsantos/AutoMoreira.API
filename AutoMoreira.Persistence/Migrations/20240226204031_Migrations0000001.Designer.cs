@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240225234804_Migrations00003")]
-    partial class Migrations00003
+    [Migration("20240226204031_Migrations0000001")]
+    partial class Migrations0000001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,14 +108,14 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "9f85cd60-413e-495c-8d39-396dcb9e2354",
+                            ConcurrencyStamp = "e5a70ff8-d492-448c-b6f4-1aeffe9e985c",
                             IsDefault = true,
                             Name = "Administrador"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "183b37b6-f1f5-466e-8a9b-93cc11b789a8",
+                            ConcurrencyStamp = "4f941683-a3f7-446f-9dad-15f79c80af5f",
                             IsDefault = false,
                             Name = "Colaborador"
                         });

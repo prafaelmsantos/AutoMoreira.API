@@ -125,7 +125,7 @@
             {
                 var message = new MimeMessage();
 
-                var userEmail = UserPasswordEmail(toName, password);
+                var userEmail = UserPasswordEmail(toName);
 
                 message.From.Add(new MailboxAddress(_emailSettings.Name, _emailSettings.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
@@ -254,7 +254,7 @@
             return (subject, body);
         }
 
-        private static (string, string) UserPasswordEmail(string toName, string password)
+        private static (string, string) UserPasswordEmail(string toName)
         {
             string subject = $"Auto Moreira: Atualização da palavra-passe";
             string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:100px; width:140px\" /></p>";

@@ -15,7 +15,6 @@
         Task<IEnumerable<T>> GetAllAsync();
 
         Task<T> FindByIdAsync(int Id);
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
  
     }
 }

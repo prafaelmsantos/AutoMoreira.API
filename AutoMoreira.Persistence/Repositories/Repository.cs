@@ -115,13 +115,5 @@
             return await Entity.FindAsync(Id);
         }
 
-        public virtual IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
-        {
-            return Entity.Where(expression).AsNoTracking();
-        }
-
-
-
-
     }
 }
