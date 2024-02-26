@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto.ClientMessage;
-
-namespace AutoMoreira.API.Controllers
+﻿namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -119,15 +117,14 @@ namespace AutoMoreira.API.Controllers
         /// <summary>
         /// Update Client Message Status
         /// </summary>
-        /// <param name="clientMessageUpdateStatusDTO"></param>
+        /// <param name="status"></param>
         /// <param name="id"></param>
         [HttpPut("Status/{id}")]
-        public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO)
+        public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] STATUS status)
         {
             try
             {
-                clientMessageUpdateStatusDTO.Id = id;
-                ClientMessageDTO clientMessageDTO = await _clientMessageService.UpdateClientMessageStatusAsync(clientMessageUpdateStatusDTO);
+                ClientMessageDTO clientMessageDTO = await _clientMessageService.UpdateClientMessageStatusAsync(id, status);
                 if (clientMessageDTO == null) return NoContent();
 
                 return Ok(clientMessageDTO);

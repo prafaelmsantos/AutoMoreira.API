@@ -211,21 +211,24 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar enviar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
+                throw new Exception($"Erro ao tentar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
             }
         }
 
-        public async Task UserUpdateUserPasswordAsync(string userName, string password)
+        public async Task UserUpdateUserPasswordAsync(UserLoginDTO userLoginDTO)
         {
             try
             {
-                User? user = await _userRepository.GetAll().Where(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
+                User? user = await _userRepository.GetAll().Where(x => x.UserName == userLoginDTO.UserName || x.Email == userLoginDTO.UserName).FirstOrDefaultAsync();
 
                 if (user == null) throw new Exception("Utilizador não encontrado.");
 
-                await UpdateUserPassword(user, password);
+                IdentityResult identityResult = await UpdateUserPassword(user, userLoginDTO.Password);
 
-                await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
+                if (identityResult.Succeeded)
+                {
+                    await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, userLoginDTO.Password);
+                }  
             }
             catch (Exception ex)
             {

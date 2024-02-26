@@ -10,7 +10,7 @@
         Task<UserDTO> CreateUserAsync(UserDTO userDTO);
         Task<UserDTO> UpdateUserAsync(UserDTO userDTO);
         Task UserResetPasswordAsync(string userName);
-        Task UserUpdateUserPasswordAsync(string userName, string password);
+        Task UserUpdateUserPasswordAsync(UserLoginDTO userLoginDTO);
         Task<UserDTO> UpdateUserModeAsync(int id, bool mode);
         Task<UserDTO> UpdateUserImageAsync(int id, string image);
     }

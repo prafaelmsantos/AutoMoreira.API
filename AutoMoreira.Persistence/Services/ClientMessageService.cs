@@ -78,15 +78,15 @@
             }
         }
 
-        public async Task<ClientMessageDTO> UpdateClientMessageStatusAsync(ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO)
+        public async Task<ClientMessageDTO> UpdateClientMessageStatusAsync(int id, STATUS status)
         {
             try
             {
-                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageUpdateStatusDTO.Id);
+                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(id);
 
                 if (clientMessage is null) throw new Exception("Mensagem de cliente não encontrada.");
 
-                clientMessage.SetStatus(clientMessageUpdateStatusDTO.Status);
+                clientMessage.SetStatus(status);
 
                 await _clientMessageRepository.UpdateAsync(clientMessage);
 

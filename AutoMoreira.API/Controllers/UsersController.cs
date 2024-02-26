@@ -164,15 +164,15 @@
         /// <summary>
         /// Update User Password
         /// </summary>
-        /// <param name="username"></param>
-        [HttpPut("UpdatePassword/{username}")]
-        public async Task<IActionResult>UpdatePassword(string username, [FromBody] string password)
+        /// <param name="userLoginDTO"></param>
+        [HttpPut("UpdatePassword")]
+        public async Task<IActionResult>UpdatePassword([FromBody] UserLoginDTO userLoginDTO)
         {
             try
             {
-                await _userService.UserUpdateUserPasswordAsync(username, password);
+                await _userService.UserUpdateUserPasswordAsync(userLoginDTO);
 
-                return Ok(username);
+                return Ok(userLoginDTO);
 
             }
             catch (Exception ex)

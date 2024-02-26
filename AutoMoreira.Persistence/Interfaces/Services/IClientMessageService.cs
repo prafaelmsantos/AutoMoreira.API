@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto.ClientMessage;
-
-namespace AutoMoreira.Persistence.Interfaces.Services
+﻿namespace AutoMoreira.Persistence.Interfaces.Services
 {
     public interface IClientMessageService
     {
@@ -9,6 +7,6 @@ namespace AutoMoreira.Persistence.Interfaces.Services
 
         Task<List<ClientMessageDTO>> GetAllClientMessagesAsync();
         Task<ClientMessageDTO> GetClientMessageByIdAsync(int clientMessageId);
-        Task<ClientMessageDTO> UpdateClientMessageStatusAsync(ClientMessageUpdateStatusDTO clientMessageUpdateStatusDTO);
+        Task<ClientMessageDTO> UpdateClientMessageStatusAsync(int id, STATUS status);
     }
 }
