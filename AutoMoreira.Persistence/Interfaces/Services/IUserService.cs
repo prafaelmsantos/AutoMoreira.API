@@ -5,9 +5,9 @@
         Task<bool> UserExists(string username);
         Task<List<UserDTO>> GetAllUsersAsync();
         Task<UserDTO> GetUserByIdAsync(int id);
-        Task<UserDTO> GetUserByUserNameOrEmailAsync(string username);
+        Task<UserDTO> GetUserByEmailAsync(string email);
         Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password);
-        Task<UserDTO> CreateUserAsync(UserDTO userDTO);
+        Task<UserDTO?> CreateUserAsync(UserDTO userDTO);
         Task<UserDTO> UpdateUserAsync(UserDTO userDTO);
         Task UserResetPasswordAsync(string userName);
         Task UserUpdateUserPasswordAsync(UserLoginDTO userLoginDTO);

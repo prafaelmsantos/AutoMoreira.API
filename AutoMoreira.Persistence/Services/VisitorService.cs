@@ -26,7 +26,7 @@
                 { 
                     Visitors = currentVisitors, 
                     LastVisitors = lastVisitors, 
-                    ValuePerc = valuePerc, 
+                    ValuePerc = Math.Round(valuePerc, 1), 
                     Value = currentValue
                 };
 
@@ -50,7 +50,7 @@
                 return new ResponseVisitorDTO() 
                 { 
                     Visitors = visitorsDTO, 
-                    ValuePerc = valuePerc, 
+                    ValuePerc = Math.Round(valuePerc, 1), 
                     Value = currentMonthValue
                 };
 
@@ -84,7 +84,7 @@
         {
             try
             {
-                Visitor visitor = await _visitorRepository
+                Visitor? visitor = await _visitorRepository
                     .GetAll()
                     .Where(x => x.Year == DateTime.UtcNow.Year && (int)x.Month == DateTime.UtcNow.Month)
                     .FirstOrDefaultAsync();

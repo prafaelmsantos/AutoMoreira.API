@@ -164,7 +164,7 @@
                     Statistics = currentStatisticsDTO,
                     LastStatistics = lastStatisticsDTO,
                     Value = currentValue,
-                    ValuePerc = valuePerc
+                    ValuePerc = Math.Round(valuePerc, 1)
 
                 };
             }
@@ -188,7 +188,7 @@
                 {
                     Statistics = statisticsDTO,
                     Value = currentMonthValue,
-                    ValuePerc = valuePerc
+                    ValuePerc = Math.Round(valuePerc, 1)
 
                 };
             }

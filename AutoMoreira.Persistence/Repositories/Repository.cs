@@ -106,13 +106,15 @@
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Entity.AsNoTracking().ToListAsync();
+            return await Entity.ToListAsync();
         }
 
 
         public virtual async Task<T> FindByIdAsync(int Id)
         {
+#pragma warning disable CS8603 // Possible null reference return.
             return await Entity.FindAsync(Id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
     }

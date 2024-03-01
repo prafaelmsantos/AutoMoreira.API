@@ -26,7 +26,7 @@
         {
             try
             {
-                User? user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userDTO.UserName.ToLower() || user.UserName == userDTO.Email.ToLower());
+                User? user = await _userManager.Users.SingleOrDefaultAsync(user => user.Email == userDTO.Email);
 
                 return await _signInManager.CheckPasswordSignInAsync(user!, password, false);
 
@@ -38,19 +38,21 @@
             }
         }
 
-        public async Task<UserDTO> CreateUserAsync(UserDTO userDTO)
+        public async Task<UserDTO?> CreateUserAsync(UserDTO userDTO)
         {
             try
             {
-                if (userDTO.Roles.Count() == 0) throw new Exception("Nenhum cargo encontrado.");
+                if (userDTO.Roles.Count == 0) throw new Exception("Nenhum cargo encontrado.");
 
-                User user = new(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
+                User? user = new(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
 
 
                 Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
 
-                user.SetRoles(new List<Role> { role });
-
+                if (role != null)
+                {
+                    user.SetRoles(new List<Role> { role });
+                }
 
                 string password = GenerateNewPassword();
 
@@ -58,7 +60,7 @@
 
                 if (identityResult.Succeeded)
                 {
-                    await _emailService.SendEmailToUserAsync($"{user.FirstName} {user.LastName}", user.Email, user.UserName, password);
+                    await _emailService.SendEmailToUserAsync($"{user.FirstName} {user.LastName}", user.Email, password);
                     return _mapper.Map<UserDTO>(user);
                 }
                 return null;
@@ -71,11 +73,12 @@
             }
         }
 
-        public async Task<UserDTO> GetUserByUserNameOrEmailAsync(string userName)
+        public async Task<UserDTO> GetUserByEmailAsync(string email)
         {
-            User? user = await _userRepository.GetAll().Where(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
-
-            if (user == null) throw new Exception("Utilizador não encontrado.");
+            User? user = await _userRepository
+                .GetAll()
+                .Where(x => x.Email == email)
+                .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
 
             return _mapper.Map<UserDTO>(user);
         }
@@ -87,16 +90,14 @@
                 User? user = await _userRepository.GetAll()
                     .Where(x=> x.Id == id)
                     .Include(x => x.Roles)
-                    .FirstOrDefaultAsync();
-                
-                if (user == null) throw new Exception("Utilizador não encontrado.");
+                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
 
                 return _mapper.Map<UserDTO>(user);
 
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar procurar utilizador por Username. Erro: {ex.Message}");
+                throw new Exception($"Erro ao tentar procurar utilizador por id. Erro: {ex.Message}");
             }
         }
         public async Task<List<UserDTO>> GetAllUsersAsync()
@@ -120,19 +121,19 @@
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(userDTO.Id);
-
-                if (user == null) throw new Exception("Utilizador não encontrado.");
-
-                user.UpdateUser(userDTO.UserName, userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image, userDTO.DarkMode);
+                User? user = await _userRepository.FindByIdAsync(userDTO.Id) ?? throw new Exception("Utilizador não encontrado.");
+                
+                user.UpdateUser(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
 
                 await _userRoleRepository.RemoveRangeAsync(_userRoleRepository.GetAll().Where(x => x.UserId == userDTO.Id).ToList());
 
                 Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
 
-                user.SetRoles(new List<Role> { role });
-
-
+                if (role != null)
+                {
+                    user.SetRoles(new List<Role> { role });
+                }
+                
                 if (userDTO.Password != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -156,10 +157,8 @@
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(id);
-
-                if (user == null) throw new Exception("Utilizador não encontrado.");
-
+                User? user = await _userRepository.FindByIdAsync(id) ?? throw new Exception("Utilizador não encontrado.");
+                
                 user.SetDarkMode(mode);
 
                 await _userRepository.UpdateAsync(user);
@@ -176,10 +175,8 @@
         {
             try
             {
-                User user = await _userRepository.FindByIdAsync(id);
-
-                if (user == null) throw new Exception("Utilizador não encontrado.");
-
+                User? user = await _userRepository.FindByIdAsync(id) ?? throw new Exception("Utilizador não encontrado.");
+                
                 user.SetImage(image);
 
                 await _userRepository.UpdateAsync(user);
@@ -192,13 +189,14 @@
             }
         }
 
-        public async Task UserResetPasswordAsync(string userName)
+        public async Task UserResetPasswordAsync(string email)
         {
             try
             {
-                User? user = await _userRepository.GetAll().Where(x => x.UserName == userName || x.Email == userName).FirstOrDefaultAsync();
-
-                if (user == null) throw new Exception("Utilizador não encontrado.");
+                User? user = await _userRepository
+                    .GetAll()
+                    .Where(x => x.Email == email)
+                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
 
                 var password = GenerateNewPassword();
 
@@ -219,9 +217,10 @@
         {
             try
             {
-                User? user = await _userRepository.GetAll().Where(x => x.UserName == userLoginDTO.UserName || x.Email == userLoginDTO.UserName).FirstOrDefaultAsync();
-
-                if (user == null) throw new Exception("Utilizador não encontrado.");
+                User? user = await _userRepository
+                    .GetAll()
+                    .Where(x => x.Email == userLoginDTO.Email)
+                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
 
                 IdentityResult identityResult = await UpdateUserPassword(user, userLoginDTO.Password);
 
@@ -236,11 +235,11 @@
             }
         }
 
-        public async Task<bool> UserExists(string userName)
+        public async Task<bool> UserExists(string email)
         {
             try
             {
-                return await _userManager.Users.AnyAsync(user => user.UserName == userName.ToLower());
+                return await _userManager.Users.AnyAsync(user => user.Email == email);
 
             }
             catch (Exception ex)

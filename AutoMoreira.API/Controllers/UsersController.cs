@@ -74,7 +74,7 @@
         {
             try
             {
-                if (await _userService.UserExists(userDTO.UserName))
+                if (await _userService.UserExists(userDTO.Email))
                 {
                     return BadRequest("O utilizador já existe!");
                 }
@@ -84,7 +84,7 @@
                     return Ok(new UserDTO
                     {
                         Id = user.Id,
-                        UserName = user.UserName,
+                        Email = user.Email,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Token = _tokenService.CreateToken(user).Result
@@ -112,10 +112,10 @@
         {
             try
             {
-                var user = await _userService.GetUserByUserNameOrEmailAsync(userLoginDTO.UserName);
+                var user = await _userService.GetUserByEmailAsync(userLoginDTO.Email);
                 if (user == null)
                 {
-                    return Unauthorized("Utilizador ou password inválida!");
+                    return Unauthorized("Email ou password inválida!");
                 }
                 var result = await _userService.CheckUserPasswordAsync(user, userLoginDTO.Password);
                 if (!result.Succeeded)
@@ -125,7 +125,7 @@
                 return Ok(new UserDTO
                 {
                     Id = user.Id,
-                    UserName = user.UserName,
+                    Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     DarkMode = user.DarkMode,
@@ -143,21 +143,21 @@
         /// <summary>
         /// Reset User Password
         /// </summary>
-        /// <param name="username"></param>
-        [HttpPost("ResetPassword/{username}")]
-        public async Task<IActionResult> ResetPassword(string username)
+        /// <param name="email"></param>
+        [HttpPost("ResetPassword/{email}")]
+        public async Task<IActionResult> ResetPassword(string email)
         {
             try
             {
-                await _userService.UserResetPasswordAsync(username);
+                await _userService.UserResetPasswordAsync(email);
 
-                return Ok(username);
+                return Ok(email);
 
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar fazer Login. Erro: {ex.Message}");
+                    $"Erro ao tentar criar uma nova palavra-passe. Erro: {ex.Message}");
             }
         }
 
@@ -225,7 +225,7 @@
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+                    $"Erro ao tentar atualizar o modo utilizador. Erro: {ex.Message}");
             }
         }
 
@@ -247,7 +247,7 @@
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+                    $"Erro ao tentar atualizar o imagem do utilizador. Erro: {ex.Message}");
             }
         }
 

@@ -9,13 +9,13 @@
             _emailSettings = emailSettings;
         }
 
-        public async Task SendEmailToUserAsync(string toName, string toAddress, string userName, string password)
+        public async Task SendEmailToUserAsync(string toName, string toAddress, string password)
         {
             try
             {
                 var message = new MimeMessage();
 
-                var userEmail = UserEmail(toName, userName, password);
+                var userEmail = UserEmail(toName, toAddress, password);
 
                 message.From.Add(new MailboxAddress(_emailSettings.Name, _emailSettings.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
@@ -25,19 +25,18 @@
                     Text = string.Format(userEmail.Item2)
                 };
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                using var client = new SmtpClient();
 
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
-                }
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
             }
             catch (Exception e)
@@ -62,19 +61,18 @@
                     Text = string.Format(userEmail.Item2)
                 };
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                using var client = new SmtpClient();
 
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
-                }
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
             }
             catch (Exception e)
@@ -99,19 +97,18 @@
                     Text = string.Format(userEmail.Item2)
                 };
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                using var client = new SmtpClient();
 
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
-                }
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
             }
             catch (Exception e)
@@ -135,19 +132,18 @@
                     Text = string.Format(userEmail.Item2)
                 };
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                using var client = new SmtpClient();
 
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
-                }
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
             }
             catch (Exception e)
@@ -171,19 +167,18 @@
                     Text = string.Format(userEmail.Item2)
                 };
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                using var client = new SmtpClient();
 
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
-                }
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
             }
             catch (Exception e)
@@ -192,13 +187,13 @@
             }
         }
 
-        private static (string, string) UserEmail(string toName, string userName, string password)
+        private static (string, string) UserEmail(string toName, string email, string password)
         {
             string subject = "Auto Moreira: Registo de utilizador";
             string body = "<p style=\"text-align:center\"><img alt=\"\" src=\"https://auto-moreira-app.onrender.com/static/media/logo.9ebafe1ed9a8e5bc22b3.png\" style=\"height:100px; width:140px\" /></p>";
             body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">Bem-vindo(a)&nbsp;<strong>{toName}</strong>. </span></span></p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\">Credenciais de acesso:</span></span></p>";
-            body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\"><strong>Nome de Utilizador: </strong>{userName}</span></span></p>";
+            body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\"><strong>Email: </strong>{email}</span></span></p>";
             body += $"<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:12px\"><strong>Palavra-passe: </strong>{password}</span></span></p>";
             body += "<p style=\"text-align:center\">&nbsp;</p>";
             body += "<p style=\"text-align:center\"><span style=\"font-family:Arial,Helvetica,sans-serif\"><span style=\"font-size:11px\"><span style=\"color:#000000\">Atentamente,</span></span></span></p>";

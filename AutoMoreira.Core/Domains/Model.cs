@@ -18,6 +18,8 @@
         {
             Name = name;
             MarkId = markId;
+            Vehicles = new List<Vehicle>();
+
         }
 
         public Model(int id, string name, int markId)
@@ -25,6 +27,7 @@
             Id = id;
             Name = name;
             MarkId = markId;
+            Vehicles = new List<Vehicle>();
         }
 
         public void UpdateModel(string name, int markId)
