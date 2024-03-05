@@ -21,13 +21,12 @@
         public bool Sold { get; private set; }
         public DateTime? SoldDate { get; private set; }
 
-        private readonly List<VehicleImage> _vehicleImages;
-        public virtual ICollection<VehicleImage> VehicleImages => _vehicleImages;
+        public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
 
 
         public Vehicle() 
         {
-            _vehicleImages = new List<VehicleImage>();
+            VehicleImages = new List<VehicleImage>();
         }
 
         public Vehicle(int id, int modelId, string version, FUEL fuelType, 
@@ -51,7 +50,7 @@
             Sold = sold;
             SoldDate = sold ? DateTime.UtcNow : null;
 
-            _vehicleImages = new List<VehicleImage>();
+            VehicleImages = new List<VehicleImage>();
         }
 
         public Vehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors, 
@@ -73,7 +72,7 @@
             Sold = sold;
             SoldDate = sold? DateTime.UtcNow : null;
 
-            _vehicleImages = new List<VehicleImage>();
+            VehicleImages = new List<VehicleImage>();
         }
 
         public void UpdateVehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors,
@@ -94,12 +93,14 @@
             Opportunity = opportunity;
             Sold = sold;
             SoldDate = sold ? DateTime.UtcNow : null;
+
+            VehicleImages = new List<VehicleImage>();
         }
 
         public void SetVehicleImages(List<VehicleImage> vehicleImages)
         {
-            _vehicleImages.Clear();
-            //VehicleImages = vehicleImages;
+            VehicleImages.Clear();
+            VehicleImages = vehicleImages;
         }
 
     }

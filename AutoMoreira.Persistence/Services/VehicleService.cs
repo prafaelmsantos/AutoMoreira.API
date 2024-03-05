@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Services
+﻿using AutoMoreira.Core.Dto.Identity;
+
+namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
@@ -20,13 +22,6 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
 
-                if (vehicleDTO.VehicleImages.Count != 0)
-                {
-                    var images = _mapper.Map<List<VehicleImage>>(vehicleDTO.VehicleImages);
-
-                    vehicle.SetVehicleImages(images);
-                }
-
                 await _vehicleRepository.AddAsync(vehicle);
 
                 return _mapper.Map<VehicleDTO>(vehicle);
@@ -41,13 +36,15 @@
         {
             try
             {
-                Vehicle? vehicle = await _vehicleRepository.FindByIdAsync(vehicleDTO.Id);
+                Vehicle? vehicle = await _vehicleRepository.GetAll().AsNoTracking().Where(x=> x.Id == vehicleDTO.Id).FirstOrDefaultAsync();
 
                 if (vehicle == null) throw new Exception("Veiculo não encontrado.");
 
                 vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
+
+                await _vehicleImageRepository.RemoveRangeAsync(_vehicleImageRepository.GetAll().Where(x => x.VehicleId == vehicleDTO.Id).ToList());
 
                 if (vehicleDTO.VehicleImages.Count != 0)
                 {
@@ -107,6 +104,7 @@
                 Vehicle? vehicle = await _vehicleRepository
                     .GetAll()
                     .Where( x=> x.Id == vehicleId)
+                    .Include(x => x.VehicleImages)
                     .Include(x => x.Model)
                     .ThenInclude(x => x.Mark)
                     .FirstOrDefaultAsync();

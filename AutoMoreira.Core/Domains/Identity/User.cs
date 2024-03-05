@@ -47,6 +47,7 @@
 
         public void SetRoles(List<Role> roles)
         {
+            Roles.Clear();
             Roles = roles;
         }
 

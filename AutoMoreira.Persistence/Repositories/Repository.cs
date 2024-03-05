@@ -17,88 +17,46 @@
 
         public virtual async Task<bool> AddAsync(T entity)
         {
-            try
-            {
-                await Entity.AddAsync(entity);
-                await _context.SaveChangesAsync();
-                return true;
-            } 
-            catch (Exception)
-            {
-                return false;
-            }    
+            await Entity.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public virtual async Task<bool> AddRangeAsync(IEnumerable<T> entities)
         {
-            try
-            {
-                await Entity.AddRangeAsync(entities);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            await Entity.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
 
         public virtual async Task<bool> UpdateAsync(T entity)
         {
-            try
-            {
-                Entity.Update(entity);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Entity.Update(entity);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public virtual async Task<bool> UpdateRangeAsync(IEnumerable<T> entities)
         {
-            try
-            {
-                Entity.UpdateRange(entities);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Entity.UpdateRange(entities);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
 
         public virtual async Task<bool> RemoveAsync(T entity)
         {
-            try
-            {
-                Entity.Remove(entity);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Entity.Remove(entity);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public virtual async Task<bool> RemoveRangeAsync(IEnumerable<T> entities)
         {
-            try
-            {
-                Entity.RemoveRange(entities);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Entity.RemoveRange(entities);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
 
