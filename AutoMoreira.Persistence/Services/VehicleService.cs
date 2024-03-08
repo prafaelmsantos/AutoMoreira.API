@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto.Identity;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
