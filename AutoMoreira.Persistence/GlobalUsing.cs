@@ -37,3 +37,4 @@ global using AutoMoreira.Core.Domains.Email;
 global using AutoMoreira.Core.Dto.Visitor;
 global using MimeKit;
 global using MailKit.Net.Smtp;
+global using AutoMoreira.Core.Dto.Generic;

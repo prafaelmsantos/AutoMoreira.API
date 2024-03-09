@@ -87,31 +87,11 @@
         /// <summary>
         /// Delete Client Message
         /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        /// <param name="clientMessagesIds"></param>
+        [HttpPost("DeleteClientMessages")]
+        public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
         {
-            try
-            {
-                var clientMessage = await _clientMessageService.GetClientMessageByIdAsync(id);
-                if (clientMessage == null) return NoContent();
-
-                if (await _clientMessageService.DeleteClientMessage(id))
-                {
-
-                    return Ok(new { message = "Mensagem de cliente não apagada!" });
-
-                }
-                else
-                {
-                    throw new Exception("Mensagem de cliente não apagada!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar apagar a mensagem de cliente. Erro: {ex.Message}");
-            }
+            return Ok(await _clientMessageService.DeleteClientMessages(clientMessagesIds));
         }
 
         /// <summary>

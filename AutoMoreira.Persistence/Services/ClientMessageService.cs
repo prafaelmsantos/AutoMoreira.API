@@ -31,20 +31,38 @@
         }
 
 
-        public async Task<bool> DeleteClientMessage(int clientMessageId)
+        public async Task<List<ResponseMessageDTO>> DeleteClientMessages(List<int> clientMessagesIds)
         {
-            try
-            {
-                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageId);
+            List<ResponseMessageDTO> responseMessageDTOs = new();
 
-                if (clientMessage == null) throw new Exception("Mensagem de cliente não encontrada.");
-
-                return await _clientMessageRepository.RemoveAsync(clientMessage);
-            }
-            catch (Exception ex)
+            foreach (int clientMessageId in clientMessagesIds)
             {
-                throw new Exception(ex.Message);
+                ResponseMessageDTO responseMessageDTO = new() { Entity = new MinimumDTO() { Id = clientMessageId }, OperationSuccess = false };
+                try
+                {
+                    ClientMessage? clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageId);
+
+                    if (clientMessage is not null)
+                    {
+                        await _clientMessageRepository.RemoveAsync(clientMessage);
+                        responseMessageDTO.Entity.Name = clientMessage.Name;
+                        responseMessageDTO.OperationSuccess = true;
+                    }
+                    else
+                    {
+                        responseMessageDTO.ErrorMessage = "Mensagem de cliente não encontrada.";
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    responseMessageDTO.ErrorMessage = ex.Message;
+                }
+
+                responseMessageDTOs.Add(responseMessageDTO);
             }
+
+            return responseMessageDTOs;
         }
 
         public async Task<List<ClientMessageDTO>> GetAllClientMessagesAsync()

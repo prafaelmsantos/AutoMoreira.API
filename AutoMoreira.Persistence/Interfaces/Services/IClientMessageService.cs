@@ -3,7 +3,7 @@
     public interface IClientMessageService
     {
         Task<ClientMessageDTO> AddClientMessageAsync(ClientMessageDTO clientMessageDTO);
-        Task<bool> DeleteClientMessage(int clientMessageId);
+        Task<List<ResponseMessageDTO>> DeleteClientMessages(List<int> clientMessagesIds);
 
         Task<List<ClientMessageDTO>> GetAllClientMessagesAsync();
         Task<ClientMessageDTO> GetClientMessageByIdAsync(int clientMessageId);
