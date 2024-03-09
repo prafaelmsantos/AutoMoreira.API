@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AutoMoreira.Persistence.Repositories
+﻿namespace AutoMoreira.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
