@@ -59,20 +59,44 @@
             }
         }
 
-        public async Task<bool> DeleteVehicle(int vehicleId)
+        public async Task<List<ResponseMessageDTO>> DeleteVehiclesAsync(List<int> vehiclesIds)
         {
-            try
-            {
-                Vehicle? vehicle = await _vehicleRepository.FindByIdAsync(vehicleId);
+            List<ResponseMessageDTO> responseMessageDTOs = new();
 
-                if (vehicle == null) throw new Exception("Veiculo não encontrado.");
-
-                return await _vehicleRepository.RemoveAsync(vehicle);
-            }
-            catch (Exception ex)
+            foreach (int vehicleId in vehiclesIds)
             {
-                throw new Exception(ex.Message);
+                ResponseMessageDTO responseMessageDTO = new() { Entity = new MinimumDTO() { Id = vehicleId }, OperationSuccess = false };
+                try
+                {
+                    Vehicle? vehicle = await _vehicleRepository
+                        .GetAll()
+                        .Where(x => x.Id == vehicleId)
+                        .Include(x => x.Model)
+                        .ThenInclude(x => x.Mark)
+                        .FirstOrDefaultAsync();
+
+                    if (vehicle is not null)
+                    {
+                        responseMessageDTO.Entity.Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name} {vehicle.Version}";
+                        
+                        await _vehicleRepository.RemoveAsync(vehicle);                    
+                        responseMessageDTO.OperationSuccess = true;
+                    }
+                    else
+                    {
+                        responseMessageDTO.ErrorMessage = "Veiculo não encontrado.";
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    responseMessageDTO.ErrorMessage = ex.Message;
+                }
+
+                responseMessageDTOs.Add(responseMessageDTO);
             }
+
+            return responseMessageDTOs;
         }
 
         public async Task<List<VehicleDTO>> GetAllVehiclesAsync()

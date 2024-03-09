@@ -31,7 +31,7 @@
         }
 
 
-        public async Task<List<ResponseMessageDTO>> DeleteClientMessages(List<int> clientMessagesIds)
+        public async Task<List<ResponseMessageDTO>> DeleteClientMessagesAsync(List<int> clientMessagesIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 
@@ -44,8 +44,10 @@
 
                     if (clientMessage is not null)
                     {
-                        await _clientMessageRepository.RemoveAsync(clientMessage);
                         responseMessageDTO.Entity.Name = clientMessage.Name;
+
+                        await _clientMessageRepository.RemoveAsync(clientMessage);
+                        
                         responseMessageDTO.OperationSuccess = true;
                     }
                     else

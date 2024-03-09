@@ -4,7 +4,7 @@
     {
         Task<VehicleDTO> AddVehicleAsync(VehicleDTO vehicleDTO);
         Task<VehicleDTO> UpdateVehicleAsync(VehicleDTO vehicleDTO);
-        Task<bool> DeleteVehicle(int vehicleId);
+        Task<List<ResponseMessageDTO>> DeleteVehiclesAsync(List<int> vehiclesIds);
 
         Task<List<VehicleDTO>> GetAllVehiclesAsync();
         Task<VehicleDTO> GetVehicleByIdAsync(int vehicleId);

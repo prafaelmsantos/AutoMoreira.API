@@ -4,7 +4,7 @@
     {
         Task<MarkDTO> AddMarkAsync(MarkDTO markDTO);
         Task<MarkDTO> UpdateMarkAsync(MarkDTO markDTO);
-        Task<bool> DeleteMark(int markId);
+        Task<List<ResponseMessageDTO>> DeleteMarksAsync(List<int> marksIds);
 
         Task<List<MarkDTO>> GetAllMarksAsync();
         Task<MarkDTO> GetMarkByIdAsync(int markId);

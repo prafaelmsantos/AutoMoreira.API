@@ -85,13 +85,13 @@
 
 
         /// <summary>
-        /// Delete Client Message
+        /// Delete Client Messages
         /// </summary>
         /// <param name="clientMessagesIds"></param>
         [HttpPost("DeleteClientMessages")]
         public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
         {
-            return Ok(await _clientMessageService.DeleteClientMessages(clientMessagesIds));
+            return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));
         }
 
         /// <summary>

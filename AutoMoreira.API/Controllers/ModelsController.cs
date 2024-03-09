@@ -132,35 +132,14 @@
         }
 
 
-        /// <summary>
-        /// Delete Model
+        //// <summary>
+        /// Delete Models
         /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        /// <param name="modelsIds"></param>
+        [HttpPost("DeleteModels")]
+        public async Task<IActionResult> Delete([FromBody] List<int> modelsIds)
         {
- 
-            try
-            {
-                var model = await _modelService.GetModelByIdAsync(id);
-                if (model == null) return NoContent();
-
-                if (await _modelService.DeleteModel(id))
-                {
-                    
-                    return Ok(new { message = "Modelo apagado!" });
-
-                }
-                else
-                {
-                    throw new Exception("Modelo não apagado!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar apagar o modelo. Erro: {ex.Message}");
-            }
+            return Ok(await _modelService.DeleteModelsAsync(modelsIds));
         }
 
         #endregion

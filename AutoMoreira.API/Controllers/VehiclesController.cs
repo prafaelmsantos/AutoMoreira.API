@@ -188,35 +188,14 @@
             }
         }
 
-
-
-        /// <summary>
-        /// Delete Vehicle
+        //// <summary>
+        /// Delete Vehicles
         /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        /// <param name="vehiclesIds"></param>
+        [HttpPost("DeleteVehicles")]
+        public async Task<IActionResult> Delete([FromBody] List<int> vehiclesIds)
         {
-
-            try
-            {
-                var vehicle = await _vehicleService.GetVehicleByIdAsync(id);
-                if (vehicle == null) return NoContent();
-
-                if (await _vehicleService.DeleteVehicle(id))
-                {
-                    return Ok(new { message = "Veiculo apagado!" });
-                }
-                else
-                {
-                    throw new Exception("Veiculo não apagado!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar apagar o veiculo. Erro: {ex.Message}");
-            }
+            return Ok(await _vehicleService.DeleteVehiclesAsync(vehiclesIds));
         }
 
         #endregion

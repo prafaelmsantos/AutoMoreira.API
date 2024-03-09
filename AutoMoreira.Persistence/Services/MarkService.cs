@@ -31,10 +31,7 @@
         {
             try
             {
-                var mark = await _markRepository.FindByIdAsync(markDTO.Id);
-
-                if (mark == null) throw new Exception("Marca não encontrada.");
-
+                var mark = await _markRepository.FindByIdAsync(markDTO.Id) ?? throw new Exception("Marca não encontrada.");
                 mark.SetName(markDTO.Name);
 
                 await _markRepository.UpdateAsync(mark);
@@ -45,24 +42,7 @@
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public async Task<bool> DeleteMark(int markId)
-        {
-            try
-            {
-                var mark = await _markRepository.FindByIdAsync(markId);
-
-                if (mark == null) throw new Exception("Marca não encontrada.");
-
-                
-                return await _markRepository.RemoveAsync(mark);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        }     
 
         public async Task<List<MarkDTO>> GetAllMarksAsync()
         {
@@ -85,14 +65,47 @@
             {
                 var mark = await _markRepository.FindByIdAsync(markId);
 
-                if (mark == null) throw new Exception("Marca não encontrada.");
-
-                return _mapper.Map<MarkDTO>(mark);
+                return mark == null ? throw new Exception("Marca não encontrada.") : _mapper.Map<MarkDTO>(mark);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<List<ResponseMessageDTO>> DeleteMarksAsync(List<int> marksIds)
+        {
+            List<ResponseMessageDTO> responseMessageDTOs = new();
+
+            foreach (int markId in marksIds)
+            {
+                ResponseMessageDTO responseMessageDTO = new() { Entity = new MinimumDTO() { Id = markId }, OperationSuccess = false };
+                try
+                {
+                    Mark? mark = await _markRepository.FindByIdAsync(markId);
+
+                    if (mark is not null)
+                    {
+                        responseMessageDTO.Entity.Name = mark.Name;
+
+                        await _markRepository.RemoveAsync(mark);
+                        responseMessageDTO.OperationSuccess = true;
+                    }
+                    else
+                    {
+                        responseMessageDTO.ErrorMessage = "Marca não encontrada.";
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    responseMessageDTO.ErrorMessage = ex.Message;
+                }
+
+                responseMessageDTOs.Add(responseMessageDTO);
+            }
+
+            return responseMessageDTOs;
         }
     }
 }

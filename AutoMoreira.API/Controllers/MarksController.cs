@@ -112,34 +112,14 @@
         }
 
 
-        /// <summary>
-        /// Delete Mark
+        //// <summary>
+        /// Delete Marks
         /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        /// <param name="modelsIds"></param>
+        [HttpPost("DeleteMarks")]
+        public async Task<IActionResult> Delete([FromBody] List<int> marksIds)
         {
-            try
-            {
-                var mark = await _markService.GetMarkByIdAsync(id);
-                if (mark == null) return NoContent();
-
-                if (await _markService.DeleteMark(id))
-                {
-                  
-                   return Ok(new { message = "Marca apagada!" });
-
-                }
-                else
-                {
-                    throw new Exception("Marca não apagada!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar apagar a marca. Erro: {ex.Message}");
-            }
+            return Ok(await _markService.DeleteMarksAsync(marksIds));
         }
         #endregion
 

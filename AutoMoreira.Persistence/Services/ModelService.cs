@@ -42,17 +42,39 @@
             }
         }
 
-        public async Task<bool> DeleteModel(int modelId)
+        public async Task<List<ResponseMessageDTO>> DeleteModelsAsync(List<int> modelsIds)
         {
-            try
+            List<ResponseMessageDTO> responseMessageDTOs = new();
+
+            foreach (int modelId in modelsIds)
             {
-                Model model = await _modelRepository.FindByIdAsync(modelId) ?? throw new Exception("Modelo não encontrado.");
-                return await _modelRepository.RemoveAsync(model);
+                ResponseMessageDTO responseMessageDTO = new() { Entity = new MinimumDTO() { Id = modelId }, OperationSuccess = false };
+                try
+                {
+                    Model? model = await _modelRepository.FindByIdAsync(modelId);
+
+                    if (model is not null)
+                    {
+                        responseMessageDTO.Entity.Name = model.Name;
+
+                        await _modelRepository.RemoveAsync(model);
+                        responseMessageDTO.OperationSuccess = true;
+                    }
+                    else
+                    {
+                        responseMessageDTO.ErrorMessage = "Modelo não encontrado.";
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    responseMessageDTO.ErrorMessage = ex.Message;
+                }
+
+                responseMessageDTOs.Add(responseMessageDTO);
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            return responseMessageDTOs;
         }
 
         public async Task<List<ModelDTO>> GetAllModelsAsync()

@@ -4,7 +4,7 @@
     {
         Task<ModelDTO> AddModelAsync(ModelDTO modelDTO);
         Task<ModelDTO> UpdateModelAsync(ModelDTO modelDTO);
-        Task<bool> DeleteModel(int modelId);
+        Task<List<ResponseMessageDTO>> DeleteModelsAsync(List<int> modelsIds);
 
         Task<List<ModelDTO>> GetAllModelsAsync();
         Task<ModelDTO> GetModelByIdAsync(int modelId);
