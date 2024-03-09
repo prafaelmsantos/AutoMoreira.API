@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Repositories
+﻿using System;
+
+namespace AutoMoreira.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -73,6 +75,12 @@
 #pragma warning disable CS8603 // Possible null reference return.
             return await Entity.FindAsync(Id);
 #pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
     }

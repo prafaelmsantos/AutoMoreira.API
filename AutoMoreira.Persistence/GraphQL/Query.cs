@@ -21,7 +21,11 @@
         [UseSorting]
         public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
         {
-            return _repo.GetAll().Include(x => x.Model).ThenInclude(x => x.Mark);
+            return _repo
+                .GetAll()
+                .Include(x => x.VehicleImages)
+                .Include(x => x.Model)
+                .ThenInclude(x => x.Mark);
         }
         [UsePaging]
         [UseFiltering]

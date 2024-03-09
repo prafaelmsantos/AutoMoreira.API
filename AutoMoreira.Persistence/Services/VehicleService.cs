@@ -3,13 +3,11 @@
     public class VehicleService : IVehicleService
     {
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly IVehicleImageRepository _vehicleImageRepository;
         private readonly IMapper _mapper;
-        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper, IVehicleImageRepository vehicleImageRepository)
+        public VehicleService(IVehicleRepository vehicleRepository, IMapper mapper)
         {
             _vehicleRepository = vehicleRepository;
             _mapper = mapper;
-            _vehicleImageRepository = vehicleImageRepository;
         }
 
         public async Task<VehicleDTO> AddVehicleAsync(VehicleDTO vehicleDTO)
@@ -42,13 +40,13 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
 
-                await _vehicleImageRepository.RemoveRangeAsync(_vehicleImageRepository.GetAll().Where(x => x.VehicleId == vehicleDTO.Id).ToList());
-
-                if (vehicleDTO.VehicleImages.Count != 0)
+                if (vehicleDTO.VehicleImages.Any())
                 {
-                    var images = _mapper.Map<List<VehicleImage>>(vehicleDTO.VehicleImages);
+                    List<VehicleImage> vehicleImages = new();
 
-                    vehicle.SetVehicleImages(images);
+                    vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
+
+                    vehicle.SetVehicleImages(vehicleImages);
                 }
 
                 await _vehicleRepository.UpdateAsync(vehicle);
@@ -83,6 +81,9 @@
             {
                 List<Vehicle> vehicles = await _vehicleRepository
                     .GetAll()
+                    .Include(x => x.VehicleImages)
+                    .Include(x => x.Model)
+                    .ThenInclude(x => x.Mark)
                     .OrderBy(x => x.Id)
                     .ToListAsync();
 
@@ -107,9 +108,7 @@
                     .ThenInclude(x => x.Mark)
                     .FirstOrDefaultAsync();
 
-                if (vehicle == null) throw new Exception("Veiculo não encontrado.");
-
-                return _mapper.Map<VehicleDTO>(vehicle);
+                return vehicle == null ? throw new Exception("Veiculo não encontrado.") : _mapper.Map<VehicleDTO>(vehicle);
             }
             catch (Exception ex)
             {

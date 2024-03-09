@@ -8,5 +8,11 @@
         public virtual Vehicle Vehicle { get; private set; } = null!;
 
         public VehicleImage() { }
+
+        public VehicleImage(string url, int vehicleId)
+        {
+            Url = url;
+            VehicleId = vehicleId;
+        }
     }
 }
