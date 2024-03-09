@@ -94,6 +94,11 @@
                 .HasDefaultValue(false)
                 .IsRequired(true);
 
+            entity.Property(x => x.IsDefault)
+                .HasColumnName("is_default")
+                .HasDefaultValue(false)
+                .IsRequired(true);
+
 
             entity.HasMany(x => x.Roles)
                .WithMany(x => x.Users)
