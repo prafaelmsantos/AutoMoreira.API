@@ -22,6 +22,7 @@
             _roleRepository = roleRepository;
             _userRoleRepository = userRoleRepository;
         }
+
         public async Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password)
         {
             try
