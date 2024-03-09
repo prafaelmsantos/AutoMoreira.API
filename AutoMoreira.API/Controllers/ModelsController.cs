@@ -136,7 +136,7 @@
         /// Delete Models
         /// </summary>
         /// <param name="modelsIds"></param>
-        [HttpPost("DeleteModels")]
+        [HttpPost("Delete")]
         public async Task<IActionResult> Delete([FromBody] List<int> modelsIds)
         {
             return Ok(await _modelService.DeleteModelsAsync(modelsIds));

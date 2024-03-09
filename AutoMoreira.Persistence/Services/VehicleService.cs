@@ -16,7 +16,7 @@
             {
                 Vehicle vehicle = new(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage, 
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
-                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
+                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
                 await _vehicleRepository.AddAsync(vehicle);
 
@@ -32,13 +32,11 @@
         {
             try
             {
-                Vehicle? vehicle = await _vehicleRepository.GetAll().AsNoTracking().Where(x=> x.Id == vehicleDTO.Id).FirstOrDefaultAsync();
-
-                if (vehicle == null) throw new Exception("Veiculo não encontrado.");
-
+                Vehicle? vehicle = await _vehicleRepository.GetAll().AsNoTracking().Where(x=> x.Id == vehicleDTO.Id).FirstOrDefaultAsync() ?? throw new Exception("Veiculo não encontrado.");
+                
                 vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
-                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold);
+                    vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
                 if (vehicleDTO.VehicleImages.Any())
                 {

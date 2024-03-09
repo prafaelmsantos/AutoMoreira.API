@@ -192,7 +192,7 @@
         /// Delete Vehicles
         /// </summary>
         /// <param name="vehiclesIds"></param>
-        [HttpPost("DeleteVehicles")]
+        [HttpPost("Delete")]
         public async Task<IActionResult> Delete([FromBody] List<int> vehiclesIds)
         {
             return Ok(await _vehicleService.DeleteVehiclesAsync(vehiclesIds));

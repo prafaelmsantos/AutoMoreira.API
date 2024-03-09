@@ -109,6 +109,16 @@
             }
         }
 
+        //// <summary>
+        /// Delete Roles
+        /// </summary>
+        /// <param name="rolesIds"></param>
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete([FromBody] List<int> rolesIds)
+        {
+            return Ok(await _roleService.DeleteRolesAsync(rolesIds));
+        }
+
         #endregion
 
     }

@@ -13,5 +13,6 @@
         Task UserUpdateUserPasswordAsync(UserLoginDTO userLoginDTO);
         Task<UserDTO> UpdateUserModeAsync(int id, bool mode);
         Task<UserDTO> UpdateUserImageAsync(int id, string image);
+        Task<List<ResponseMessageDTO>> DeleteUsersAsync(List<int> usersIds);
     }
 }

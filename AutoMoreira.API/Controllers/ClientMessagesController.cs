@@ -83,17 +83,6 @@
             }
         }
 
-
-        /// <summary>
-        /// Delete Client Messages
-        /// </summary>
-        /// <param name="clientMessagesIds"></param>
-        [HttpPost("DeleteClientMessages")]
-        public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
-        {
-            return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));
-        }
-
         /// <summary>
         /// Update Client Message Status
         /// </summary>
@@ -114,6 +103,16 @@
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
                     $"Erro ao tentar atualizar o status da mensagem de cliente. Erro: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Delete Client Messages
+        /// </summary>
+        /// <param name="clientMessagesIds"></param>
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
+        {
+            return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));
         }
         #endregion
     }

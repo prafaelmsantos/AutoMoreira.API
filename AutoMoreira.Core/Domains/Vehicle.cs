@@ -17,8 +17,8 @@
         public int EngineSize { get; private set; }
         public int Power { get; private set; }
         public string? Observations { get; private set; }
-        public bool Opportunity { get; private set; }
-        public bool Sold { get; private set; }
+        public bool Opportunity { get; private set; } = false;
+        public bool Sold { get; private set; } = false;
         public DateTime? SoldDate { get; private set; }
 
         public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
@@ -31,7 +31,7 @@
 
         public Vehicle(int id, int modelId, string version, FUEL fuelType, 
             double price, double mileage, int year, string color, int doors, TRANSMISSION transmission, 
-            int engineSize, int power, string observations, bool opportunity, bool sold)
+            int engineSize, int power, string observations, bool opportunity)
         {
             Id = id;
             ModelId = modelId;
@@ -47,14 +47,13 @@
             Power = power;
             Observations = observations;
             Opportunity = opportunity;
-            Sold = sold;
-            SoldDate = sold ? DateTime.UtcNow : null;
+            Sold = false;
 
             VehicleImages = new List<VehicleImage>();
         }
 
         public Vehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors, 
-            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold)
+            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold, DateTime? soldDate)
         {
             ModelId = modelId;
             Version = version;
@@ -70,13 +69,13 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            SoldDate = sold? DateTime.UtcNow : null;
+            SoldDate = soldDate ?? (sold ? DateTime.UtcNow : null);
 
             VehicleImages = new List<VehicleImage>();
         }
 
         public void UpdateVehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors,
-            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold)
+            TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold, DateTime? soldDate)
         {
             ModelId = modelId;
             Version = version;
@@ -92,7 +91,7 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            SoldDate = sold ? DateTime.UtcNow : null;
+            SoldDate = soldDate ?? (sold ? DateTime.UtcNow : null);
 
             VehicleImages = new List<VehicleImage>();
         }

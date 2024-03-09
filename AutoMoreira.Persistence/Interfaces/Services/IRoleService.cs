@@ -7,5 +7,7 @@
 
         Task<List<RoleDTO>> GetAllRolesAsync();
         Task<RoleDTO> GetRoleByIdAsync(int roleId);
+
+        Task<List<ResponseMessageDTO>> DeleteRolesAsync(List<int> rolesIds);
     }
 }

@@ -79,6 +79,7 @@
             User? user = await _userRepository
                 .GetAll()
                 .Where(x => x.Email == email)
+                .Include( x=> x.Roles)
                 .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
 
             return _mapper.Map<UserDTO>(user);
@@ -248,6 +249,41 @@
                 throw new Exception($"Erro ao tentar verificar se o utilizador existe. Erro: {ex.Message}");
 
             }
+        }
+
+        public async Task<List<ResponseMessageDTO>> DeleteUsersAsync(List<int> usersIds)
+        {
+            List<ResponseMessageDTO> responseMessageDTOs = new();
+
+            foreach (int userId in usersIds)
+            {
+                ResponseMessageDTO responseMessageDTO = new() { Entity = new MinimumDTO() { Id = userId }, OperationSuccess = false };
+                try
+                {
+                    User? user = await _userRepository.FindByIdAsync(userId);
+
+                    if (user is not null)
+                    {
+                        responseMessageDTO.Entity.Name = user.Email;
+
+                        await _userRepository.RemoveAsync(user);
+                        responseMessageDTO.OperationSuccess = true;
+                    }
+                    else
+                    {
+                        responseMessageDTO.ErrorMessage = "Utilizador não encontrado.";
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    responseMessageDTO.ErrorMessage = ex.Message;
+                }
+
+                responseMessageDTOs.Add(responseMessageDTO);
+            }
+
+            return responseMessageDTOs;
         }
 
         private static string GenerateNewPassword()

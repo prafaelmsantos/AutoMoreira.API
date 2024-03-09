@@ -1,6 +1,3 @@
-using AutoMoreira.Core.Domains.Email;
-using Microsoft.Extensions.Configuration;
-
 namespace AutoMoreira.API
 {
     public class Startup

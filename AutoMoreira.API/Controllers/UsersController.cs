@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.API.Controllers
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -87,6 +89,11 @@
                         Email = user.Email,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
+                        Image = user.Image,
+                        PhoneNumber = user.PhoneNumber,
+                        DarkMode = user.DarkMode,
+                        IsDefault = user.IsDefault,
+                        Roles = user.Roles,
                         Token = _tokenService.CreateToken(user).Result
                     });
                 }
@@ -128,7 +135,11 @@
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Image = user.Image,
+                    PhoneNumber = user.PhoneNumber,
                     DarkMode = user.DarkMode,
+                    IsDefault = user.IsDefault,
+                    Roles = user.Roles,
                     Token = _tokenService.CreateToken(user).Result
                 });
 
@@ -181,8 +192,6 @@
                     $"Erro ao tentar fazer atualização da palavra-passe. Erro: {ex.Message}");
             }
         }
-
-
 
         /// <summary>
         /// Update User
@@ -251,6 +260,15 @@
             }
         }
 
+        //// <summary>
+        /// Delete Users
+        /// </summary>
+        /// <param name="usersIds"></param>
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete([FromBody] List<int> usersIds)
+        {
+            return Ok(await _userService.DeleteUsersAsync(usersIds));
+        }
         #endregion
 
     }

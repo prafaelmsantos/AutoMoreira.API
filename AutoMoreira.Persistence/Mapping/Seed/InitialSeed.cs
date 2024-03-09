@@ -29,13 +29,13 @@
               );
 
             modelBuilder.Entity<Vehicle>().HasData(
-              new Vehicle(1, 1, "Sportline", FUEL.Diesel, 40000, 2000, 2022, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", true, false),
-              new Vehicle(2, 2, "AMG", FUEL.Hybrid, 27000, 7000, 2021, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
-              new Vehicle(3, 3, "Sport", FUEL.Petrol, 29000, 0, 2023, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true, false),
-              new Vehicle(4, 4, "GTI", FUEL.Petrol, 18000, 10000, 2022, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false, false)
+              new Vehicle(1, 1, "Sportline", FUEL.Diesel, 40000, 2000, 2022, "Azul", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", true),
+              new Vehicle(2, 2, "AMG", FUEL.Hybrid, 27000, 7000, 2021, "Cinza", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true),
+              new Vehicle(3, 3, "Sport", FUEL.Petrol, 29000, 0, 2023, "Vermelho", 5, TRANSMISSION.Automatic, 1999, 140, "Garantia de 2 anos", true),
+              new Vehicle(4, 4, "GTI", FUEL.Petrol, 18000, 10000, 2022, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false)
               );
 
-            modelBuilder.Entity<Role>().HasData(new(1, "Administrador", true), new(2, "Colaborador"));
+            modelBuilder.Entity<Role>().HasData(new (1, "Administrador", true), new (2, "Colaborador", true, true));
 
         }
     }

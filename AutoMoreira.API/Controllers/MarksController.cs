@@ -116,7 +116,7 @@
         /// Delete Marks
         /// </summary>
         /// <param name="modelsIds"></param>
-        [HttpPost("DeleteMarks")]
+        [HttpPost("Delete")]
         public async Task<IActionResult> Delete([FromBody] List<int> marksIds)
         {
             return Ok(await _markService.DeleteMarksAsync(marksIds));

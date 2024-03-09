@@ -22,6 +22,11 @@
                 .HasDefaultValue(false)
                 .IsRequired(true);
 
+            entity.Property(x => x.IsReadOnly)
+               .HasColumnName("is_read_only")
+               .HasDefaultValue(false)
+               .IsRequired(true);
+
 
             /* ------------------- IdentityRole ------------------- */
 
