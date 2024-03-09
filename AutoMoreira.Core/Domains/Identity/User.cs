@@ -15,6 +15,23 @@
             Roles = new List<Role>();
         }
 
+        public User(int id, string email, string? phoneNumber, string firstName, string lastName, bool isDefault)
+        {
+            Id = id;
+            UserName = email;
+            NormalizedUserName = email.ToUpper();
+            Email = email;
+            NormalizedEmail = email.ToUpper();
+            EmailConfirmed = true;
+            PhoneNumber = phoneNumber;
+            PhoneNumberConfirmed = true;
+            FirstName = firstName;
+            LastName = lastName;
+            IsDefault = isDefault;
+
+            Roles = new List<Role>();
+        }
+
         public User(string email, string? phoneNumber, string firstName, string lastName)
         {
             UserName = email;
@@ -59,6 +76,12 @@
         {
             Roles.Clear();
             Roles = roles;
+        }
+
+        public void SetPasswordHash(string passwordHash)
+        {
+            PasswordHash = passwordHash;
+            SecurityStamp = Guid.NewGuid().ToString();
         }
 
     }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoMoreira.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240226204031_Migrations0000001")]
-    partial class Migrations0000001
+    [Migration("20240309174643_000001")]
+    partial class _000001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,6 +85,12 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("is_default");
 
+                    b.Property<bool>("IsReadOnly")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_read_only");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -108,16 +114,20 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e5a70ff8-d492-448c-b6f4-1aeffe9e985c",
-                            IsDefault = true,
-                            Name = "Administrador"
+                            ConcurrencyStamp = "3f5814c9-ee24-4b35-a701-e9137bca961d",
+                            IsDefault = false,
+                            IsReadOnly = true,
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "4f941683-a3f7-446f-9dad-15f79c80af5f",
-                            IsDefault = false,
-                            Name = "Colaborador"
+                            ConcurrencyStamp = "c3e59ecd-c99f-40a1-b7ca-7b79adc1c030",
+                            IsDefault = true,
+                            IsReadOnly = true,
+                            Name = "Colaborador",
+                            NormalizedName = "COLABORADOR"
                         });
                 });
 
@@ -166,6 +176,12 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("text")
                         .HasColumnName("image");
+
+                    b.Property<bool>("IsDefault")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_default");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -235,6 +251,29 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c0aab5e2-4d6f-4093-a2ad-f85ad77c9169",
+                            DarkMode = false,
+                            Email = "automoreiraportugal@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Auto",
+                            IsDefault = true,
+                            LastName = "Moreira",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
+                            NormalizedUserName = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDMMFMlNH0fzo8Rci3d1YLHRv9WrmvHQMY0hJ4srfDVy9v1K42u9k2Zd0tkHEvo0pA==",
+                            PhoneNumber = "231472555",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "7a169789-ef15-4992-a704-426d2a56dda1",
+                            TwoFactorEnabled = false,
+                            UserName = "automoreiraportugal@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.UserRole", b =>
@@ -252,6 +291,13 @@ namespace AutoMoreira.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("user_roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>

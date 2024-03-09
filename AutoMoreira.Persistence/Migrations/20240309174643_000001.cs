@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class Migrations0000001 : Migration
+    public partial class _000001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,7 @@ namespace AutoMoreira.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     is_default = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    is_read_only = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     concurrency_stamp = table.Column<string>(type: "text", nullable: true)
@@ -67,6 +68,7 @@ namespace AutoMoreira.Persistence.Migrations
                     last_name = table.Column<string>(type: "text", nullable: false),
                     image = table.Column<string>(type: "text", nullable: true),
                     dark_mode = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    is_default = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
@@ -299,13 +301,18 @@ namespace AutoMoreira.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "is_default", "name", "normalized_name" },
-                values: new object[] { 1, "e5a70ff8-d492-448c-b6f4-1aeffe9e985c", true, "Administrador", null });
+                columns: new[] { "id", "concurrency_stamp", "is_read_only", "name", "normalized_name" },
+                values: new object[] { 1, "3f5814c9-ee24-4b35-a701-e9137bca961d", true, "Administrador", "ADMINISTRADOR" });
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
-                values: new object[] { 2, "4f941683-a3f7-446f-9dad-15f79c80af5f", "Colaborador", null });
+                columns: new[] { "id", "concurrency_stamp", "is_default", "is_read_only", "name", "normalized_name" },
+                values: new object[] { 2, "c3e59ecd-c99f-40a1-b7ca-7b79adc1c030", true, true, "Colaborador", "COLABORADOR" });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "first_name", "image", "is_default", "last_name", "lockout_end", "normalized_email", "normalized_user_name", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "user_name" },
+                values: new object[] { 1, 0, "c0aab5e2-4d6f-4093-a2ad-f85ad77c9169", "automoreiraportugal@gmail.com", true, "Auto", null, true, "Moreira", null, "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AQAAAAEAACcQAAAAEDMMFMlNH0fzo8Rci3d1YLHRv9WrmvHQMY0hJ4srfDVy9v1K42u9k2Zd0tkHEvo0pA==", "231472555", true, "7a169789-ef15-4992-a704-426d2a56dda1", "automoreiraportugal@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "models",
@@ -322,6 +329,11 @@ namespace AutoMoreira.Persistence.Migrations
                     { 8, 8, "V40" },
                     { 9, 9, "Punto" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "user_roles",
+                columns: new[] { "role_id", "user_id" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "vehicles",

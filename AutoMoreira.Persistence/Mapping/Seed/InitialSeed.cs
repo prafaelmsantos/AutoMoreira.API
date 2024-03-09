@@ -35,7 +35,18 @@
               new Vehicle(4, 4, "GTI", FUEL.Petrol, 18000, 10000, 2022, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false)
               );
 
-            modelBuilder.Entity<Role>().HasData(new (1, "Administrador", true), new (2, "Colaborador", true, true));
+            Role role = new(1, "Administrador", true);
+
+            modelBuilder.Entity<Role>().HasData(role, new(2, "Colaborador", true, true));
+
+            var hasher = new PasswordHasher<User>();
+
+            User user = new(1, "automoreiraportugal@gmail.com", "231472555", "Auto", "Moreira", true);
+            user.SetPasswordHash(hasher.HashPassword(user, "123456"));
+
+            modelBuilder.Entity<User>().HasData(user);
+
+            modelBuilder.Entity<UserRole>().HasData(new UserRole(user.Id, role.Id));
 
         }
     }

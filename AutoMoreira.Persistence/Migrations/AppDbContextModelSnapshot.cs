@@ -112,18 +112,20 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "5aa4f9ab-7f36-4ff8-8e49-bc67a8a97c7a",
+                            ConcurrencyStamp = "3f5814c9-ee24-4b35-a701-e9137bca961d",
                             IsDefault = false,
                             IsReadOnly = true,
-                            Name = "Administrador"
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "c0239276-4352-49ee-bf1a-e7d645547967",
+                            ConcurrencyStamp = "c3e59ecd-c99f-40a1-b7ca-7b79adc1c030",
                             IsDefault = true,
                             IsReadOnly = true,
-                            Name = "Colaborador"
+                            Name = "Colaborador",
+                            NormalizedName = "COLABORADOR"
                         });
                 });
 
@@ -172,6 +174,12 @@ namespace AutoMoreira.Persistence.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("text")
                         .HasColumnName("image");
+
+                    b.Property<bool>("IsDefault")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_default");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -241,6 +249,29 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c0aab5e2-4d6f-4093-a2ad-f85ad77c9169",
+                            DarkMode = false,
+                            Email = "automoreiraportugal@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Auto",
+                            IsDefault = true,
+                            LastName = "Moreira",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
+                            NormalizedUserName = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDMMFMlNH0fzo8Rci3d1YLHRv9WrmvHQMY0hJ4srfDVy9v1K42u9k2Zd0tkHEvo0pA==",
+                            PhoneNumber = "231472555",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "7a169789-ef15-4992-a704-426d2a56dda1",
+                            TwoFactorEnabled = false,
+                            UserName = "automoreiraportugal@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Identity.UserRole", b =>
@@ -258,6 +289,13 @@ namespace AutoMoreira.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("user_roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("AutoMoreira.Core.Domains.Mark", b =>
