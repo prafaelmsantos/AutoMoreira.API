@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Repositories
+﻿using System;
+
+namespace AutoMoreira.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -77,8 +79,23 @@
 
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
+                if (Entity != null)
+                {
+                    Entity = null;
+                }
+            }
         }
 
     }

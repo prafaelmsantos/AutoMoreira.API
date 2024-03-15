@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Services
+﻿using AutoMoreira.Core.Domains;
+
+namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
@@ -32,20 +34,20 @@
         {
             try
             {
-                Vehicle? vehicle = await _vehicleRepository.GetAll().AsNoTracking().Where(x=> x.Id == vehicleDTO.Id).FirstOrDefaultAsync() ?? throw new Exception("Veiculo não encontrado.");
+                Vehicle? vehicle = await _vehicleRepository
+                    .GetAll()
+                    .Where(x=> x.Id == vehicleDTO.Id)
+                    .Include( x=> x.VehicleImages)
+                    .FirstOrDefaultAsync() ?? throw new Exception("Veiculo não encontrado.");
                 
                 vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
-                if (vehicleDTO.VehicleImages.Any())
-                {
-                    List<VehicleImage> vehicleImages = new();
+                List<VehicleImage> vehicleImages = new();
+                vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
 
-                    vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
-
-                    vehicle.SetVehicleImages(vehicleImages);
-                }
+                vehicle.SetVehicleImages(vehicleImages);
 
                 await _vehicleRepository.UpdateAsync(vehicle);
 

@@ -8,11 +8,10 @@
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
         private readonly IRoleRepository _roleRepository;
-        private readonly IUserRoleRepository _userRoleRepository;
 
         public UserService(UserManager<User> userManager, SignInManager<User> signInManager, 
             IMapper mapper, IUserRepository userRepository, IEmailService emailService, 
-            IRoleRepository roleRepository, IUserRoleRepository userRoleRepository)
+            IRoleRepository roleRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -20,7 +19,6 @@
             _userRepository = userRepository;
             _emailService = emailService;
             _roleRepository = roleRepository;
-            _userRoleRepository = userRoleRepository;
         }
 
         public async Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password)
@@ -123,11 +121,13 @@
         {
             try
             {
-                User? user = await _userRepository.FindByIdAsync(userDTO.Id) ?? throw new Exception("Utilizador não encontrado.");
+                User? user = await _userRepository
+                    .GetAll()
+                    .Where(x => x.Id == userDTO.Id)
+                    .Include( x => x.Roles)
+                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
                 
                 user.UpdateUser(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
-
-                await _userRoleRepository.RemoveRangeAsync(_userRoleRepository.GetAll().Where(x => x.UserId == userDTO.Id).ToList());
 
                 Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
 
