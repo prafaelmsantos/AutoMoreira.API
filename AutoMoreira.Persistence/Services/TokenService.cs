@@ -19,9 +19,6 @@
         }
         public async Task<string> CreateToken(UserDTO userDTO)
         {
-            //Podia mapiar o userDto em vez do userupdateDto. 
-            //Mass como mais a frente onde vai ser usado o createToken é necessario mapiar o userUpdateDTO,
-            //entao coloca-se ja aqui
             var user = _mapper.Map<User>(userDTO);
 
             //Claims são afirmações sobre o utilizador ( nome, idade, foto, ...).
@@ -32,16 +29,16 @@
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Name, user.UserName)
             };
+
             //Vou buscar todas as roles do utilizador
             var roles = await _userManager.GetRolesAsync(user);
 
-            //Ele vai adicionar para dentro de claims varias outras claims(Roles). O Select é basicamente um ciclo for
+            //Ele vai adicionar para dentro de claims varias outras claims(Roles).
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            //
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-            //Montar a estrutura do token.
 
+            //Montar a estrutura do token.
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
@@ -49,7 +46,6 @@
                 Expires = DateTime.Now.AddDays(1),
                 //chave de criptografia
                 SigningCredentials = creds
-
             };
 
             //Formato JWT

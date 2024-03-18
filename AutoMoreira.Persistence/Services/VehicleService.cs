@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Domains;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class VehicleService : IVehicleService
     {
@@ -45,7 +43,7 @@ namespace AutoMoreira.Persistence.Services
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
                 List<VehicleImage> vehicleImages = new();
-                vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
+                vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id, x.IsMain)));
 
                 vehicle.SetVehicleImages(vehicleImages);
 
@@ -223,7 +221,7 @@ namespace AutoMoreira.Persistence.Services
             try
             {
                 var pieValues = await GetPieStatisticValues();
-                return new PieStatisticDTO() { TotalSales = pieValues.Item1, TotalStock = pieValues.Item2 };
+                return new PieStatisticDTO() { TotalSales = Math.Round(pieValues.Item1, 1), TotalStock = Math.Round(pieValues.Item2, 1)};
             }
             catch (Exception ex)
             {

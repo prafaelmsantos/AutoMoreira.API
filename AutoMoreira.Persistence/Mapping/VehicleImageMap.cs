@@ -21,6 +21,11 @@
                 .HasColumnName("vehicleId")
                 .IsRequired(true);
 
+            entity.Property(x => x.IsMain)
+                .HasColumnName("is_main")
+                .HasDefaultValue("false")
+                .IsRequired(true);
+
 
         }
 

@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace AutoMoreira.API.Controllers
+﻿namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
