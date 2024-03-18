@@ -36,8 +36,12 @@
             try
             {
                 Role role = await _roleRepository.FindByIdAsync(roleDTO.Id) ?? throw new Exception("Cargo não encontrado.");
-                role.UpdateRole(roleDTO.Name);
 
+                if (!role.IsReadOnly)
+                {
+                    role.UpdateRole(roleDTO.Name);
+                }
+                
                 await _roleRepository.UpdateAsync(role);
 
                 return _mapper.Map<RoleDTO>(role);
@@ -91,7 +95,7 @@
                 {
                     Role? role = await _roleRepository.FindByIdAsync(roleId);
 
-                    if (role is not null)
+                    if (role != null)
                     {
                         responseMessageDTO.Entity.Name = role.Name;
 

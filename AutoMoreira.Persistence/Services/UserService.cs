@@ -131,7 +131,7 @@
 
                 Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
 
-                if (role != null)
+                if (role != null && !user.IsDefault)
                 {
                     user.SetRoles(new List<Role> { role });
                 }
