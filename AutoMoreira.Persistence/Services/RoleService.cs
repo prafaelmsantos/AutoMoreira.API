@@ -37,11 +37,13 @@
             {
                 Role role = await _roleRepository.FindByIdAsync(roleDTO.Id) ?? throw new Exception("Cargo não encontrado.");
 
-                if (!role.IsReadOnly)
+                if (role.IsReadOnly)
                 {
-                    role.UpdateRole(roleDTO.Name);
+                    throw new Exception("Cargo não pode ser atualizado pois é padrão do sistema.");
                 }
-                
+
+                role.UpdateRole(roleDTO.Name);
+
                 await _roleRepository.UpdateAsync(role);
 
                 return _mapper.Map<RoleDTO>(role);
@@ -101,7 +103,7 @@
 
                         if (role.IsReadOnly || role.IsDefault)
                         {
-                            responseMessageDTO.ErrorMessage = "O Cargo não pode ser apagado porque pertence ao sistema.";
+                            responseMessageDTO.ErrorMessage = "O Cargo não pode ser apagado pois é padrão do sistema.";
                         }
                         else
                         {

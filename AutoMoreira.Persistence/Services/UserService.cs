@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.Persistence.Services
+﻿using AutoMoreira.Core.Domains.Identity;
+
+namespace AutoMoreira.Persistence.Services
 {
     public class UserService : IUserService
     {
@@ -262,12 +264,19 @@
                 {
                     User? user = await _userRepository.FindByIdAsync(userId);
 
-                    if (user is not null)
+                    if (user != null)
                     {
                         responseMessageDTO.Entity.Name = user.Email;
 
-                        await _userRepository.RemoveAsync(user);
-                        responseMessageDTO.OperationSuccess = true;
+                        if (user.IsDefault)
+                        {
+                            responseMessageDTO.ErrorMessage = "O Utilizador não pode ser apagado pois é administrador do sistema.";
+                        }
+                        else
+                        {
+                            await _userRepository.RemoveAsync(user);
+                            responseMessageDTO.OperationSuccess = true;
+                        }         
                     }
                     else
                     {
