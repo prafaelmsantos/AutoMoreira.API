@@ -69,7 +69,7 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            SoldDate = soldDate ?? (sold ? DateTime.UtcNow : null);
+            SoldDate = sold ? (soldDate ?? DateTime.UtcNow) : null;
 
             VehicleImages = new List<VehicleImage>();
         }
@@ -91,7 +91,7 @@
             Observations = observations;
             Opportunity = opportunity;
             Sold = sold;
-            SoldDate = soldDate ?? (sold ? DateTime.UtcNow : null);
+            SoldDate = sold ? (soldDate ?? DateTime.UtcNow) : null;
 
             VehicleImages = new List<VehicleImage>();
         }
