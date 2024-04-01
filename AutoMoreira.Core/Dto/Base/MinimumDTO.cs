@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Core.Dto.Generic
+﻿namespace AutoMoreira.Core.Dto.Base
 {
     public class MinimumDTO
     {

@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Domains.Identity;
-
-namespace AutoMoreira.Persistence.Services
+﻿namespace AutoMoreira.Persistence.Services
 {
     public class UserService : IUserService
     {

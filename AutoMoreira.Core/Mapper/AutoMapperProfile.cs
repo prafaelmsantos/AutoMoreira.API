@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto.Visitor;
-
-namespace AutoMoreira.Core.Mapper
+﻿namespace AutoMoreira.Core.Mapper
 {
     public class AutoMapperProfile : Profile
     {
