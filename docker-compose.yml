@@ -4,18 +4,6 @@ networks:
   automoreira.api:
 
 services:
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=sa
-      - POSTGRES_PASSWORD=password@12345#
-      - POSTGRES_DB=auto_moreira_db
-    ports:
-      - 5432:5432
-    networks:
-      - automoreira.api
-
   automoreira.api:
     container_name: automoreira.api
     image: ${DOCKER_REGISTRY-}automoreiraapi
@@ -25,8 +13,6 @@ services:
     ports:
       - 9000:80
       - 9001:443
-    depends_on:
-      - postgres
     environment:
       - CONNECTION_STRINGS=host=postgres;port=5432;Database=auto_moreira_db;User ID=sa;Password=password@12345#;Include Error Detail=true
     restart: always

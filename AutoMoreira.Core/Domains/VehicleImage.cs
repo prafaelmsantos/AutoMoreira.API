@@ -10,10 +10,15 @@
 
         public VehicleImage() { }
 
-        public VehicleImage(string url, int vehicleId, bool isMain)
+        public VehicleImage(string url, int vehicleId)
         {
             Url = url;
             VehicleId = vehicleId;
+            IsMain = false;
+        }
+
+        public void SetIsMain(bool isMain)
+        {
             IsMain = isMain;
         }
     }

@@ -18,6 +18,8 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
+                vehicle = await SetVehicleImages(vehicleDTO, vehicle);
+
                 await _vehicleRepository.AddAsync(vehicle);
 
                 return _mapper.Map<VehicleDTO>(vehicle);
@@ -42,10 +44,7 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
-                List<VehicleImage> vehicleImages = new();
-                vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id, x.IsMain)));
-
-                vehicle.SetVehicleImages(vehicleImages);
+                vehicle = await SetVehicleImages(vehicleDTO, vehicle);
 
                 await _vehicleRepository.UpdateAsync(vehicle);
 
@@ -303,6 +302,16 @@
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private static Task<Vehicle> SetVehicleImages(VehicleDTO vehicleDTO, Vehicle vehicle)
+        {
+            List<VehicleImage> vehicleImages = new();
+            vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
+            vehicleImages.FirstOrDefault()?.SetIsMain(true);
+            vehicle.SetVehicleImages(vehicleImages);
+
+            return Task.FromResult(vehicle);
         }
 
         #endregion
