@@ -8,9 +8,9 @@
 *.cache
 *.vsidx
 *obj
-*bin
+/obj
+/bin
 /.vs
-*.bin
 *.exe
 /AutoMoreira.Core/obj
 /AutoMoreira.Core/bin
@@ -18,4 +18,3 @@
 /AutoMoreira.API/bin
 /AutoMoreira.Persistence/obj
 /AutoMoreira.Persistence/bin
-*.bin
