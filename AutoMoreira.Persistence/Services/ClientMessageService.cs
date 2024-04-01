@@ -86,10 +86,7 @@
         {
             try
             {
-                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageId);
-
-                if (clientMessage == null) throw new Exception("Mensagem de cliente não encontrada.");
-
+                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(clientMessageId) ?? throw new Exception("Mensagem de cliente não encontrada.");
                 return _mapper.Map<ClientMessageDTO>(clientMessage);
             }
             catch (Exception ex)
@@ -102,10 +99,7 @@
         {
             try
             {
-                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(id);
-
-                if (clientMessage is null) throw new Exception("Mensagem de cliente não encontrada.");
-
+                ClientMessage clientMessage = await _clientMessageRepository.FindByIdAsync(id) ?? throw new Exception("Mensagem de cliente não encontrada.");
                 clientMessage.SetStatus(status);
 
                 await _clientMessageRepository.UpdateAsync(clientMessage);

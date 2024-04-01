@@ -1,6 +1,6 @@
-﻿namespace AutoMoreira.Core.Domains.Email
+﻿namespace AutoMoreira.Core.Dto.Email
 {
-    public class EmailSettings
+    public class EmailDTO
     {
         public string Name { get; set; } = null!;
         public string Address { get; set; } = null!;
