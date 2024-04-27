@@ -2,104 +2,41 @@
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        #region Private variables
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;   
         private readonly IUserRepository _userRepository;
-        private readonly IEmailService _emailService;
         private readonly IRoleRepository _roleRepository;
+        private readonly ITokenService _tokenService;
+        private readonly IEmailService _emailService;
+        #endregion
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, 
-            IMapper mapper, IUserRepository userRepository, IEmailService emailService, 
-            IRoleRepository roleRepository)
+        #region Constructors
+        public UserService(
+            IMapper mapper,
+            UserManager<User> userManager, 
+            SignInManager<User> signInManager,        
+            IUserRepository userRepository,
+            IRoleRepository roleRepository,
+            ITokenService tokenService,
+            IEmailService emailService 
+            )
         {
+            _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
-            _mapper = mapper;
+            
             _userRepository = userRepository;
-            _emailService = emailService;
             _roleRepository = roleRepository;
+            _tokenService = tokenService;
+            _emailService = emailService;         
         }
 
-        public async Task<bool> CheckUserPasswordAsync(UserDTO userDTO, string password)
-        {
-            try
-            {
-                User? user = await _userManager.Users.SingleOrDefaultAsync(user => user.Email == userDTO.Email);
-                SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user!, password, false);
+        #endregion
 
-                return signInResult.Succeeded;
+        #region Public methods
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao tentar verificar password. Erro: {ex.Message}");
-
-            }
-        }
-
-        public async Task<UserDTO?> CreateUserAsync(UserDTO userDTO)
-        {
-            try
-            {
-                if (userDTO.Roles.Count == 0) throw new Exception("Nenhum cargo encontrado.");
-
-                User? user = new(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
-
-                Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
-
-                if (role != null)
-                {
-                    user.SetRoles(new List<Role> { role });
-                }
-
-                string password = GenerateNewPassword();
-
-                IdentityResult identityResult = await _userManager.CreateAsync(user, password);
-
-                if (identityResult.Succeeded)
-                {
-                    await _emailService.SendEmailToUserAsync($"{user.FirstName} {user.LastName}", user.Email, password);
-                    return _mapper.Map<UserDTO>(user);
-                }
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao tentar criar conta de utilizador!. Erro: {ex.Message}");
-
-            }
-        }
-
-        public async Task<UserDTO> GetUserByEmailAsync(string email)
-        {
-            User? user = await _userRepository
-                .GetAll()
-                .Where(x => x.Email == email)
-                .Include( x=> x.Roles)
-                .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
-
-            return _mapper.Map<UserDTO>(user);
-        }
-
-        public async Task<UserDTO> GetUserByIdAsync(int id)
-        {
-            try
-            {
-                User? user = await _userRepository.GetAll()
-                    .Where(x=> x.Id == id)
-                    .Include(x => x.Roles)
-                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
-
-                return _mapper.Map<UserDTO>(user);
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao tentar procurar utilizador por id. Erro: {ex.Message}");
-            }
-        }
         public async Task<List<UserDTO>> GetAllUsersAsync()
         {
             try
@@ -113,7 +50,80 @@
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"{DomainResource.GetAllUsersAsyncException} {ex.Message}");
+            }
+        }
+
+        public async Task<UserDTO> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                User? user = await _userRepository.GetAll()
+                    .Where(x => x.Id == id)
+                    .Include(x => x.Roles)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+                return _mapper.Map<UserDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.GetUserByIdAsyncException} {ex.Message}");
+            }
+        }
+
+        public async Task<UserDTO> LoginUserAsync(UserLoginDTO userLoginDTO)
+        {
+            try
+            {
+                User? user = await _userRepository
+                    .GetAll()
+                    .Where(x => x.Email == userLoginDTO.Email)
+                    .Include(x => x.Roles)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+                await CheckUserPasswordAsync(userLoginDTO);
+
+                UserDTO userDTO = _mapper.Map<UserDTO>(user);
+
+                userDTO.Token = _tokenService.CreateToken(userDTO).Result;
+
+                return userDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.LoginUserAsyncException} {ex.Message}");
+            }
+        }
+
+        public async Task<UserDTO> AddUserAsync(UserDTO userDTO)
+        {
+            try
+            {
+                UserExistsAsync(userDTO.Id, userDTO.Email).Result
+                    .Throw(() => throw new Exception(DomainResource.UserAlreadyExistsException))
+                    .IfTrue();
+
+                User user = new(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
+
+                user = await UpdateUserRoleAsync(user, userDTO);
+
+                string password = GenerateNewPassword();
+
+                await _userManager.CreateAsync(user, password);
+
+                await _emailService.SendEmailToUserAsync($"{user.FirstName} {user.LastName}", user.Email, password);
+
+                return _mapper.Map<UserDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.AddUserAsyncException} {ex.Message}");
             }
         }
 
@@ -124,25 +134,27 @@
                 User? user = await _userRepository
                     .GetAll()
                     .Where(x => x.Id == userDTO.Id)
-                    .Include( x => x.Roles)
-                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
-                
+                    .Include(x => x.Roles)
+                    .FirstOrDefaultAsync();
+
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+                UserExistsAsync(user.Id, user.Email).Result
+                    .Throw(() => throw new Exception(DomainResource.UserAlreadyExistsException))
+                    .IfTrue();
+
                 user.UpdateUser(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
 
-                Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
-
-                if (role != null && !user.IsDefault)
+                if (!user.IsDefault)
                 {
-                    user.SetRoles(new List<Role> { role });
+                    user = await UpdateUserRoleAsync(user, userDTO);
                 }
-                
+
                 if (userDTO.Password != null)
                 {
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-                    await _userManager.ResetPasswordAsync(user, token, userDTO.Password);
+                    await UpdateUserPassword(user, userDTO.Password);
                 }
-                
+
                 await _userRepository.UpdateAsync(user);
 
                 await _emailService.SendEmailToUpdatedUserAsync($"{user.FirstName} {user.LastName}", user.Email);
@@ -151,7 +163,7 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar utilizador. Erro: {ex.Message}");
+                throw new Exception($"{DomainResource.UpdateUserAsyncException} {ex.Message}");
             }
         }
 
@@ -159,8 +171,10 @@
         {
             try
             {
-                User? user = await _userRepository.FindByIdAsync(id) ?? throw new Exception("Utilizador não encontrado.");
-                
+                User? user = await _userRepository.FindByIdAsync(id);
+
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
                 user.SetDarkMode(mode);
 
                 await _userRepository.UpdateAsync(user);
@@ -169,7 +183,7 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+                throw new Exception($"{DomainResource.UpdateUserModeAsyncException} {ex.Message}");
             }
         }
 
@@ -177,8 +191,10 @@
         {
             try
             {
-                User? user = await _userRepository.FindByIdAsync(id) ?? throw new Exception("Utilizador não encontrado.");
-                
+                User? user = await _userRepository.FindByIdAsync(id);
+
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
                 user.SetImage(image);
 
                 await _userRepository.UpdateAsync(user);
@@ -187,71 +203,121 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar o modo de utilizador. Erro: {ex.Message}");
+                throw new Exception($"{DomainResource.UpdateUserImageAsyncException} {ex.Message}");
             }
         }
 
-        public async Task UserResetPasswordAsync(string email)
-        {
-            try
-            {
-                User? user = await _userRepository
-                    .GetAll()
-                    .Where(x => x.Email == email)
-                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
-
-                var password = GenerateNewPassword();
-
-                IdentityResult identityResult = await UpdateUserPassword(user, password);
-                if (identityResult.Succeeded)
-                {
-                    await _emailService.SendEmailToUserResetPasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao tentar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
-            }
-        }
-
-        public async Task UserUpdateUserPasswordAsync(UserLoginDTO userLoginDTO)
+        public async Task<UserDTO> UpdateUserPasswordAsync(UserLoginDTO userLoginDTO)
         {
             try
             {
                 User? user = await _userRepository
                     .GetAll()
                     .Where(x => x.Email == userLoginDTO.Email)
-                    .FirstOrDefaultAsync() ?? throw new Exception("Utilizador não encontrado.");
+                    .FirstOrDefaultAsync();
 
-                IdentityResult identityResult = await UpdateUserPassword(user, userLoginDTO.Password);
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
 
-                if (identityResult.Succeeded)
-                {
-                    await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, userLoginDTO.Password);
-                }  
+                await UpdateUserPassword(user, userLoginDTO.Password);
+
+                await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, userLoginDTO.Password);
+
+                return _mapper.Map<UserDTO>(user);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar enviar criar uma nova palavra-passe do utilizador. Erro: {ex.Message}");
+                throw new Exception($"{DomainResource.UpdateUserPasswordAsyncException} {ex.Message}");
             }
         }
 
-        public async Task<bool> UserExists(string email)
+        public async Task<UserDTO> ResetUserPasswordAsync(string email)
         {
             try
             {
-                return await _userManager.Users.AnyAsync(user => user.Email == email);
+                User? user = await _userRepository
+                    .GetAll()
+                    .Where(x => x.Email == email)
+                    .FirstOrDefaultAsync();
 
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+                var password = GenerateNewPassword();
+
+                await UpdateUserPassword(user, password);
+
+                await _emailService.SendEmailToUserResetPasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
+
+                return _mapper.Map<UserDTO>(user);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao tentar verificar se o utilizador existe. Erro: {ex.Message}");
-
+                throw new Exception($"{DomainResource.ResetUserPasswordAsyncException} {ex.Message}");
             }
         }
 
         public async Task<List<ResponseMessageDTO>> DeleteUsersAsync(List<int> usersIds)
+        {
+            return await DeleteUsers(usersIds);
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private async Task CheckUserPasswordAsync(UserLoginDTO userLoginDTO)
+        {
+            User? user = await _userManager
+                   .Users
+                   .SingleOrDefaultAsync(user => user.Email == userLoginDTO.Email);
+
+            user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+            SignInResult signInResult = await _signInManager
+                .CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
+
+            signInResult.Succeeded.Throw(() => throw new Exception(DomainResource.UserPasswordNotFoundException))
+                .IfFalse();
+        }
+
+        private async Task<User> UpdateUserRoleAsync(User user, UserDTO userDTO)
+        {
+            (userDTO.Roles.Count == 0)
+                .Throw(() => throw new Exception(DomainResource.RoleNotFoundException))
+                .IfTrue();
+
+            Role? role = await _roleRepository
+                .FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
+
+            role.ThrowIfNull(() => throw new Exception(DomainResource.RoleNotFoundException));
+
+            user.SetRoles(new List<Role> { role });
+
+            return user;
+        }
+
+        private async Task<bool> UserExistsAsync(int id, string email)
+        {
+            return await _userRepository.GetAll().AnyAsync(user => user.Email == email && user.Id != id);
+        }
+
+        private static string GenerateNewPassword()
+        {
+            Random rnd = new();
+            return rnd.Next(100000, 1000000000).ToString();
+        }
+
+        private async Task UpdateUserPassword(User user, string password)
+        {
+            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            IdentityResult identityResult = await _userManager.ResetPasswordAsync(user, token, password);
+
+            identityResult.Succeeded
+                    .Throw(() => throw new Exception(DomainResource.UpdateUserPasswordAsyncException))
+                    .IfFalse();
+        }
+
+        private async Task<List<ResponseMessageDTO>> DeleteUsers(List<int> usersIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 
@@ -262,29 +328,29 @@
                 {
                     User? user = await _userRepository.FindByIdAsync(userId);
 
-                    if (user != null)
+                    if (user is not null)
                     {
                         responseMessageDTO.Entity.Name = user.Email;
 
                         if (user.IsDefault)
                         {
-                            responseMessageDTO.ErrorMessage = "O Utilizador não pode ser apagado pois é administrador do sistema.";
+                            responseMessageDTO.ErrorMessage = DomainResource.DeleteDefaultUserAsyncException;
                         }
                         else
                         {
                             await _userRepository.RemoveAsync(user);
                             responseMessageDTO.OperationSuccess = true;
-                        }         
+                        }
                     }
                     else
                     {
-                        responseMessageDTO.ErrorMessage = "Utilizador não encontrado.";
+                        responseMessageDTO.ErrorMessage = DomainResource.UserNotFoundException;
                     }
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    responseMessageDTO.ErrorMessage = ex.Message;
+                    responseMessageDTO.ErrorMessage = DomainResource.DeleteUsersAsyncException;
                 }
 
                 responseMessageDTOs.Add(responseMessageDTO);
@@ -293,18 +359,6 @@
             return responseMessageDTOs;
         }
 
-        private static string GenerateNewPassword()
-        {
-            Random rnd = new();
-            return  rnd.Next(100000, 1000000000).ToString();
-        }
-
-        private async Task<IdentityResult> UpdateUserPassword(User user, string password)
-        {
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            return await _userManager.ResetPasswordAsync(user, token, password);
-        }
-
+        #endregion
     }
 }

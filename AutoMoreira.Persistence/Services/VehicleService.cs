@@ -214,7 +214,6 @@
             }
         }
 
-
         public async Task<PieStatisticDTO> GetVehiclePieStatisticsAsync()
         {
             try

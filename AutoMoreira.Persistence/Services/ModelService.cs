@@ -29,6 +29,7 @@
                     .GetAll()
                     .Include(x => x.Mark)
                     .OrderBy(x => x.Id)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 return _mapper.Map<List<ModelDTO>>(models);
@@ -47,6 +48,7 @@
                     .GetAll()
                     .Where(x => x.Id == modelId)
                     .Include(x => x.Mark)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync();
 
                 model.ThrowIfNull(() => throw new Exception(DomainResource.ModelNotFoundException));
@@ -67,6 +69,7 @@
                     .GetAll()
                     .Where(x => x.MarkId == markId)
                     .OrderBy(x => x.Id)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 return _mapper.Map<List<ModelDTO>>(models);

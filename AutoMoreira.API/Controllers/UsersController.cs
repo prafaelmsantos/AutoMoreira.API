@@ -11,7 +11,6 @@
 
         #endregion
 
-
         #region Constructors
         public UsersController(IUserService userService, ITokenService tokenService)
         {
@@ -26,9 +25,18 @@
         /// Get All Users
         /// </summary>
         [HttpGet()]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _userService.GetAllUsersAsync());
+            try
+            {
+                return Ok(await _userService.GetAllUsersAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }        
         }
 
         /// <summary>
@@ -36,9 +44,18 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            return Ok(await _userService.GetUserByIdAsync(id));
+            try
+            {
+                return Ok(await _userService.GetUserByIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }       
         }
 
 
@@ -47,41 +64,19 @@
         /// </summary>
         /// <param name="userDTO"></param>
         [HttpPost()]
-        public async Task<IActionResult> CreateUser([FromBody] UserDTO userDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Post([FromBody] UserDTO userDTO)
         {
             try
             {
-                if (await _userService.UserExists(userDTO.Email))
-                {
-                    return BadRequest("O utilizador já existe!");
-                }
-                var user = await _userService.CreateUserAsync(userDTO);
-                if (user != null)
-                {
-                    return Ok(new UserDTO
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Image = user.Image,
-                        PhoneNumber = user.PhoneNumber,
-                        DarkMode = user.DarkMode,
-                        IsDefault = user.IsDefault,
-                        Roles = user.Roles,
-                        Token = _tokenService.CreateToken(user).Result
-                    });
-                }
-                return BadRequest("Utilizador não criado! Tente mais tarde...");
-
-
+                userDTO.Id = 0;
+                return Ok(await _userService.AddUserAsync(userDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar conta utilizador. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
-
         }
 
 
@@ -90,17 +85,18 @@
         /// </summary>
         /// <param name="userLoginDTO"></param>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLoginDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDTO userLoginDTO)
         {
-            UserDTO userDTO = await _userService.GetUserByEmailAsync(userLoginDTO.Email);
-            if (!await _userService.CheckUserPasswordAsync(userDTO, userLoginDTO.Password))
+            try
             {
-                return Unauthorized();
+                return Ok(await _userService.LoginUserAsync(userLoginDTO));
             }
-
-            userDTO.Token = _tokenService.CreateToken(userDTO).Result;
-
-            return Ok(userDTO);
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }     
         }
 
         /// <summary>
@@ -108,10 +104,18 @@
         /// </summary>
         /// <param name="email"></param>
         [HttpPost("ResetPassword/{email}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> ResetPassword([FromRoute] string email)
         {
-            await _userService.UserResetPasswordAsync(email);
-            return Ok(email);
+            try
+            {          
+                return Ok(await _userService.ResetUserPasswordAsync(email));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }   
         }
 
         /// <summary>
@@ -119,9 +123,18 @@
         /// </summary>
         /// <param name="userLoginDTO"></param>
         [HttpPut("UpdatePassword")]
-        public async Task<IActionResult>UpdatePassword([FromBody] UserLoginDTO userLoginDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> PutPassword([FromBody] UserLoginDTO userLoginDTO)
         {
-            return Ok(_userService.UserUpdateUserPasswordAsync(userLoginDTO));
+            try
+            {
+                return Ok(await _userService.UpdateUserPasswordAsync(userLoginDTO));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }  
         }
 
         /// <summary>
@@ -130,10 +143,19 @@
         /// <param name="userDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UserDTO userDTO)
         {
-            userDTO.Id = id;
-            return Ok(await _userService.UpdateUserAsync(userDTO));
+            try
+            {
+                userDTO.Id = id;
+                return Ok(await _userService.UpdateUserAsync(userDTO));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }       
         }
 
         /// <summary>
@@ -142,9 +164,18 @@
         /// <param name="mode"></param>
         /// <param name="id"></param>
         [HttpPut("Mode/{id}")]
-        public async Task<IActionResult> UpdateUserMode(int id, [FromBody] bool mode)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> PutMode([FromRoute] int id, [FromBody] bool mode)
         {
-            return Ok(await _userService.UpdateUserModeAsync(id, mode));
+            try
+            {
+                return Ok(await _userService.UpdateUserModeAsync(id, mode));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
         }
 
         /// <summary>
@@ -153,9 +184,18 @@
         /// <param name="image"></param>
         /// <param name="id"></param>
         [HttpPut("Image/{id}")]
-        public async Task<IActionResult> UpdateUserImage(int id, [FromBody] string image)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> PutImage([FromRoute] int id, [FromBody] string image)
         {
-            return Ok(await _userService.UpdateUserImageAsync(id, image));
+            try
+            {
+                return Ok(await _userService.UpdateUserImageAsync(id, image));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }    
         }
 
         //// <summary>
@@ -163,11 +203,19 @@
         /// </summary>
         /// <param name="usersIds"></param>
         [HttpPost("Delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> usersIds)
         {
-            return Ok(await _userService.DeleteUsersAsync(usersIds));
+            try
+            {
+                return Ok(await _userService.DeleteUsersAsync(usersIds));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
         }
         #endregion
-
     }
 }

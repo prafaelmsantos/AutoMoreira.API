@@ -30,6 +30,7 @@
                 List<Role> roles = await _roleRepository
                     .GetAll()
                     .OrderBy(x => x.Id)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 return _mapper.Map<List<RoleDTO>>(roles);

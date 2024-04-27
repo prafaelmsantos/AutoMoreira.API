@@ -26,10 +26,10 @@
                 List<Mark> marks = await _markRepository
                     .GetAll()
                     .OrderBy(x => x.Id)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 return _mapper.Map<List<MarkDTO>>(marks);
-
             }
             catch (Exception ex)
             {
