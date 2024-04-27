@@ -67,7 +67,7 @@
             NormalizedEmail = email.ToUpper();
             EmailConfirmed = true;
             PhoneNumber = phoneNumber;
-            PhoneNumberConfirmed = true;
+            PhoneNumberConfirmed = phoneNumber != null;
             FirstName = firstName;
             LastName = lastName;
             IsDefault = false;
@@ -111,7 +111,7 @@
 
         public void SetImage(string image)
         {
-            image.Throw(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
+            image.ThrowIfNull(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
                 .IfWhiteSpace();
 
             Image = image;
@@ -125,7 +125,7 @@
 
         public void SetPasswordHash(string passwordHash)
         {
-            passwordHash.Throw(() => throw new Exception(DomainResource.UserPasswordHashNeedsToBeSpecifiedException))
+            passwordHash.ThrowIfNull(() => throw new Exception(DomainResource.UserPasswordHashNeedsToBeSpecifiedException))
                 .IfWhiteSpace();
 
             PasswordHash = passwordHash;

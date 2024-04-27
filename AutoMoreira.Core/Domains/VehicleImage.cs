@@ -19,9 +19,9 @@
             IsMain = false;
         }
 
-        public void SetIsMain(bool isMain)
+        public void SetIsMain()
         {
-            IsMain = isMain;
+            IsMain = true;
         }
     }
 }

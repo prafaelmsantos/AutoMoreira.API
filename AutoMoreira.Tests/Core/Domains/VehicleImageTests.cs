@@ -57,14 +57,13 @@
         public void Method_SetIsMain_WithValidParameters()
         {
             // Arrange
-            bool isMain = _faker.Random.Bool();
             VehicleImage VehicleImage = VehicleImageBuilder.VehicleImage();
 
             // Act
-            VehicleImage.SetIsMain(isMain);
+            VehicleImage.SetIsMain();
 
             // Assert
-            VehicleImage.IsMain.Should().Be(isMain);
+            VehicleImage.IsMain.Should().BeTrue();
         }
     }
 }

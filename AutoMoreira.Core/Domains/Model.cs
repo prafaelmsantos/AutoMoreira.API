@@ -32,7 +32,7 @@
             id.Throw(() => throw new Exception(DomainResource.ModelIdNeedsToBeSpecifiedException))
               .IfNegativeOrZero();        
 
-            name.ThrowIfNull(() => throw new Exception(DomainResource.MarkNameNeedsToBeSpecifiedException))
+            name.ThrowIfNull(() => throw new Exception(DomainResource.ModelNameNeedsToBeSpecifiedException))
                 .IfWhiteSpace();
 
             markId.Throw(() => throw new Exception(DomainResource.MarkIdNeedsToBeSpecifiedException))

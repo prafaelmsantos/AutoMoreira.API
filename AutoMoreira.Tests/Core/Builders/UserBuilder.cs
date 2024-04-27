@@ -33,6 +33,7 @@
                 FirstName = _data.Name.FirstName(),
                 LastName = _data.Name.LastName(),
                 Image = _data.Image.PlaceImgUrl(),
+                Password = _data.Random.Guid().ToString(),
                 Token = _data.Random.Guid().ToString(),
                 DarkMode = _data.Random.Bool(),
                 IsDefault = _data.Random.Bool(),

@@ -79,7 +79,7 @@
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Constructor_WithInvalidId_ThrowsArgumentException(int id)
+        public void FullConstructor_WithInvalidId_ThrowsArgumentException(int id)
         {
             // Arrange
             RoleDTO dto = RoleBuilder.RoleDTO();
@@ -89,6 +89,22 @@
             FluentActions.Invoking(() => RoleBuilder.FullRole(dto)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.RoleIdNeedsToBeSpecifiedException);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void FullConstructor_WithInvalidName_ThrowsArgumentException(string? name)
+        {
+            // Arrange
+            RoleDTO dto = RoleBuilder.RoleDTO();
+            dto.Name = name!;
+
+            // Act & Assert
+            FluentActions.Invoking(() => RoleBuilder.FullRole(dto)).Should()
+                .Throw<Exception>()
+                .WithMessage(DomainResource.RoleNameNeedsToBeSpecifiedException);
         }
 
         [Theory]

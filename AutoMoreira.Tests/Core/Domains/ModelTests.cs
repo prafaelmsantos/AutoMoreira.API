@@ -75,7 +75,7 @@
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Constructor_WithInvalidId_ThrowsArgumentException(int id)
+        public void FullConstructor_WithInvalidId_ThrowsArgumentException(int id)
         {
             // Arrange
             ModelDTO dto = ModelBuilder.ModelDTO();
@@ -85,6 +85,37 @@
             FluentActions.Invoking(() => ModelBuilder.FullModel(dto)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.ModelIdNeedsToBeSpecifiedException);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void FullConstructor_WithInvalidName_ThrowsArgumentException(string? name)
+        {
+            // Arrange
+            ModelDTO dto = ModelBuilder.ModelDTO();
+            dto.Name = name!;
+
+            // Act & Assert
+            FluentActions.Invoking(() => ModelBuilder.FullModel(dto)).Should()
+                .Throw<Exception>()
+                .WithMessage(DomainResource.ModelNameNeedsToBeSpecifiedException);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void FullConstructor_WithInvalidMarkId_ThrowsArgumentException(int markId)
+        {
+            // Arrange
+            ModelDTO dto = ModelBuilder.ModelDTO();
+            dto.MarkId = markId;
+
+            // Act & Assert
+            FluentActions.Invoking(() => ModelBuilder.FullModel(dto)).Should()
+                .Throw<Exception>()
+                .WithMessage(DomainResource.MarkIdNeedsToBeSpecifiedException);
         }
 
         [Theory]

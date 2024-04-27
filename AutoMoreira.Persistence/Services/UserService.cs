@@ -46,7 +46,6 @@
 
                 User? user = new(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
 
-
                 Role? role = await _roleRepository.FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
 
                 if (role != null)

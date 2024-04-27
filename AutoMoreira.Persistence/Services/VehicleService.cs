@@ -308,7 +308,7 @@
         {
             List<VehicleImage> vehicleImages = new();
             vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url)));
-            vehicleImages.FirstOrDefault()?.SetIsMain(true);
+            vehicleImages.FirstOrDefault()?.SetIsMain();
             vehicle.SetVehicleImages(vehicleImages);
 
             return vehicle;

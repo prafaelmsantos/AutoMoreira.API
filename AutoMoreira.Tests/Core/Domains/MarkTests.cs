@@ -69,7 +69,7 @@
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Constructor_WithInvalidId_ThrowsArgumentException(int id)
+        public void FullConstructor_WithInvalidId_ThrowsArgumentException(int id)
         {
             // Arrange
             MarkDTO dto = MarkBuilder.MarkDTO();
@@ -79,6 +79,22 @@
             FluentActions.Invoking(() => MarkBuilder.FullMark(dto)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.MarkIdNeedsToBeSpecifiedException);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void FullConstructor_WithInvalidName_ThrowsArgumentException(string? name)
+        {
+            // Arrange
+            MarkDTO dto = MarkBuilder.MarkDTO();
+            dto.Name = name!;
+
+            // Act & Assert
+            FluentActions.Invoking(() => MarkBuilder.FullMark(dto)).Should()
+                .Throw<Exception>()
+                .WithMessage(DomainResource.MarkNameNeedsToBeSpecifiedException);
         }
 
         [Theory]
