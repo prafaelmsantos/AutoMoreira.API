@@ -42,6 +42,5 @@
 
             Status = status;
         }
-
     }
 }

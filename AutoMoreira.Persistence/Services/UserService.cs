@@ -297,7 +297,9 @@
 
         private async Task<bool> UserExistsAsync(int id, string email)
         {
-            return await _userRepository.GetAll().AnyAsync(user => user.Email == email && user.Id != id);
+            return await _userRepository
+                .GetAll()
+                .AnyAsync(user => user.Id != id && user.Email.Trim().ToLower() == email.Trim().ToLower());
         }
 
         private static string GenerateNewPassword()
