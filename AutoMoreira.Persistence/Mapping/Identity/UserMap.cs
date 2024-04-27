@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Identity
 {
     public class UserMap : IEntityTypeConfiguration<User>
     {
@@ -9,7 +9,7 @@
             entity.HasKey(x => x.Id);
 
             /* ------------------- IdentityUser ------------------- */
-            
+
             entity.Property(x => x.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd()
@@ -109,6 +109,5 @@
                   .WithMany().HasForeignKey(x => x.UserId));
 
         }
-
     }
 }

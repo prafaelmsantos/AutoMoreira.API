@@ -1,10 +1,10 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Identity
 {
-    public class IdentityUserClaimMap : IEntityTypeConfiguration<IdentityUserClaim<int>>
+    public class IdentityRoleClaimMap : IEntityTypeConfiguration<IdentityRoleClaim<int>>
     {
-        public void Configure(EntityTypeBuilder<IdentityUserClaim<int>> entity)
+        public void Configure(EntityTypeBuilder<IdentityRoleClaim<int>> entity)
         {
-            entity.ToTable("identity_user_claim");
+            entity.ToTable("identity_role_claim");
 
             entity.HasKey(x => x.Id);
 
@@ -13,8 +13,8 @@
                 .ValueGeneratedOnAdd()
                 .IsRequired(true);
 
-            entity.Property(x => x.UserId)
-                .HasColumnName("user_id")
+            entity.Property(x => x.RoleId)
+                .HasColumnName("role_id")
                 .IsRequired(true);
 
             entity.Property(x => x.ClaimType)
@@ -24,8 +24,6 @@
             entity.Property(x => x.ClaimValue)
                 .HasColumnName("claim_value")
                 .IsRequired(true);
-
         }
-
     }
 }

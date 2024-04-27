@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Identity
 {
     public class IdentityUserTokenMap : IEntityTypeConfiguration<IdentityUserToken<int>>
     {
@@ -23,6 +23,5 @@
                 .IsRequired(true);
 
         }
-
     }
 }

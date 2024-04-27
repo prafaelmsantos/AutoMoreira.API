@@ -131,6 +131,5 @@
             PasswordHash = passwordHash;
             SecurityStamp = Guid.NewGuid().ToString();
         }
-
     }
 }

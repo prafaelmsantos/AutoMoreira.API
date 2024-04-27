@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Identity
 {
     public class UserRoleMap : IEntityTypeConfiguration<UserRole>
     {
@@ -16,6 +16,5 @@
                 .HasColumnName("role_id")
                 .IsRequired(true);
         }
-
     }
 }

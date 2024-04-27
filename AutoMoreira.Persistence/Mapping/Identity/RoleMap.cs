@@ -1,4 +1,4 @@
-﻿namespace AutoMoreira.Persistence.Mapping
+﻿namespace AutoMoreira.Persistence.Mapping.Identity
 {
     public class RoleMap : IEntityTypeConfiguration<Role>
     {
@@ -27,7 +27,6 @@
                .HasDefaultValue(false)
                .IsRequired(true);
 
-
             /* ------------------- IdentityRole ------------------- */
 
             entity.Property(x => x.NormalizedName)
@@ -40,6 +39,5 @@
 
             /* ---------------------------------------------------- */
         }
-
     }
 }
