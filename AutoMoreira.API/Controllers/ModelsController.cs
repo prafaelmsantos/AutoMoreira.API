@@ -1,4 +1,6 @@
-﻿namespace AutoMoreira.API.Controllers
+﻿using AutoMoreira.Core.Dto;
+
+namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -9,7 +11,6 @@
         private readonly IModelService _modelService;
 
         #endregion
-
 
         #region Constructors
 
@@ -25,19 +26,17 @@
         /// Get All Models
         /// </summary>
         [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var models = await _modelService.GetAllModelsAsync();
-                if (models == null) return NoContent();
-
-                return Ok(models);
+                return Ok(await _modelService.GetAllModelsAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar modelos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -47,19 +46,17 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var model = await _modelService.GetModelByIdAsync(id);
-                if (model == null) return NoContent();
-
-                return Ok(model);
+                return Ok(await _modelService.GetModelByIdAsync(id));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar o modelo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -69,19 +66,17 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("Mark/{id}")]
-        public async Task<IActionResult> GetByMarkId(int id)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetByMarkId([FromRoute] int id)
         {
             try
             {
-                var models = await _modelService.GetModelsByMarkIdAsync(id);
-                if (models == null) return NoContent();
-
-                return Ok(models);
+                return Ok(await _modelService.GetModelsByMarkIdAsync(id));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar modelos por marca id. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -91,19 +86,18 @@
         /// </summary>
         /// <param name="modelDTO"></param>
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Post([FromBody] ModelDTO modelDTO)
         {
             try
             {
-                var model = await _modelService.AddModelAsync(modelDTO);
-                if (model == null) return NoContent();
-
-                return Ok(model);
+                modelDTO.Id = 0;
+                return Ok(await _modelService.AddModelAsync(modelDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar o modelo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -114,20 +108,18 @@
         /// <param name="id"></param>
         /// <param name="modelDTO></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] ModelDTO modelDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] ModelDTO modelDTO)
         {
             try
             {
                 modelDTO.Id = id;
-                var model = await _modelService.UpdateModelAsync(modelDTO);
-                if (model == null) return NoContent();
-
-                return Ok(model);
+                return Ok(await _modelService.UpdateModelAsync(modelDTO));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o modelo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -137,12 +129,20 @@
         /// </summary>
         /// <param name="modelsIds"></param>
         [HttpPost("Delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> modelsIds)
         {
-            return Ok(await _modelService.DeleteModelsAsync(modelsIds));
+            try
+            {
+                return Ok(await _modelService.DeleteModelsAsync(modelsIds));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            } 
         }
 
         #endregion
-
     }
 }

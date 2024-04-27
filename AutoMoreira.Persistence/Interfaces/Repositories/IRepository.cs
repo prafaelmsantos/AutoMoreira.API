@@ -2,11 +2,11 @@
 {
     public interface IRepository<T> where T : class
     {
-        Task<bool> AddAsync(T entity);
-        Task<bool> AddRangeAsync(IEnumerable<T> entities);
+        Task<T> AddAsync(T entity);
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
 
-        Task<bool> UpdateAsync(T entity);
-        Task<bool> UpdateRangeAsync(IEnumerable<T> entities);
+        Task<T> UpdateAsync(T entity);
+        Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities);
 
         Task<bool> RemoveAsync(T entity);
         Task<bool> RemoveRangeAsync(IEnumerable<T> entities);

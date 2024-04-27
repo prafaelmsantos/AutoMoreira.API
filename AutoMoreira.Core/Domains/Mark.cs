@@ -13,14 +13,22 @@
 
         public Mark(int id, string name)
         {
+            id.Throw(() => throw new Exception(DomainResource.MarkIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
+            name.ThrowIfNull(() => throw new Exception(DomainResource.MarkNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Id = id;
             Name = name;
 
             Models = new List<Model>();
         }
-
         public Mark(string name)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.MarkNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Name = name;
 
             Models = new List<Model>();
@@ -28,6 +36,9 @@
 
         public void SetName(string name)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.MarkNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Name = name;
         }
     }

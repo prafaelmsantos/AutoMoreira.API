@@ -15,33 +15,32 @@
         }
         #endregion
 
-        public virtual async Task<bool> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             await Entity.AddAsync(entity);
             await _context.SaveChangesAsync();
-            return true;
+            return entity;
         }
 
-        public virtual async Task<bool> AddRangeAsync(IEnumerable<T> entities)
+        public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
         {
             await Entity.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
-            return true;
+            return entities;
         }
 
-
-        public virtual async Task<bool> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             Entity.Update(entity);
             await _context.SaveChangesAsync();
-            return true;
+            return entity;
         }
 
-        public virtual async Task<bool> UpdateRangeAsync(IEnumerable<T> entities)
+        public virtual async Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities)
         {
             Entity.UpdateRange(entities);
             await _context.SaveChangesAsync();
-            return true;
+            return entities;
         }
 
 

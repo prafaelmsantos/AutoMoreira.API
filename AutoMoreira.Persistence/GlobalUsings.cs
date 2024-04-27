@@ -30,3 +30,4 @@ global using MimeKit;
 global using MailKit.Net.Smtp;
 global using AutoMoreira.Core.Dto.Base;
 global using AutoMoreira.Core.Dto.Email;
+global using Throw;

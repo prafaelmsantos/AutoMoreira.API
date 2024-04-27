@@ -18,7 +18,7 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
-                vehicle = await SetVehicleImages(vehicleDTO, vehicle);
+                vehicle = SetVehicleImages(vehicleDTO, vehicle);
 
                 await _vehicleRepository.AddAsync(vehicle);
 
@@ -44,7 +44,7 @@
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
-                vehicle = await SetVehicleImages(vehicleDTO, vehicle);
+                vehicle = SetVehicleImages(vehicleDTO, vehicle);
 
                 await _vehicleRepository.UpdateAsync(vehicle);
 
@@ -239,7 +239,7 @@
                     .Where(x=> x.Sold == sold)
                     .ToListAsync();
 
-                if (byMonth is true)
+                if (byMonth)
                 {
                     vehicles = vehicles.Where(x => x.SoldDate?.Month == DateTime.UtcNow.Month).ToList();
                 }
@@ -304,14 +304,14 @@
             }
         }
 
-        private static Task<Vehicle> SetVehicleImages(VehicleDTO vehicleDTO, Vehicle vehicle)
+        private static Vehicle SetVehicleImages(VehicleDTO vehicleDTO, Vehicle vehicle)
         {
             List<VehicleImage> vehicleImages = new();
-            vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url, vehicle.Id)));
+            vehicleDTO.VehicleImages.ForEach(x => vehicleImages.Add(new VehicleImage(x.Url)));
             vehicleImages.FirstOrDefault()?.SetIsMain(true);
             vehicle.SetVehicleImages(vehicleImages);
 
-            return Task.FromResult(vehicle);
+            return vehicle;
         }
 
         #endregion

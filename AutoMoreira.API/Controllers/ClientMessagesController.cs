@@ -23,6 +23,8 @@
         /// Get All Client Messages
         /// </summary>
         [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Get()
         {
             try
@@ -45,6 +47,8 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -67,6 +71,8 @@
         /// </summary>
         /// <param name="clientMessageDTO"></param>
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Post(ClientMessageDTO clientMessageDTO)
         {
             try
@@ -89,6 +95,8 @@
         /// <param name="status"></param>
         /// <param name="id"></param>
         [HttpPut("Status/{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] STATUS status)
         {
             try
@@ -110,6 +118,8 @@
         /// </summary>
         /// <param name="clientMessagesIds"></param>
         [HttpPost("Delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
         {
             return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));

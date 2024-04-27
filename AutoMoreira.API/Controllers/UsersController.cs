@@ -28,19 +28,7 @@
         [HttpGet()]
         public async Task<IActionResult> Get()
         {
-            try
-            {
-                var users = await _userService.GetAllUsersAsync();
-                if (users == null) return NoContent();
-
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar utilizadores. Erro: {ex.Message}");
-            }
-
+            return Ok(await _userService.GetAllUsersAsync());
         }
 
         /// <summary>
@@ -48,20 +36,9 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            try
-            {
-                UserDTO userDTO = await _userService.GetUserByIdAsync(id);
-                if (userDTO == null) return NoContent();
-
-                return Ok(userDTO);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar o utilizador. Erro: {ex.Message}");
-            }
+            return Ok(await _userService.GetUserByIdAsync(id));
         }
 
 
@@ -115,38 +92,15 @@
         [HttpPost("Login")]
         public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLoginDTO)
         {
-            try
+            UserDTO userDTO = await _userService.GetUserByEmailAsync(userLoginDTO.Email);
+            if (!await _userService.CheckUserPasswordAsync(userDTO, userLoginDTO.Password))
             {
-                var user = await _userService.GetUserByEmailAsync(userLoginDTO.Email);
-                if (user == null)
-                {
-                    return Unauthorized("Email ou password inválida!");
-                }
-                var result = await _userService.CheckUserPasswordAsync(user, userLoginDTO.Password);
-                if (!result.Succeeded)
-                {
-                    return Unauthorized();
-                }
-                return Ok(new UserDTO
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Image = user.Image,
-                    PhoneNumber = user.PhoneNumber,
-                    DarkMode = user.DarkMode,
-                    IsDefault = user.IsDefault,
-                    Roles = user.Roles,
-                    Token = _tokenService.CreateToken(user).Result
-                });
+                return Unauthorized();
+            }
 
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar fazer Login. Erro: {ex.Message}");
-            }
+            userDTO.Token = _tokenService.CreateToken(userDTO).Result;
+
+            return Ok(userDTO);
         }
 
         /// <summary>
@@ -154,20 +108,10 @@
         /// </summary>
         /// <param name="email"></param>
         [HttpPost("ResetPassword/{email}")]
-        public async Task<IActionResult> ResetPassword(string email)
+        public async Task<IActionResult> ResetPassword([FromRoute] string email)
         {
-            try
-            {
-                await _userService.UserResetPasswordAsync(email);
-
-                return Ok(email);
-
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar uma nova palavra-passe. Erro: {ex.Message}");
-            }
+            await _userService.UserResetPasswordAsync(email);
+            return Ok(email);
         }
 
         /// <summary>
@@ -177,18 +121,7 @@
         [HttpPut("UpdatePassword")]
         public async Task<IActionResult>UpdatePassword([FromBody] UserLoginDTO userLoginDTO)
         {
-            try
-            {
-                await _userService.UserUpdateUserPasswordAsync(userLoginDTO);
-
-                return Ok(userLoginDTO);
-
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar fazer atualização da palavra-passe. Erro: {ex.Message}");
-            }
+            return Ok(_userService.UserUpdateUserPasswordAsync(userLoginDTO));
         }
 
         /// <summary>
@@ -199,19 +132,8 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)
         {
-            try
-            {
-                userDTO.Id = id;
-                UserDTO userUpdate = await _userService.UpdateUserAsync(userDTO);
-                if (userUpdate == null) return NoContent();
-
-                return Ok(userUpdate);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar Utilizador. Erro: {ex.Message}");
-            }
+            userDTO.Id = id;
+            return Ok(await _userService.UpdateUserAsync(userDTO));
         }
 
         /// <summary>
@@ -222,18 +144,7 @@
         [HttpPut("Mode/{id}")]
         public async Task<IActionResult> UpdateUserMode(int id, [FromBody] bool mode)
         {
-            try
-            {
-                UserDTO userDTO = await _userService.UpdateUserModeAsync(id, mode);
-                if (userDTO == null) return NoContent();
-
-                return Ok(userDTO);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o modo utilizador. Erro: {ex.Message}");
-            }
+            return Ok(await _userService.UpdateUserModeAsync(id, mode));
         }
 
         /// <summary>
@@ -244,18 +155,7 @@
         [HttpPut("Image/{id}")]
         public async Task<IActionResult> UpdateUserImage(int id, [FromBody] string image)
         {
-            try
-            {
-                UserDTO userDTO = await _userService.UpdateUserImageAsync(id, image);
-                if (userDTO == null) return NoContent();
-
-                return Ok(userDTO);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o imagem do utilizador. Erro: {ex.Message}");
-            }
+            return Ok(await _userService.UpdateUserImageAsync(id, image));
         }
 
         //// <summary>

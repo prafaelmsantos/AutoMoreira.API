@@ -14,6 +14,12 @@
 
         public Role(int id, string name, bool isReadOnly = false, bool isDefault = false)
         {
+            id.Throw(() => throw new Exception(DomainResource.RoleIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
+            name.ThrowIfNull(() => throw new Exception(DomainResource.RoleNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Id = id;
             Name = name;
             NormalizedName = name.ToUpper();
@@ -25,17 +31,22 @@
 
         public Role(string name)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.RoleNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Name = name;
             NormalizedName = name.ToUpper();
 
             Users = new List<User>();
         }
 
-        public void UpdateRole(string name)
+        public void SetName(string name)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.RoleNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Name = name;
             NormalizedName = name.ToUpper();
         }
-
     }
 }

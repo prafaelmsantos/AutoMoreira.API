@@ -9,6 +9,12 @@
 
         public UserRole(int userId, int roleId)
         {
+            userId.Throw(() => throw new Exception(DomainResource.UserIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
+            roleId.Throw(() => throw new Exception(DomainResource.RoleIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
             UserId = userId;
             RoleId = roleId;
         }

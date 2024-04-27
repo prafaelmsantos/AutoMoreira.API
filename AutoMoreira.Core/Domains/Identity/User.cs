@@ -17,6 +17,21 @@
 
         public User(int id, string email, string? phoneNumber, string firstName, string lastName, bool isDefault)
         {
+            id.Throw(() => throw new Exception(DomainResource.UserIdNeedsToBeSpecifiedException))
+            .IfNegativeOrZero();
+
+            email.ThrowIfNull(() => throw new Exception(DomainResource.UserEmailNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            phoneNumber?.Throw(() => throw new Exception(DomainResource.UserPhoneNumberNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            firstName.ThrowIfNull(() => throw new Exception(DomainResource.UserFirstNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            lastName.ThrowIfNull(() => throw new Exception(DomainResource.UserLastNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Id = id;
             UserName = email;
             NormalizedUserName = email.ToUpper();
@@ -34,6 +49,18 @@
 
         public User(string email, string? phoneNumber, string firstName, string lastName)
         {
+            email.ThrowIfNull(() => throw new Exception(DomainResource.UserEmailNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            phoneNumber?.Throw(() => throw new Exception(DomainResource.UserPhoneNumberNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            firstName.ThrowIfNull(() => throw new Exception(DomainResource.UserFirstNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            lastName.ThrowIfNull(() => throw new Exception(DomainResource.UserLastNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             UserName = email;
             NormalizedUserName = email.ToUpper();
             Email = email;
@@ -50,6 +77,21 @@
 
         public void UpdateUser(string email, string? phoneNumber, string firstName, string lastName, string? image)
         {
+            email.ThrowIfNull(() => throw new Exception(DomainResource.UserEmailNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            phoneNumber?.Throw(() => throw new Exception(DomainResource.UserPhoneNumberNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            firstName.ThrowIfNull(() => throw new Exception(DomainResource.UserFirstNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            lastName.ThrowIfNull(() => throw new Exception(DomainResource.UserLastNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            image?.Throw(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             UserName = email;
             NormalizedUserName = email.ToUpper();
             Email = email;
@@ -69,6 +111,9 @@
 
         public void SetImage(string image)
         {
+            image.Throw(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Image = image;
         }
 
@@ -80,6 +125,9 @@
 
         public void SetPasswordHash(string passwordHash)
         {
+            passwordHash.Throw(() => throw new Exception(DomainResource.UserPasswordHashNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             PasswordHash = passwordHash;
             SecurityStamp = Guid.NewGuid().ToString();
         }

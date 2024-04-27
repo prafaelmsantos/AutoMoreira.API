@@ -21,13 +21,14 @@
             _roleRepository = roleRepository;
         }
 
-        public async Task<SignInResult> CheckUserPasswordAsync(UserDTO userDTO, string password)
+        public async Task<bool> CheckUserPasswordAsync(UserDTO userDTO, string password)
         {
             try
             {
                 User? user = await _userManager.Users.SingleOrDefaultAsync(user => user.Email == userDTO.Email);
+                SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user!, password, false);
 
-                return await _signInManager.CheckPasswordSignInAsync(user!, password, false);
+                return signInResult.Succeeded;
 
             }
             catch (Exception ex)

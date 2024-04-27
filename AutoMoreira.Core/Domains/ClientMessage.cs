@@ -13,6 +13,19 @@
 
         public ClientMessage(string name, string email, long phoneNumber, string message)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.ClientMessageNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            email.ThrowIfNull(() => throw new Exception(DomainResource.ClientMessageEmailNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            phoneNumber.Throw(() => throw new Exception(DomainResource.ClientMessagePhoneNumberNeedsToBeSpecifiedException))
+                .IfGreaterThan(999999999)
+                .IfLessThan(200000000);
+
+            message.ThrowIfNull(() => throw new Exception(DomainResource.ClientMessageNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Name = name;
             Email = email;
             PhoneNumber = phoneNumber;
@@ -23,6 +36,10 @@
 
         public void SetStatus(STATUS status)
         {
+            System.Enum.IsDefined(typeof(STATUS), status)
+                .Throw(() => throw new Exception(DomainResource.ClientMessageStatusNeedsToBeSpecifiedException))
+                .IfFalse();
+
             Status = status;
         }
 

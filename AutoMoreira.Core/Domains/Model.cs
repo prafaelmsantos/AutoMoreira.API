@@ -16,14 +16,28 @@
 
         public Model(string name, int markId)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.ModelNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            markId.Throw(() => throw new Exception(DomainResource.MarkIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
             Name = name;
             MarkId = markId;
             Vehicles = new List<Vehicle>();
-
         }
 
         public Model(int id, string name, int markId)
         {
+            id.Throw(() => throw new Exception(DomainResource.ModelIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();        
+
+            name.ThrowIfNull(() => throw new Exception(DomainResource.MarkNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            markId.Throw(() => throw new Exception(DomainResource.MarkIdNeedsToBeSpecifiedException))
+             .IfNegativeOrZero();
+
             Id = id;
             Name = name;
             MarkId = markId;
@@ -32,6 +46,12 @@
 
         public void UpdateModel(string name, int markId)
         {
+            name.ThrowIfNull(() => throw new Exception(DomainResource.ModelNameNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
+            markId.Throw(() => throw new Exception(DomainResource.MarkIdNeedsToBeSpecifiedException))
+              .IfNegativeOrZero();
+
             Name = name;
             MarkId = markId;
         }

@@ -30,7 +30,6 @@
             }
         }
 
-
         public async Task<List<ResponseMessageDTO>> DeleteClientMessagesAsync(List<int> clientMessagesIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
@@ -71,7 +70,11 @@
         {
             try
             {
-                List<ClientMessage> clientMessages = await _clientMessageRepository.GetAll().OrderBy(x => x.Id).ToListAsync();
+                List<ClientMessage> clientMessages = await _clientMessageRepository
+                    .GetAll()
+                    .OrderBy(x => x.Id)
+                    .AsNoTracking()
+                    .ToListAsync();
 
                 return _mapper.Map<List<ClientMessageDTO>>(clientMessages);
 

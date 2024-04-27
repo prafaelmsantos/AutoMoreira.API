@@ -2,60 +2,38 @@
 {
     public class MarkService : IMarkService
     {
-        private readonly IMarkRepository _markRepository;
+        #region Private variables
+
         private readonly IMapper _mapper;
+        private readonly IMarkRepository _markRepository;
 
-        public MarkService(IMarkRepository markRepository, IMapper mapper)
+        #endregion
+
+        #region Constructors
+        public MarkService(IMapper mapper, IMarkRepository markRepository)
         {
-            _markRepository = markRepository;
             _mapper = mapper;
+            _markRepository = markRepository;
         }
+        #endregion
 
-        public async Task<MarkDTO> AddMarkAsync(MarkDTO markDTO)
-        {
-            try
-            {
-                Mark mark = new(markDTO.Name);
-
-                await _markRepository.AddAsync(mark);
-
-                return _mapper.Map<MarkDTO>(mark);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<MarkDTO> UpdateMarkAsync(MarkDTO markDTO)
-        {
-            try
-            {
-                var mark = await _markRepository.FindByIdAsync(markDTO.Id) ?? throw new Exception("Marca não encontrada.");
-                mark.SetName(markDTO.Name);
-
-                await _markRepository.UpdateAsync(mark);
-
-                return _mapper.Map<MarkDTO>(mark);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }     
+        #region Public methods
 
         public async Task<List<MarkDTO>> GetAllMarksAsync()
         {
             try
             {
-                List<Mark> marks = await _markRepository.GetAll().OrderBy(x => x.Id).ToListAsync();
+                List<Mark> marks = await _markRepository
+                    .GetAll()
+                    .OrderBy(x => x.Id)
+                    .ToListAsync();
 
                 return _mapper.Map<List<MarkDTO>>(marks);
 
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"{DomainResource.GetAllMarksAsyncException} {ex.Message}");
             }
         }
 
@@ -63,17 +41,79 @@
         {
             try
             {
-                var mark = await _markRepository.FindByIdAsync(markId);
+                Mark? mark = await _markRepository.FindByIdAsync(markId);
 
-                return mark == null ? throw new Exception("Marca não encontrada.") : _mapper.Map<MarkDTO>(mark);
+                mark.ThrowIfNull(() => throw new Exception(DomainResource.MarkNotFoundException));
+
+                return _mapper.Map<MarkDTO>(mark);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"{DomainResource.GetMarkByIdAsyncException} {ex.Message}");
+            }
+        }
+        
+        public async Task<MarkDTO> AddMarkAsync(MarkDTO markDTO)
+        {
+            try
+            {
+                MarkExistsAsync(markDTO).Result
+                    .Throw(() => throw new Exception(DomainResource.MarkAlreadyExistsException))
+                    .IfTrue();
+                
+                Mark mark = new(markDTO.Name);
+
+                mark = await _markRepository.AddAsync(mark);
+
+                return _mapper.Map<MarkDTO>(mark);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.AddMarkAsyncException} {ex.Message}");
             }
         }
 
+        public async Task<MarkDTO> UpdateMarkAsync(MarkDTO markDTO)
+        {
+            try
+            {
+                Mark? mark = await _markRepository.FindByIdAsync(markDTO.Id);
+
+                mark.ThrowIfNull(() => throw new Exception(DomainResource.MarkNotFoundException));
+
+                MarkExistsAsync(markDTO).Result
+                    .Throw(() => throw new Exception(DomainResource.MarkAlreadyExistsException))
+                    .IfTrue();
+
+                mark.SetName(markDTO.Name);
+
+                mark = await _markRepository.UpdateAsync(mark);
+
+                return _mapper.Map<MarkDTO>(mark);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.UpdateMarkAsyncException} {ex.Message}");
+            }
+        }     
+
         public async Task<List<ResponseMessageDTO>> DeleteMarksAsync(List<int> marksIds)
+        {
+            return await DeleteMarks(marksIds);
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private async Task<bool> MarkExistsAsync(MarkDTO markDTO)
+        {
+            return await _markRepository
+                    .GetAll()
+                    .AnyAsync(x => x.Id != markDTO.Id && x.Name.Trim().ToLower() == markDTO.Name.ToLower());
+        }
+
+        private async Task<List<ResponseMessageDTO>> DeleteMarks(List<int> marksIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 
@@ -87,19 +127,16 @@
                     if (mark is not null)
                     {
                         responseMessageDTO.Entity.Name = mark.Name;
-
-                        await _markRepository.RemoveAsync(mark);
-                        responseMessageDTO.OperationSuccess = true;
+                        responseMessageDTO.OperationSuccess = await _markRepository.RemoveAsync(mark);
                     }
                     else
                     {
-                        responseMessageDTO.ErrorMessage = "Marca não encontrada.";
+                        responseMessageDTO.ErrorMessage = DomainResource.MarkNotFoundException;
                     }
                 }
-
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    responseMessageDTO.ErrorMessage = ex.Message;
+                    responseMessageDTO.ErrorMessage = DomainResource.DeleteMarksAsyncException;
                 }
 
                 responseMessageDTOs.Add(responseMessageDTO);
@@ -107,5 +144,7 @@
 
             return responseMessageDTOs;
         }
+
+        #endregion
     }
 }

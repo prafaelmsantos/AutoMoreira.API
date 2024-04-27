@@ -10,10 +10,12 @@
 
         public VehicleImage() { }
 
-        public VehicleImage(string url, int vehicleId)
+        public VehicleImage(string url)
         {
+            url.ThrowIfNull(() => throw new Exception(DomainResource.VehicleImageUrlNeedsToBeSpecifiedException))
+                .IfWhiteSpace();
+
             Url = url;
-            VehicleId = vehicleId;
             IsMain = false;
         }
 

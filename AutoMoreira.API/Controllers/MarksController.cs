@@ -25,19 +25,17 @@
         /// Get All Marks
         /// </summary>
         [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var marks = await _markService.GetAllMarksAsync();
-                if (marks == null) return NoContent();
-
-                return Ok(marks);
+                return Ok(await _markService.GetAllMarksAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar marcas. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -47,21 +45,17 @@
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var mark = await _markService.GetMarkByIdAsync(id);
-                if (mark == null) return NoContent();
-
-
-
-                return Ok(mark);
+                return Ok(await _markService.GetMarkByIdAsync(id));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar a marca. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -71,19 +65,18 @@
         /// </summary>
         /// <param name="markDTO"></param>
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Post([FromBody] MarkDTO markDTO)
         {
             try
             {
-                var mark = await _markService.AddMarkAsync(markDTO);
-                if (mark == null) return NotFound("Erro a criar a marca!");
-
-                return Ok(mark);
+                markDTO.Id = 0;
+                return Ok(await _markService.AddMarkAsync(markDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar a marca. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -94,20 +87,18 @@
         /// <param name="id"></param>
         /// <param name="markDTO"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] MarkDTO markDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] MarkDTO markDTO)
         {
             try
             {
                 markDTO.Id = id;
-                var mark = await _markService.UpdateMarkAsync(markDTO);
-                if (mark == null) return NoContent();
-
-                return Ok(mark);
+                return Ok(await _markService.UpdateMarkAsync(markDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar a marca. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -117,11 +108,19 @@
         /// </summary>
         /// <param name="modelsIds"></param>
         [HttpPost("Delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> marksIds)
         {
-            return Ok(await _markService.DeleteMarksAsync(marksIds));
+            try
+            {
+                return Ok(await _markService.DeleteMarksAsync(marksIds));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            } 
         }
         #endregion
-
     }
 }
