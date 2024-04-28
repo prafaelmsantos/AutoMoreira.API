@@ -2,9 +2,11 @@
 {
     public interface IVisitorService
     {
+        Task<VisitorCounterDTO> GetVisitorCountersAsync();
         Task<ResponseVisitorDTO> GetAllVisitoresWithMonthComparisonAsync();
         Task<ResponseCompleteVisitorDTO> GetAllVisitoresWithYearComparisonAsync();
-        Task<VisitorDTO> CreateOrUpdateVisitorAsync();
-        Task<VisitorCounterDTO> GetAllVisitoresCountersAsync();
+
+
+        Task<VisitorDTO> CreateOrUpdateVisitorAsync();     
     }
 }

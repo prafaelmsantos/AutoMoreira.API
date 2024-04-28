@@ -29,7 +29,7 @@
             services.AddScoped<IClientMessageService, ClientMessageService>();
             services.AddScoped<IVisitorService, VisitorService>();
 
-            var emailSettings = configuration.GetSection("EmailSettings").Get<EmailDTO>();
+            var emailSettings = configuration.GetSection("EmailSettings").Get<EmailConfig>();
             services.AddScoped<IEmailService, EmailService>(x => new EmailService(emailSettings));
 
             //JWT

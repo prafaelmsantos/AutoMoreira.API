@@ -25,59 +25,55 @@
         /// Get Line Chart
         /// </summary>
         [HttpGet("LineChart")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetLineChart()
         {
             try
             {
-                var visitors = await _visitorService.GetAllVisitoresWithYearComparisonAsync();
-                if (visitors == null) return NoContent();
-
-                return Ok(visitors);
+                return Ok(await _visitorService.GetAllVisitoresWithYearComparisonAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar visitantes. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Get Bar Chart
         /// </summary>
         [HttpGet("BarChart")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetBarChart()
         {
             try
             {
-                var visitors = await _visitorService.GetAllVisitoresWithMonthComparisonAsync();
-                if (visitors == null) return NoContent();
-
-                return Ok(visitors);
+                return Ok(await _visitorService.GetAllVisitoresWithMonthComparisonAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar visitantes. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Get Counters
         /// </summary>
         [HttpGet("Counters")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetCounters()
         {
             try
             {
-                var visitors = await _visitorService.GetAllVisitoresCountersAsync();
-                if (visitors == null) return NoContent();
-
-                return Ok(visitors);
+                return Ok(await _visitorService.GetVisitorCountersAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar visitantes. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -86,23 +82,20 @@
         /// Create/Update Visitor
         /// </summary>
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Post()
         {
             try
             {
-                var visitor = await _visitorService.CreateOrUpdateVisitorAsync();
-                if (visitor == null) return NotFound("Erro ao criar/atualizar visitantes!");
-
-                return Ok(visitor);
+                return Ok(await _visitorService.CreateOrUpdateVisitorAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao criar/atualizar visitantes. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
         #endregion
-
     }
 }

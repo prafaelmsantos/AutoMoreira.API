@@ -7,15 +7,13 @@
         #region Properties
 
         private readonly IUserService _userService;
-        private readonly ITokenService _tokenService;
 
         #endregion
 
         #region Constructors
-        public UsersController(IUserService userService, ITokenService tokenService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
-            _tokenService = tokenService;
         }
         #endregion
 
@@ -38,6 +36,7 @@
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }        
         }
+
 
         /// <summary>
         /// Get User
@@ -99,6 +98,7 @@
             }     
         }
 
+
         /// <summary>
         /// Reset User Password
         /// </summary>
@@ -118,6 +118,7 @@
             }   
         }
 
+
         /// <summary>
         /// Update User Password
         /// </summary>
@@ -136,6 +137,7 @@
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }  
         }
+
 
         /// <summary>
         /// Update User
@@ -158,6 +160,7 @@
             }       
         }
 
+
         /// <summary>
         /// Update User Mode
         /// </summary>
@@ -178,6 +181,7 @@
             }
         }
 
+
         /// <summary>
         /// Update User Image
         /// </summary>
@@ -197,6 +201,7 @@
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }    
         }
+
 
         //// <summary>
         /// Delete Users

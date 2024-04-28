@@ -2,11 +2,11 @@
 {
     public class EmailService : IEmailService
     {
-        private readonly EmailDTO _emailDTO;
+        private readonly EmailConfig _emailConfig;
 
-        public EmailService(EmailDTO emailDTO)
+        public EmailService(EmailConfig emailConfig)
         {
-            _emailDTO = emailDTO;
+            _emailConfig = emailConfig;
         }
 
         public async Task SendEmailToUserAsync(string toName, string toAddress, string password)
@@ -17,7 +17,7 @@
 
                 var userEmail = UserEmail(toName, toAddress, password);
 
-                message.From.Add(new MailboxAddress(_emailDTO.Name, _emailDTO.Address));
+                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = userEmail.Item1;
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -31,10 +31,10 @@
 
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(_emailDTO.Host, _emailDTO.Port, true);
+                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailDTO.Username, _emailDTO.Password);
+                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
@@ -53,7 +53,7 @@
 
                 var userEmail = UserUpdateEmail(toName);
 
-                message.From.Add(new MailboxAddress(_emailDTO.Name, _emailDTO.Address));
+                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = userEmail.Item1;
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -67,10 +67,10 @@
 
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(_emailDTO.Host, _emailDTO.Port, true);
+                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailDTO.Username, _emailDTO.Password);
+                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
@@ -89,7 +89,7 @@
 
                 var userEmail = UserResetPasswordEmail(toName, password);
 
-                message.From.Add(new MailboxAddress(_emailDTO.Name, _emailDTO.Address));
+                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = userEmail.Item1;
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -103,10 +103,10 @@
 
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(_emailDTO.Host, _emailDTO.Port, true);
+                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailDTO.Username, _emailDTO.Password);
+                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
@@ -116,6 +116,7 @@
                 throw new InvalidOperationException(e.Message);
             }
         }
+
         public async Task SendEmailToUserUpdatePasswordAsync(string toName, string toAddress, string password)
         {
             try
@@ -124,7 +125,7 @@
 
                 var userEmail = UserPasswordEmail(toName);
 
-                message.From.Add(new MailboxAddress(_emailDTO.Name, _emailDTO.Address));
+                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = userEmail.Item1;
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -138,10 +139,10 @@
 
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(_emailDTO.Host, _emailDTO.Port, true);
+                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailDTO.Username, _emailDTO.Password);
+                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
@@ -151,6 +152,7 @@
                 throw new InvalidOperationException(e.Message);
             }
         }
+
         public async Task SendEmailToClientAsync(string toName, string toAddress)
         {
             try
@@ -159,7 +161,7 @@
 
                 var userEmail = ClientEmail(toName);
 
-                message.From.Add(new MailboxAddress(_emailDTO.Name, _emailDTO.Address));
+                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = userEmail.Item1;
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -173,10 +175,10 @@
 
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                await client.ConnectAsync(_emailDTO.Host, _emailDTO.Port, true);
+                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailDTO.Username, _emailDTO.Password);
+                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 

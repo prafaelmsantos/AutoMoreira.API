@@ -29,15 +29,11 @@
         {
             try
             {
-                var clientMessages = await _clientMessageService.GetAllClientMessagesAsync();
-                if (clientMessages == null) return NoContent();
-
-                return Ok(clientMessages);
+                return Ok(await _clientMessageService.GetAllClientMessagesAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar mensagens de clientes. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -49,19 +45,15 @@
         [HttpGet("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var clientMessage = await _clientMessageService.GetClientMessageByIdAsync(id);
-                if (clientMessage == null) return NoContent();
-
-                return Ok(clientMessage);
+                return Ok(await _clientMessageService.GetClientMessageByIdAsync(id));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar a mensagem de cliente. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -73,21 +65,18 @@
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> Post(ClientMessageDTO clientMessageDTO)
+        public async Task<IActionResult> Post([FromBody] ClientMessageDTO clientMessageDTO)
         {
             try
             {
-                var clientMessage = await _clientMessageService.AddClientMessageAsync(clientMessageDTO);
-                if (clientMessage == null) return NotFound("Erro ao tentar criar a mensagem de cliente!");
-
-                return Ok(clientMessage);
+                return Ok(await _clientMessageService.AddClientMessageAsync(clientMessageDTO));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar a mensagem de cliente. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Update Client Message Status
@@ -97,21 +86,18 @@
         [HttpPut("Status/{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateClientMessageStatus(int id, [FromBody] STATUS status)
+        public async Task<IActionResult> PutStatus([FromRoute] int id, [FromBody] STATUS status)
         {
             try
             {
-                ClientMessageDTO clientMessageDTO = await _clientMessageService.UpdateClientMessageStatusAsync(id, status);
-                if (clientMessageDTO == null) return NoContent();
-
-                return Ok(clientMessageDTO);
+                return Ok(await _clientMessageService.UpdateClientMessageStatusAsync(id, status));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o status da mensagem de cliente. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Delete Client Messages
@@ -122,8 +108,16 @@
         [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> clientMessagesIds)
         {
-            return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));
+            try
+            {
+                return Ok(await _clientMessageService.DeleteClientMessagesAsync(clientMessagesIds));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }  
         }
+        
         #endregion
     }
 }

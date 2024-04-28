@@ -2,13 +2,39 @@
 {
     public class VisitorService : IVisitorService
     {
-        private readonly IVisitorRepository _visitorRepository;
-        private readonly IMapper _mapper;
+        #region Private variables
 
-        public VisitorService(IVisitorRepository visitorRepository, IMapper mapper)
+        private readonly IMapper _mapper;
+        private readonly IVisitorRepository _visitorRepository;
+
+        #endregion
+
+        #region Constructors
+        public VisitorService(IMapper mapper, IVisitorRepository visitorRepository)
         {
-            _visitorRepository = visitorRepository;
             _mapper = mapper;
+            _visitorRepository = visitorRepository;         
+        }
+        #endregion
+
+        #region Public methods
+
+        public async Task<VisitorCounterDTO> GetVisitorCountersAsync()
+        {
+            try
+            {
+                List<VisitorDTO> visitorsDTO = await GetAllVisitoresByYear(DateTime.UtcNow.Year);
+
+                return new()
+                {
+                    Total = visitorsDTO.Select(x => x.Value).Sum(),
+                    TotalMonth = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.FirstOrDefault()?.Value ?? 0
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.GetVisitorCountersAsyncException} {ex.Message}");
+            }
         }
 
         public async Task<ResponseCompleteVisitorDTO> GetAllVisitoresWithYearComparisonAsync()
@@ -18,22 +44,19 @@
                 List<VisitorDTO> currentVisitors = await GetAllVisitoresByYear(DateTime.UtcNow.Year);
                 List<VisitorDTO> lastVisitors = await GetAllVisitoresByYear(DateTime.UtcNow.Year - 1);
 
-                long lastValue = lastVisitors.Select( x => x.Value).Sum();
-                long currentValue = currentVisitors.Select(x => x.Value).Sum();
-                double valuePerc = lastValue != 0 ? (double)(currentValue - lastValue) / lastValue * 100 : currentValue != 0 ? 100 : 0;
+                var values = GetValuesWithYearComparison(lastVisitors, currentVisitors);
 
-                return new ResponseCompleteVisitorDTO() 
+                return new() 
                 { 
                     Visitors = currentVisitors, 
-                    LastVisitors = lastVisitors, 
-                    ValuePerc = Math.Round(valuePerc, 1), 
-                    Value = currentValue
+                    LastVisitors = lastVisitors,       
+                    Value = values.Item1,
+                    ValuePerc = values.Item2
                 };
-
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"{DomainResource.GetAllVisitorsWithYearComparisonAsyncException} {ex.Message}");
             }
         }
 
@@ -43,40 +66,18 @@
             {
                 List<VisitorDTO> visitorsDTO = await GetAllVisitoresByYear(DateTime.UtcNow.Year);
 
-                long currentMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.FirstOrDefault()?.Value ?? 0;
-                long lastMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month - 1)?.FirstOrDefault()?.Value ?? 0;
-                double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : currentMonthValue != 0 ? 100 : 0;
+               var values = GetValuesWithMonthComparison(visitorsDTO);
 
-                return new ResponseVisitorDTO() 
+                return new() 
                 { 
                     Visitors = visitorsDTO, 
-                    ValuePerc = Math.Round(valuePerc, 1), 
-                    Value = currentMonthValue
+                    Value = values.Item1,
+                    ValuePerc = values.Item2
                 };
-
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<VisitorCounterDTO> GetAllVisitoresCountersAsync()
-        {
-            try
-            {
-                List<VisitorDTO> visitorsDTO = await GetAllVisitoresByYear(DateTime.UtcNow.Year);
-
-                return new VisitorCounterDTO()
-                {
-                    Total = visitorsDTO.Select(x => x.Value).Sum(),
-                    TotalMonth = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.FirstOrDefault()?.Value ?? 0
-                };
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                throw new Exception($"{DomainResource.GetAllVisitorsWithMonthComparisonAsyncException} {ex.Message}");
             }
         }
 
@@ -105,39 +106,50 @@
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-            
+                throw new Exception($"{DomainResource.CreateOrUpdateVisitorAsyncException} {ex.Message}");
+            }         
         }
+
+        #endregion
 
         #region Private methods
         private async Task<List<VisitorDTO>> GetAllVisitoresByYear(int year)
         {
-            try
-            {
-                List<Visitor> visitors = await _visitorRepository
-                    .GetAll()
-                    .Where(x => x.Year == year)
-                    .ToListAsync();
+            List<Visitor> visitors = await _visitorRepository
+                     .GetAll()
+                     .Where(x => x.Year == year)
+                     .ToListAsync();
 
-                List<VisitorDTO> visitorsDTO = _mapper.Map<List<VisitorDTO>>(visitors);
+            List<VisitorDTO> visitorsDTO = _mapper.Map<List<VisitorDTO>>(visitors);
 
-                List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
+            List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
 
-                var visitorsEmpty = monthList.Except(visitorsDTO.Select(x => x.Month)).ToList();
+            var visitorsEmpty = monthList.Except(visitorsDTO.Select(x => x.Month)).ToList();
 
-                visitorsEmpty.ForEach(month => 
-                    visitorsDTO.Add(new VisitorDTO() { Month = month, Year = DateTime.UtcNow.Year, Value = 0 }));
+            visitorsEmpty.ForEach(month =>
+                visitorsDTO.Add(new VisitorDTO() { Month = month, Year = DateTime.UtcNow.Year, Value = 0 }));
 
-                return visitorsDTO.OrderBy(x => x.Month).ToList();
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return visitorsDTO.OrderBy(x => x.Month).ToList();
         }
-        #endregion
 
+        private static (long, double) GetValuesWithYearComparison(List<VisitorDTO> lastVisitors, List<VisitorDTO> currentVisitors)
+        {
+            long lastValue = lastVisitors.Select(x => x.Value).Sum();
+            long currentValue = currentVisitors.Select(x => x.Value).Sum();
+            double valuePerc = lastValue != 0 ? (double)(currentValue - lastValue) / lastValue * 100 : currentValue != 0 ? 100 : 0;
+
+            return (currentValue, Math.Round(valuePerc, 1));
+        }
+
+        private static (long, double) GetValuesWithMonthComparison(List<VisitorDTO> visitorsDTO)
+        {
+            long currentMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month)?.FirstOrDefault()?.Value ?? 0;
+            long lastMonthValue = visitorsDTO.Where(x => (int)x.Month == DateTime.UtcNow.Month - 1)?.FirstOrDefault()?.Value ?? 0;
+            double valuePerc = lastMonthValue != 0 ? (double)(currentMonthValue - lastMonthValue) / lastMonthValue * 100 : currentMonthValue != 0 ? 100 : 0;
+
+            return (currentMonthValue, Math.Round(valuePerc, 1));
+        }
+
+        #endregion
     }
 }

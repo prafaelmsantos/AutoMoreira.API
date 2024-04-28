@@ -24,40 +24,37 @@
         /// Get All Vehicles
         /// </summary>
         [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var vehicles = await _vehicleService.GetAllVehiclesAsync();
-                if (vehicles == null) return NoContent();
-
-                return Ok(vehicles);
+                return Ok(await _vehicleService.GetAllVehiclesAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Get Vehicle
         /// </summary>
         /// <param name="id"></param>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var vehicle = await _vehicleService.GetVehicleByIdAsync(id);
-                if (vehicle == null) return NoContent();
-
-                return Ok(vehicle);
+                return Ok(await _vehicleService.GetVehicleByIdAsync(id));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar o veiculo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -65,59 +62,55 @@
         /// Get Vehicles Line Chart
         /// </summary>
         [HttpGet("LineChart")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetLineChart()
         {
             try
             {
-                var vehicles = await _vehicleService.GetAllVisitoresWithYearComparisonAsync();
-                if (vehicles == null) return NoContent();
-
-                return Ok(vehicles);
+                return Ok(await _vehicleService.GetAllVehiclesWithYearComparisonAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Get Vehicles Bar Chart
         /// </summary>
         [HttpGet("BarChart")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetBarChart()
         {
             try
             {
-                var vehicles = await _vehicleService.GetAllVehiclesWithMonthComparisonAsync();
-                if (vehicles == null) return NoContent();
-
-                return Ok(vehicles);
+                return Ok(await _vehicleService.GetAllVehiclesWithMonthComparisonAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Get Counters
         /// </summary>
         [HttpGet("Counters")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetCounters()
         {
             try
             {
-                var vehicles = await _vehicleService.GetVehicleCountersAsync();
-                if (vehicles == null) return NoContent();
-
-                return Ok(vehicles);
+                return Ok(await _vehicleService.GetVehicleCountersAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar veiculos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -126,19 +119,17 @@
         /// Get Pie Chart
         /// </summary>
         [HttpGet("PieChart")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetPieChart()
         {
             try
             {
-                var vehicles = await _vehicleService.GetVehiclePieStatisticsAsync();
-                if (vehicles == null) return NoContent();
-
-                return Ok(vehicles);
+                return Ok(await _vehicleService.GetVehiclePieStatisticsAsync());
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar encontrar as estatisticas dos veiculos. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -148,19 +139,17 @@
         /// </summary>
         /// <param name="vehicleDTO"></param>
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Post([FromBody] VehicleDTO vehicleDTO)
         {
             try
             {
-                var vehicle = await _vehicleService.AddVehicleAsync(vehicleDTO);
-                if (vehicle == null) return NoContent();
-
-                return Ok(vehicle);
+                return Ok(await _vehicleService.AddVehicleAsync(vehicleDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar criar o veiculo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
 
@@ -171,31 +160,39 @@
         /// <param name="vehicleDTO"></param>
         /// <param name="id"></param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] VehicleDTO vehicleDTO)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] VehicleDTO vehicleDTO)
         {
             try
             {
                 vehicleDTO.Id = id;
-                var vehicle = await _vehicleService.UpdateVehicleAsync(vehicleDTO);
-                if (vehicle == null) return NoContent();
-
-                return Ok(vehicle);
+                return Ok(await _vehicleService.UpdateVehicleAsync(vehicleDTO));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar o veiculo. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
             }
         }
+
 
         //// <summary>
         /// Delete Vehicles
         /// </summary>
         /// <param name="vehiclesIds"></param>
         [HttpPost("Delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Delete([FromBody] List<int> vehiclesIds)
         {
-            return Ok(await _vehicleService.DeleteVehiclesAsync(vehiclesIds));
+            try
+            {
+                return Ok(await _vehicleService.DeleteVehiclesAsync(vehiclesIds));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
         }
 
         #endregion
