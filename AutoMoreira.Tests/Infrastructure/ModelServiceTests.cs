@@ -33,7 +33,7 @@
             dto.Id = 0;
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)));
 
             // Act
             List<ModelDTO> result = await _modelService.GetAllModelsAsync();
@@ -69,7 +69,7 @@
             dto.Id = 0;
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)));
 
             // Act
             ModelDTO result = await _modelService.GetModelByIdAsync(dto.Id);
@@ -119,7 +119,7 @@
             dto.Id = 0;
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)));
 
             // Act
             List<ModelDTO> result = await _modelService.GetModelsByMarkIdAsync(dto.MarkId);
@@ -154,7 +154,7 @@
             ModelDTO dto = ModelBuilder.ModelDTO();
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()));
 
             _modelRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Model>())).ReturnsAsync(ModelBuilder.Model(dto));
 
@@ -178,7 +178,7 @@
             ModelDTO dto = ModelBuilder.ModelDTO();
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.AddModelAsync(dto)).Should()
@@ -192,7 +192,7 @@
             ModelDTO dto = ModelBuilder.ModelDTO();
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()));
 
             _modelRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Model>())).ThrowsAsync(new Exception());
 
@@ -214,7 +214,7 @@
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(ModelBuilder.Model(dto));
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()));
 
             _modelRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Model>())).ReturnsAsync(ModelBuilder.Model(dto));
 
@@ -255,7 +255,7 @@
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(ModelBuilder.Model(dto));
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryable(dto)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.UpdateModelAsync(dto)).Should()
@@ -271,7 +271,7 @@
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(ModelBuilder.Model(dto));
 
             _modelRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()));
 
             _modelRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Model>())).ThrowsAsync(new Exception());
 

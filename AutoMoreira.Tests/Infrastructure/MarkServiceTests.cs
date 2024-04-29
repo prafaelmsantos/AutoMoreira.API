@@ -33,7 +33,7 @@
             dto.Id = 0;
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)));
 
             // Act
             List<MarkDTO> result = await _markService.GetAllMarksAsync();
@@ -115,7 +115,7 @@
             MarkDTO dto = MarkBuilder.MarkDTO();
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()));
 
             _markRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Mark>())).ReturnsAsync(MarkBuilder.Mark(dto));
 
@@ -138,7 +138,7 @@
             MarkDTO dto = MarkBuilder.MarkDTO();
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.AddMarkAsync(dto)).Should()
@@ -152,7 +152,7 @@
             MarkDTO dto = MarkBuilder.MarkDTO();
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()));
 
             _markRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Mark>())).ThrowsAsync(new Exception());
 
@@ -175,7 +175,7 @@
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(mark);
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()));
 
             _markRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Mark>())).ReturnsAsync(mark);
 
@@ -215,7 +215,7 @@
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(MarkBuilder.Mark(dto));
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.UpdateMarkAsync(dto)).Should()
@@ -231,7 +231,7 @@
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(MarkBuilder.Mark(dto));
 
             _markRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()).AsQueryable());
+                .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryableEmpty()));
 
             _markRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Mark>())).ThrowsAsync(new Exception());
 
