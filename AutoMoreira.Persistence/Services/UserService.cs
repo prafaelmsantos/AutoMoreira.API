@@ -143,7 +143,7 @@
                     .Throw(() => throw new Exception(DomainResource.UserAlreadyExistsException))
                     .IfTrue();
 
-                user.UpdateUser(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
+                user.Update(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
 
                 if (!user.IsDefault)
                 {

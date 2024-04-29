@@ -8,10 +8,10 @@
         public string? Version { get; private set; }
         public FUEL FuelType { get; private set; }
         public double Price { get; private set; }
-        public double Mileage { get; private set; }
+        public int Mileage { get; private set; }
         
         public int Year { get; private set; }
-        public string Color { get; private set; } = null!;
+        public string? Color { get; private set; }
         public int Doors { get; private set; }
         public TRANSMISSION Transmission { get; private set; }
         public int EngineSize { get; private set; }
@@ -30,8 +30,8 @@
         }
 
         public Vehicle(int id, int modelId, string? version, FUEL fuelType, 
-            double price, double mileage, int year, string color, int doors, TRANSMISSION transmission, 
-            int engineSize, int power, string observations, bool opportunity)
+            double price, int mileage, int year, string? color, int doors, TRANSMISSION transmission, 
+            int engineSize, int power, string? observations, bool opportunity)
         {
             id.Throw(() => throw new Exception(DomainResource.VehicleIdNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
@@ -40,7 +40,7 @@
                 .IfNegativeOrZero();
 
             System.Enum.IsDefined(typeof(FUEL), fuelType)
-                .Throw(() => throw new Exception(DomainResource.VehicleStatusNeedsToBeSpecifiedException))
+                .Throw(() => throw new Exception(DomainResource.VehicleFuelTypeNeedsToBeSpecifiedException))
                 .IfFalse();
 
             price.Throw(() => throw new Exception(DomainResource.VehiclePriceNeedsToBeSpecifiedException))
@@ -51,9 +51,6 @@
 
             year.Throw(() => throw new Exception(DomainResource.VehicleYearNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
-
-            color.ThrowIfNull(() => throw new Exception(DomainResource.VehicleColorNeedsToBeSpecifiedException))
-                .IfWhiteSpace();
 
             doors.Throw(() => throw new Exception(DomainResource.VehicleDoorsNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
@@ -87,14 +84,14 @@
             VehicleImages = new List<VehicleImage>();
         }
 
-        public Vehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors, 
+        public Vehicle(int modelId, string? version, FUEL fuelType, double price, int mileage, int year, string? color, int doors, 
             TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold, DateTime? soldDate)
         {
             modelId.Throw(() => throw new Exception(DomainResource.VehicleModelIdNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
 
             System.Enum.IsDefined(typeof(FUEL), fuelType)
-                .Throw(() => throw new Exception(DomainResource.VehicleStatusNeedsToBeSpecifiedException))
+                .Throw(() => throw new Exception(DomainResource.VehicleFuelTypeNeedsToBeSpecifiedException))
                 .IfFalse();
 
             price.Throw(() => throw new Exception(DomainResource.VehiclePriceNeedsToBeSpecifiedException))
@@ -105,9 +102,6 @@
 
             year.Throw(() => throw new Exception(DomainResource.VehicleYearNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
-
-            color.ThrowIfNull(() => throw new Exception(DomainResource.VehicleColorNeedsToBeSpecifiedException))
-                .IfWhiteSpace();
 
             doors.Throw(() => throw new Exception(DomainResource.VehicleDoorsNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
@@ -141,14 +135,14 @@
             VehicleImages = new List<VehicleImage>();
         }
 
-        public void UpdateVehicle(int modelId, string? version, FUEL fuelType, double price, double mileage, int year, string color, int doors,
+        public void Update(int modelId, string? version, FUEL fuelType, double price, int mileage, int year, string? color, int doors,
             TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold, DateTime? soldDate)
         {
             modelId.Throw(() => throw new Exception(DomainResource.VehicleModelIdNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
 
             System.Enum.IsDefined(typeof(FUEL), fuelType)
-                .Throw(() => throw new Exception(DomainResource.VehicleStatusNeedsToBeSpecifiedException))
+                .Throw(() => throw new Exception(DomainResource.VehicleFuelTypeNeedsToBeSpecifiedException))
                 .IfFalse();
 
             price.Throw(() => throw new Exception(DomainResource.VehiclePriceNeedsToBeSpecifiedException))
@@ -159,9 +153,6 @@
 
             year.Throw(() => throw new Exception(DomainResource.VehicleYearNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
-
-            color.ThrowIfNull(() => throw new Exception(DomainResource.VehicleColorNeedsToBeSpecifiedException))
-                .IfWhiteSpace();
 
             doors.Throw(() => throw new Exception(DomainResource.VehicleDoorsNeedsToBeSpecifiedException))
                 .IfNegativeOrZero();
@@ -200,6 +191,5 @@
             VehicleImages.Clear();
             VehicleImages = vehicleImages;
         }
-
     }
 }

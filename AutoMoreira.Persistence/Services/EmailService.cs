@@ -2,12 +2,22 @@
 {
     public class EmailService : IEmailService
     {
+        #region Private variables
+
         private readonly EmailConfig _emailConfig;
+
+        #endregion
+
+        #region Constructors
 
         public EmailService(EmailConfig emailConfig)
         {
             _emailConfig = emailConfig;
         }
+
+        #endregion
+
+        #region Public methods
 
         public async Task SendEmailToUserAsync(string toName, string toAddress, string password)
         {
@@ -189,6 +199,10 @@
             }
         }
 
+        #endregion
+
+        #region Private methods
+
         private static (string, string) UserEmail(string toName, string email, string password)
         {
             string subject = "Auto Moreira: Registo de utilizador";
@@ -291,5 +305,7 @@
 
             return (subject, body);
         }
+
+        #endregion
     }
 }

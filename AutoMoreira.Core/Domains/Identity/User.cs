@@ -75,7 +75,7 @@
             Roles = new List<Role>();
         }
 
-        public void UpdateUser(string email, string? phoneNumber, string firstName, string lastName, string? image)
+        public void Update(string email, string? phoneNumber, string firstName, string lastName, string? image)
         {
             email.ThrowIfNull(() => throw new Exception(DomainResource.UserEmailNeedsToBeSpecifiedException))
                 .IfWhiteSpace();

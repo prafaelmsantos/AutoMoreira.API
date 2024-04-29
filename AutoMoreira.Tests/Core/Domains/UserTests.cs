@@ -237,14 +237,14 @@
         }
 
         [Fact]
-        public void Method_UpdateUser_WithValidParameters()
+        public void Method_Update_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.FullUser(dto);
 
             // Act
-            user.UpdateUser(dto.Email, dto.PhoneNumber, dto.FirstName, dto.LastName, dto.Image);
+            user.Update(dto.Email, dto.PhoneNumber, dto.FirstName, dto.LastName, dto.Image);
 
             // Assert
             user.UserName.Should().Be(dto.Email).And.NotBeNullOrWhiteSpace();
@@ -265,14 +265,14 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_UpdateUser_WithInvalidEmail_ThrowsArgumentException(string? email)
+        public void Method_Update_WithInvalidEmail_ThrowsArgumentException(string? email)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.User(dto);
 
             // Act & Assert
-            FluentActions.Invoking(() => user.UpdateUser(email!, user.PhoneNumber, user.FirstName, user.LastName, user.Image)).Should()
+            FluentActions.Invoking(() => user.Update(email!, user.PhoneNumber, user.FirstName, user.LastName, user.Image)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserEmailNeedsToBeSpecifiedException);
         }
@@ -280,14 +280,14 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public void Method_UpdateUser_WithInvalidPhoneNumber_ThrowsArgumentException(string? phoneNumber)
+        public void Method_Update_WithInvalidPhoneNumber_ThrowsArgumentException(string? phoneNumber)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.User(dto);
 
             // Act & Assert
-            FluentActions.Invoking(() => user.UpdateUser(user.Email, phoneNumber, user.FirstName, user.LastName, user.Image)).Should()
+            FluentActions.Invoking(() => user.Update(user.Email, phoneNumber, user.FirstName, user.LastName, user.Image)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserPhoneNumberNeedsToBeSpecifiedException);
         }
@@ -296,14 +296,14 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_UpdateUser_WithInvalidFirstName_ThrowsArgumentException(string? firstName)
+        public void Method_Update_WithInvalidFirstName_ThrowsArgumentException(string? firstName)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.User(dto);
 
             // Act & Assert
-            FluentActions.Invoking(() => user.UpdateUser(user.Email, user.PhoneNumber, firstName!, user.LastName, user.Image)).Should()
+            FluentActions.Invoking(() => user.Update(user.Email, user.PhoneNumber, firstName!, user.LastName, user.Image)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserFirstNameNeedsToBeSpecifiedException);
         }
@@ -312,14 +312,14 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_UpdateUser_WithInvalidLastName_ThrowsArgumentException(string? lastName)
+        public void Method_Update_WithInvalidLastName_ThrowsArgumentException(string? lastName)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.User(dto);
 
             // Act & Assert
-            FluentActions.Invoking(() => user.UpdateUser(user.Email, user.PhoneNumber, user.FirstName, lastName!, user.Image)).Should()
+            FluentActions.Invoking(() => user.Update(user.Email, user.PhoneNumber, user.FirstName, lastName!, user.Image)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserLastNameNeedsToBeSpecifiedException);
         }
@@ -327,14 +327,14 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public void Method_UpdateUser_WithInvalidImage_ThrowsArgumentException(string? image)
+        public void Method_Update_WithInvalidImage_ThrowsArgumentException(string? image)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
             User user = UserBuilder.User(dto);
 
             // Act & Assert
-            FluentActions.Invoking(() => user.UpdateUser(user.Email, user.PhoneNumber, user.FirstName, user.LastName, image)).Should()
+            FluentActions.Invoking(() => user.Update(user.Email, user.PhoneNumber, user.FirstName, user.LastName, image)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserImageNeedsToBeSpecifiedException);
         }

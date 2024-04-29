@@ -184,7 +184,7 @@
 
                 vehicle.ThrowIfNull(() => throw new Exception(DomainResource.VehicleNotFoundException));
 
-                vehicle.UpdateVehicle(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
+                vehicle.Update(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
                     vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
@@ -308,7 +308,7 @@
 
                     if (vehicle is not null)
                     {
-                        responseMessageDTO.Entity.Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name} {vehicle.Version}";
+                        responseMessageDTO.Entity.Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty;
                         responseMessageDTO.OperationSuccess = await _vehicleRepository.RemoveAsync(vehicle);
                     }
                     else

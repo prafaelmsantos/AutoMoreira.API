@@ -8,10 +8,10 @@
         public string? Version { get; set; }
         public FUEL FuelType { get; set; }
         public double Price { get; set; }
-        public double Mileage { get; set; }
+        public int Mileage { get; set; }
 
         public int Year { get; set; }
-        public string Color { get; set; } = null!;
+        public string? Color { get; set; }
         public int Doors { get; set; }
         public TRANSMISSION Transmission { get; set; }
         public int EngineSize { get; set; }

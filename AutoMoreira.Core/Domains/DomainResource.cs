@@ -41,11 +41,10 @@
 
         public static readonly string VehicleIdNeedsToBeSpecifiedException = "O id da veículo é invalido.";
         public static readonly string VehicleModelIdNeedsToBeSpecifiedException = "O id do modelo da veículo é invalido.";
-        public static readonly string VehicleStatusNeedsToBeSpecifiedException = "O status do veículo é invalido.";
+        public static readonly string VehicleFuelTypeNeedsToBeSpecifiedException = "O tipo de combustível do veículo é invalido.";
         public static readonly string VehiclePriceNeedsToBeSpecifiedException = "O preço do veículo é invalido.";
         public static readonly string VehicleMileageNeedsToBeSpecifiedException = "O numero de quilómetros do veículo é invalido.";
         public static readonly string VehicleYearNeedsToBeSpecifiedException = "O ano do veículo é invalido.";
-        public static readonly string VehicleColorNeedsToBeSpecifiedException = "A cor do veículo é invalida.";
         public static readonly string VehicleDoorsNeedsToBeSpecifiedException = "O numero de portas do veículo é invalido.";
         public static readonly string VehicleTransmissionNeedsToBeSpecifiedException = "A transmissão do veículo é invalida.";
         public static readonly string VehicleEngineSizeNeedsToBeSpecifiedException = "O tamanho do motor do veículo é invalido.";

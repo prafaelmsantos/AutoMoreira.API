@@ -39,7 +39,7 @@
 
             entity.Property(x => x.Color)
                 .HasColumnName("color")
-                .IsRequired(true);
+                .IsRequired(false);
 
             entity.Property(x => x.Doors)
                 .HasColumnName("doors")
