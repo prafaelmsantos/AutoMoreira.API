@@ -41,6 +41,9 @@
             // Assert
             result.Should().NotBeEmpty();
             result.Should().BeEquivalentTo(MarkBuilder.MarkListDTO(dto));
+
+            _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -73,8 +76,8 @@
             result.Should().NotBeNull();
             result.Name.Should().Be(dto.Name);
 
-            // Verify that the FindByIdAsync method was called once
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -123,8 +126,9 @@
             result.Should().NotBeNull();
             result.Name.Should().Be(dto.Name);
 
-            // Verify that the AddAsync method was called once
-            _markRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Mark>()), Times.Once);
+            _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _markRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Mark>()), Times.Once);      
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -181,12 +185,11 @@
             // Assert
             result.Should().NotBeNull();
             result.Name.Should().Be(dto.Name);
-
-            // Verify that the FindByIdAsync method was called once
+       
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the AddAsync method was called once
+            _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _markRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Mark>()), Times.Once);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -261,11 +264,9 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the RemoveAsync method was called once
             _markRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Mark>()), Times.Once);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -285,11 +286,8 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the RemoveAsync method was called once
-            _markRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Mark>()), Times.Never);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -309,11 +307,8 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the RemoveAsync method was called once
-            _markRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Mark>()), Times.Never);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -338,11 +333,9 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the RemoveAsync method was called once
             _markRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Mark>()), Times.Once);
+            _markRepositoryMock.VerifyNoOtherCalls();
         }
         #endregion
     }

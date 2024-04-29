@@ -48,6 +48,9 @@
             // Assert
             result.Should().NotBeEmpty();
             result.Should().BeEquivalentTo(RoleBuilder.RoleListDTO(dto));
+
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -82,8 +85,8 @@
             result.IsReadOnly.Should().BeFalse();
             result.IsDefault.Should().BeFalse();
 
-            // Verify that the FindByIdAsync method was called once
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -134,8 +137,9 @@
             result.IsReadOnly.Should().BeFalse();
             result.IsDefault.Should().BeFalse();
 
-            // Verify that the AddAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _roleRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Role>()), Times.Once);
+            _roleRepositoryMock.VerifyNoOtherCalls();   
         }
 
         [Fact]
@@ -195,11 +199,10 @@
             result.IsReadOnly.Should().BeFalse();
             result.IsDefault.Should().BeFalse();
 
-            // Verify that the FindByIdAsync method was called once
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-
-            // Verify that the UpdateAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _roleRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Role>()), Times.Once);
+            _roleRepositoryMock.VerifyNoOtherCalls(); 
         }
 
         [Fact]
@@ -310,18 +313,20 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
 
-            // Verify that the RemoveAsync method was called once
             _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Once);
 
-            // Verify that the RemoveRangeAsync method was called once
             _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the UpdateAsync method was called once
             _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Once);
+
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -342,18 +347,19 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once and never
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Never);
+
             _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Never);
 
-            // Verify that the RemoveAsync method was called never
             _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
 
-            // Verify that the RemoveRangeAsync method was called never
             _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Never);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Never);
 
-            // Verify that the UpdateAsync method was called never
             _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -382,18 +388,8 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once and never
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-            _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Never);
-
-            // Verify that the RemoveAsync method was called never
-            _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
-
-            // Verify that the RemoveRangeAsync method was called never
-            _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Never);
-
-            // Verify that the UpdateAsync method was called never
-            _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -413,18 +409,8 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once and never
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-            _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Never);
-
-            // Verify that the RemoveAsync method was called never
-            _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
-
-            // Verify that the RemoveRangeAsync method was called never
-            _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Never);
-
-            // Verify that the UpdateAsync method was called never
-            _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -469,18 +455,20 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
 
-            // Verify that the RemoveAsync method was called once
             _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Once);
 
-            // Verify that the RemoveRangeAsync method was called once
             _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the UpdateAsync method was called once
             _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Once);
+
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -515,18 +503,11 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once and never
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-            _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Never);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the RemoveAsync method was called never
-            _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
-
-            // Verify that the RemoveRangeAsync method was called never
-            _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Never);
-
-            // Verify that the UpdateAsync method was called never
-            _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -562,19 +543,12 @@
             // Assert
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
-
-            // Verify that the FindByIdAsync method was called once and never
+         
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-            _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Never);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the RemoveAsync method was called never
-            _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
-
-            // Verify that the RemoveRangeAsync method was called never
-            _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Never);
-
-            // Verify that the UpdateAsync method was called never
-            _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -615,18 +589,20 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
 
-            // Verify that the RemoveAsync method was called never
             _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
 
-            // Verify that the RemoveRangeAsync method was called once
             _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the UpdateAsync method was called never
             _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
+
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -670,18 +646,18 @@
             results.Should().NotBeEmpty();
             results.Should().BeEquivalentTo(responseMessageDTOs);
 
-            // Verify that the FindByIdAsync method was called once
+            _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
+            _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+
             _roleRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _userRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
 
-            // Verify that the RemoveAsync method was called never
-            _roleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Role>()), Times.Never);
-
-            // Verify that the RemoveRangeAsync method was called once
             _userRoleRepositoryMock.Verify(repo => repo.RemoveRangeAsync(It.IsAny<IEnumerable<UserRole>>()), Times.Once);
+            _userRoleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
 
-            // Verify that the UpdateAsync method was called once
             _userRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Once);
+
+            _roleRepositoryMock.VerifyNoOtherCalls();
         }
 
         #endregion
