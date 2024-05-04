@@ -7,13 +7,15 @@
         #region Properties
 
         private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
 
         #endregion
 
         #region Constructors
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ITokenService tokenService)
         {
             _userService = userService;
+            _tokenService = tokenService;
         }
         #endregion
 
@@ -90,7 +92,16 @@
         {
             try
             {
-                return Ok(await _userService.LoginUserAsync(userLoginDTO));
+                UserDTO userDTO = await _userService.GetUserByEmailAsync(userLoginDTO.Email);
+
+                if (!await _userService.LoginUserAsync(userLoginDTO))
+                {
+                    return Unauthorized(userLoginDTO);
+                }
+
+                userDTO.Token = await _tokenService.CreateToken(userDTO);
+
+                return Ok(userDTO);
             }
             catch (Exception ex)
             {

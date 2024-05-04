@@ -96,14 +96,14 @@
 
         public async Task<List<ResponseMessageDTO>> DeleteClientMessagesAsync(List<int> clientMessagesIds)
         {
-            return await DeleteClientMessages(clientMessagesIds);
+            return await DeleteAsync(clientMessagesIds);
         }
 
         #endregion
 
         #region Private methods
 
-        private async Task<List<ResponseMessageDTO>> DeleteClientMessages(List<int> clientMessagesIds)
+        private async Task<List<ResponseMessageDTO>> DeleteAsync(List<int> clientMessagesIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 

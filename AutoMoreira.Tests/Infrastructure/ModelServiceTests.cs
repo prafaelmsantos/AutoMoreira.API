@@ -87,9 +87,9 @@
         public async Task GetModelByIdAsync_ModelNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            Model? Model = null;
+            Model? model = null;
 
-            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(Model);
+            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(model);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(0)).Should()

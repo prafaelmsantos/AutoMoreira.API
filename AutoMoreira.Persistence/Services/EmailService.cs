@@ -23,30 +23,10 @@
         {
             try
             {
-                var message = new MimeMessage();
-
+  
                 var userEmail = UserEmail(toName, toAddress, password);
 
-                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
-                message.To.Add(new MailboxAddress(toName, toAddress));
-                message.Subject = userEmail.Item1;
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text = string.Format(userEmail.Item2)
-                };
-
-                using var client = new SmtpClient();
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
-
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
 
             }
             catch (Exception e)
@@ -59,30 +39,9 @@
         {
             try
             {
-                var message = new MimeMessage();
-
                 var userEmail = UserUpdateEmail(toName);
 
-                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
-                message.To.Add(new MailboxAddress(toName, toAddress));
-                message.Subject = userEmail.Item1;
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text = string.Format(userEmail.Item2)
-                };
-
-                using var client = new SmtpClient();
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
-
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
 
             }
             catch (Exception e)
@@ -95,31 +54,8 @@
         {
             try
             {
-                var message = new MimeMessage();
-
                 var userEmail = UserResetPasswordEmail(toName, password);
-
-                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
-                message.To.Add(new MailboxAddress(toName, toAddress));
-                message.Subject = userEmail.Item1;
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text = string.Format(userEmail.Item2)
-                };
-
-                using var client = new SmtpClient();
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
-
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-
+                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
             }
             catch (Exception e)
             {
@@ -131,31 +67,8 @@
         {
             try
             {
-                var message = new MimeMessage();
-
                 var userEmail = UserPasswordEmail(toName);
-
-                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
-                message.To.Add(new MailboxAddress(toName, toAddress));
-                message.Subject = userEmail.Item1;
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text = string.Format(userEmail.Item2)
-                };
-
-                using var client = new SmtpClient();
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
-
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-
+                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
             }
             catch (Exception e)
             {
@@ -167,31 +80,8 @@
         {
             try
             {
-                var message = new MimeMessage();
-
                 var userEmail = ClientEmail(toName);
-
-                message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
-                message.To.Add(new MailboxAddress(toName, toAddress));
-                message.Subject = userEmail.Item1;
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text = string.Format(userEmail.Item2)
-                };
-
-                using var client = new SmtpClient();
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
-
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-
+                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
             }
             catch (Exception e)
             {
@@ -202,6 +92,32 @@
         #endregion
 
         #region Private methods
+        private async Task SendEmail(string toName, string toAddress, string subject, string text)
+        {
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Address));
+            message.To.Add(new MailboxAddress(toName, toAddress));
+            message.Subject = subject;
+            message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = string.Format(text)
+            };
+
+            using var client = new SmtpClient();
+
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+            await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, true);
+
+            client.AuthenticationMechanisms.Remove("XOAUTH2");
+            await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+
+        }
 
         private static (string, string) UserEmail(string toName, string email, string password)
         {

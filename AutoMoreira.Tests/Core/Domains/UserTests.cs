@@ -370,7 +370,6 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        [InlineData(null)]
         public void Method_SetImage_WithInvalidImage_ThrowsArgumentException(string? image)
         {
             // Arrange

@@ -8,7 +8,6 @@
         private readonly SignInManager<User> _signInManager;   
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
-        private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
         #endregion
 
@@ -19,7 +18,6 @@
             SignInManager<User> signInManager,        
             IUserRepository userRepository,
             IRoleRepository roleRepository,
-            ITokenService tokenService,
             IEmailService emailService 
             )
         {
@@ -29,7 +27,6 @@
             
             _userRepository = userRepository;
             _roleRepository = roleRepository;
-            _tokenService = tokenService;
             _emailService = emailService;         
         }
 
@@ -74,24 +71,20 @@
             }
         }
 
-        public async Task<UserDTO> LoginUserAsync(UserLoginDTO userLoginDTO)
+        public async Task<UserDTO> GetUserByEmailAsync(string email)
         {
             try
             {
                 User? user = await _userRepository
                     .GetAll()
-                    .Where(x => x.Email == userLoginDTO.Email)
+                    .Where(x => x.Email == email)
                     .Include(x => x.Roles)
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
 
                 user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
 
-                await CheckUserPasswordAsync(userLoginDTO);
-
                 UserDTO userDTO = _mapper.Map<UserDTO>(user);
-
-                userDTO.Token = _tokenService.CreateToken(userDTO).Result;
 
                 return userDTO;
             }
@@ -99,6 +92,20 @@
             {
                 throw new Exception($"{DomainResource.LoginUserAsyncException} {ex.Message}");
             }
+        }
+
+        public async Task<bool> LoginUserAsync(UserLoginDTO userLoginDTO)
+        {
+            User? user = await _userManager
+                   .Users
+                   .SingleOrDefaultAsync(user => user.Email == userLoginDTO.Email);
+
+            user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+
+            SignInResult signInResult = await _signInManager
+                .CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
+
+            return signInResult.Succeeded;
         }
 
         public async Task<UserDTO> AddUserAsync(UserDTO userDTO)
@@ -111,11 +118,14 @@
 
                 User user = new(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName);
 
-                user = await UpdateUserRoleAsync(user, userDTO);
+                user = await UpdateRoleAsync(user, userDTO);
 
                 string password = GenerateNewPassword();
 
-                await _userManager.CreateAsync(user, password);
+                IdentityResult identityResult = await _userManager.CreateAsync(user, password);
+
+                identityResult.Succeeded.Throw(() => throw new Exception(DomainResource.UserNotFoundException))
+                    .IfFalse();
 
                 await _emailService.SendEmailToUserAsync($"{user.FirstName} {user.LastName}", user.Email, password);
 
@@ -145,14 +155,18 @@
 
                 user.Update(userDTO.Email, userDTO.PhoneNumber, userDTO.FirstName, userDTO.LastName, userDTO.Image);
 
-                if (!user.IsDefault)
+                if (user.IsDefault)
                 {
-                    user = await UpdateUserRoleAsync(user, userDTO);
+                    user = await UpdateWithDefaultRoleAsync(user);                  
+                }
+                else
+                {
+                    user = await UpdateRoleAsync(user, userDTO);
                 }
 
                 if (userDTO.Password != null)
                 {
-                    await UpdateUserPassword(user, userDTO.Password);
+                    await UpdatePasswordAsync(user, userDTO.Password);
                 }
 
                 await _userRepository.UpdateAsync(user);
@@ -187,7 +201,7 @@
             }
         }
 
-        public async Task<UserDTO> UpdateUserImageAsync(int id, string image)
+        public async Task<UserDTO> UpdateUserImageAsync(int id, string? image)
         {
             try
             {
@@ -218,7 +232,7 @@
 
                 user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
 
-                await UpdateUserPassword(user, userLoginDTO.Password);
+                await UpdatePasswordAsync(user, userLoginDTO.Password);
 
                 await _emailService.SendEmailToUserUpdatePasswordAsync($"{user.FirstName} {user.LastName}", user.Email, userLoginDTO.Password);
 
@@ -243,7 +257,7 @@
 
                 var password = GenerateNewPassword();
 
-                await UpdateUserPassword(user, password);
+                await UpdatePasswordAsync(user, password);
 
                 await _emailService.SendEmailToUserResetPasswordAsync($"{user.FirstName} {user.LastName}", user.Email, password);
 
@@ -257,43 +271,12 @@
 
         public async Task<List<ResponseMessageDTO>> DeleteUsersAsync(List<int> usersIds)
         {
-            return await DeleteUsers(usersIds);
+            return await DeleteAsync(usersIds);
         }
 
         #endregion
 
         #region Private methods
-
-        private async Task CheckUserPasswordAsync(UserLoginDTO userLoginDTO)
-        {
-            User? user = await _userManager
-                   .Users
-                   .SingleOrDefaultAsync(user => user.Email == userLoginDTO.Email);
-
-            user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
-
-            SignInResult signInResult = await _signInManager
-                .CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
-
-            signInResult.Succeeded.Throw(() => throw new Exception(DomainResource.UserPasswordNotFoundException))
-                .IfFalse();
-        }
-
-        private async Task<User> UpdateUserRoleAsync(User user, UserDTO userDTO)
-        {
-            (userDTO.Roles.Count == 0)
-                .Throw(() => throw new Exception(DomainResource.RoleNotFoundException))
-                .IfTrue();
-
-            Role? role = await _roleRepository
-                .FindByIdAsync(userDTO.Roles.FirstOrDefault()!.Id);
-
-            role.ThrowIfNull(() => throw new Exception(DomainResource.RoleNotFoundException));
-
-            user.SetRoles(new List<Role> { role });
-
-            return user;
-        }
 
         private async Task<bool> UserExistsAsync(int id, string email)
         {
@@ -302,13 +285,38 @@
                 .AnyAsync(user => user.Id != id && user.Email.Trim().ToLower() == email.Trim().ToLower());
         }
 
-        private static string GenerateNewPassword()
+        private async Task<User> UpdateRoleAsync(User user, UserDTO userDTO)
         {
-            Random rnd = new();
-            return rnd.Next(100000, 1000000000).ToString();
+            (userDTO.Roles.Count == 0)
+                .Throw(() => throw new Exception(DomainResource.RoleNotFoundException))
+                .IfTrue();
+
+            Role? role = await _roleRepository
+                .FindByIdAsync(userDTO.Roles.FirstOrDefault()?.Id ?? 0);
+
+            role.ThrowIfNull(() => throw new Exception(DomainResource.RoleNotFoundException));
+
+            user.SetRoles(new List<Role> { role });
+
+            return user;
         }
 
-        private async Task UpdateUserPassword(User user, string password)
+        private async Task<User> UpdateWithDefaultRoleAsync(User user)
+        {
+
+            Role? role = await _roleRepository
+                .GetAll()
+                .Where(x => x.IsDefault && x.IsReadOnly)
+                .FirstOrDefaultAsync();
+
+            role.ThrowIfNull(() => throw new Exception(DomainResource.DefaultRoleNotFoundException));
+
+            user.SetRoles(new List<Role> { role });
+
+            return user;
+        }
+
+        private async Task UpdatePasswordAsync(User user, string password)
         {
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -319,7 +327,13 @@
                     .IfFalse();
         }
 
-        private async Task<List<ResponseMessageDTO>> DeleteUsers(List<int> usersIds)
+        private static string GenerateNewPassword()
+        {
+            Random rnd = new();
+            return rnd.Next(100000, 1000000000).ToString();
+        }
+
+        private async Task<List<ResponseMessageDTO>> DeleteAsync(List<int> usersIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 

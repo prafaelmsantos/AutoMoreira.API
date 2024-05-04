@@ -17,3 +17,8 @@ global using AutoMoreira.Core.Domains.Enum;
 global using AutoMoreira.Core.Dto.Visitor;
 global using AutoMoreira.Core.Domains.Identity;
 global using AutoMoreira.Core.Dto.Identity;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Microsoft.AspNetCore.Authentication;

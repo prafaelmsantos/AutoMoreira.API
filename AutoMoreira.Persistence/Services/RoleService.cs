@@ -107,14 +107,14 @@
 
         public async Task<List<ResponseMessageDTO>> DeleteRolesAsync(List<int> rolesIds)
         {
-            return await DeleteRoles(rolesIds);
+            return await DeleteAsync(rolesIds);
         }
 
         #endregion
 
         #region Private methods
 
-        private async Task UpdateUserWithDefaultRole(long roleId)
+        private async Task UpdateUserWithDefaultRoleAsync(long roleId)
         {
             List<UserRole> userRoles = await _userRoleRepository
                 .GetAll()
@@ -148,7 +148,7 @@
                     .AnyAsync(x => x.Id != roleDTO.Id && x.Name.Trim().ToLower() == roleDTO.Name.ToLower());
         }
 
-        private async Task<List<ResponseMessageDTO>> DeleteRoles(List<int> rolesIds)
+        private async Task<List<ResponseMessageDTO>> DeleteAsync(List<int> rolesIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 
@@ -169,7 +169,7 @@
                         }
                         else
                         {
-                            await UpdateUserWithDefaultRole(roleId);
+                            await UpdateUserWithDefaultRoleAsync(roleId);
                             responseMessageDTO.OperationSuccess = await _roleRepository.RemoveAsync(role);
                         }
                     }

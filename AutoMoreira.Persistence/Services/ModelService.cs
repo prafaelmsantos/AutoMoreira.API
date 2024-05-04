@@ -126,7 +126,7 @@
 
         public async Task<List<ResponseMessageDTO>> DeleteModelsAsync(List<int> modelsIds)
         {
-            return await DeleteModels(modelsIds);
+            return await DeleteAsync(modelsIds);
         }
 
         #endregion
@@ -140,7 +140,7 @@
                     .AnyAsync(x => x.Id != modelDTO.Id && x.Name.Trim().ToLower() == modelDTO.Name.ToLower());
         }
 
-        private async Task<List<ResponseMessageDTO>> DeleteModels(List<int> modelsIds)
+        private async Task<List<ResponseMessageDTO>> DeleteAsync(List<int> modelsIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 

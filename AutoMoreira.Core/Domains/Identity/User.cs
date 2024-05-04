@@ -109,9 +109,9 @@
             DarkMode = darkMode;
         }
 
-        public void SetImage(string image)
+        public void SetImage(string? image)
         {
-            image.ThrowIfNull(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
+            image?.Throw(() => throw new Exception(DomainResource.UserImageNeedsToBeSpecifiedException))
                 .IfWhiteSpace();
 
             Image = image;

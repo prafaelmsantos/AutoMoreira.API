@@ -40,6 +40,14 @@
                 Roles = new()
             };
         }
+        public static UserLoginDTO UserLoginDTO(UserDTO userDTO)
+        {
+            return new()
+            {
+                Email = userDTO.Email,
+                Password = userDTO.Password!
+            };
+        }
         public static User User(UserDTO dto)
         {
             return new(dto.Email, dto.PhoneNumber, dto.FirstName, dto.LastName);
@@ -48,9 +56,29 @@
         {
             return new(dto.Id, dto.Email, dto.PhoneNumber, dto.FirstName, dto.LastName, dto.IsDefault);
         }
+        public static List<User> UserList(User user)
+        {
+            return new List<User>() { user };
+        }
         public static List<User> UserList(UserDTO dto)
         {
             return new List<User>() { User(dto) };
+        }
+        public static List<User> UserListWithRoles(UserDTO dto)
+        {
+            User user = User(dto);
+            user.SetRoles(RoleBuilder.RoleList(dto.Roles.FirstOrDefault()!));
+            return new List<User>() { user };
+        }
+        public static List<User> FullUserListWithRoles(UserDTO dto)
+        {
+            User user = FullUser(dto);
+            user.SetRoles(RoleBuilder.RoleList(dto.Roles.FirstOrDefault()!));
+            return new List<User>() { user };
+        }
+        public static List<UserDTO> UserListDTO(UserDTO dto)
+        {
+            return new List<UserDTO>() { dto };
         }
         public static List<User> FullUserListDTO(UserDTO dto)
         {
@@ -59,6 +87,18 @@
         public static IQueryable<User> IQueryable(UserDTO dto)
         {
             return UserList(dto).AsQueryable();
+        }
+        public static IQueryable<User> IQueryable(User user)
+        {
+            return UserList(user).AsQueryable();
+        }
+        public static IQueryable<User> IQueryableWithRoles(UserDTO dto)
+        {
+            return UserListWithRoles(dto).AsQueryable();
+        }
+        public static IQueryable<User> FullIQueryableWithRoles(UserDTO dto)
+        {
+            return FullUserListWithRoles(dto).AsQueryable();
         }
         public static IQueryable<User> IQueryableEmpty()
         {

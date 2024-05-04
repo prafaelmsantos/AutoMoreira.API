@@ -66,9 +66,9 @@
         {
             try
             {
-                var salesVehiclesByMonth = await GetCountersValues(true, true);
-                var salesVehicles = await GetCountersValues(true);
-                var stockVehicles = await GetCountersValues();
+                var salesVehiclesByMonth = await GetCountersValuesAsync(true, true);
+                var salesVehicles = await GetCountersValuesAsync(true);
+                var stockVehicles = await GetCountersValuesAsync();
 
                 return new()
                 {
@@ -99,8 +99,8 @@
         {
             try
             {
-                List<StatisticDTO> currentStatisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year);
-                List<StatisticDTO> lastStatisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year - 1);
+                List<StatisticDTO> currentStatisticsDTO = await GetStatisticsByYearAsync(DateTime.UtcNow.Year);
+                List<StatisticDTO> lastStatisticsDTO = await GetStatisticsByYearAsync(DateTime.UtcNow.Year - 1);
 
                 var values = GetValuesWithYearComparison(lastStatisticsDTO, currentStatisticsDTO);
 
@@ -122,7 +122,7 @@
         {
             try
             {
-                List<StatisticDTO> statisticsDTO = await GetStatisticsByYear(DateTime.UtcNow.Year);
+                List<StatisticDTO> statisticsDTO = await GetStatisticsByYearAsync(DateTime.UtcNow.Year);
 
                 var values = GetValuesWithMonthComparison(statisticsDTO);
 
@@ -143,7 +143,7 @@
         {
             try
             {
-                var pieValues = await GetPieStatisticValues();
+                var pieValues = await GetPieStatisticValuesAsync();
                 return new() { TotalSales = pieValues.Item1, TotalStock = pieValues.Item2 };
             }
             catch (Exception ex)
@@ -202,14 +202,14 @@
 
         public async Task<List<ResponseMessageDTO>> DeleteVehiclesAsync(List<int> vehiclesIds)
         {
-            return await DeleteVehicles(vehiclesIds);
+            return await DeleteAsync(vehiclesIds);
         }
 
         #endregion
 
         #region Private methods
 
-        private async Task<(int, double)> GetCountersValues(bool sold = false, bool byMonth = false)
+        private async Task<(int, double)> GetCountersValuesAsync(bool sold = false, bool byMonth = false)
         {
             var vehicles = await _vehicleRepository
                     .GetAll()
@@ -224,7 +224,7 @@
             return (vehicles.Count(), vehicles.Select(x => x.Price).Sum());
         }
 
-        private async Task<List<StatisticDTO>> GetStatisticsByYear(int year)
+        private async Task<List<StatisticDTO>> GetStatisticsByYearAsync(int year)
         {
             List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
@@ -264,7 +264,7 @@
             return (currentMonthValue, Math.Round(valuePerc, 1));
         }
 
-        private async Task<(double, double)> GetPieStatisticValues()
+        private async Task<(double, double)> GetPieStatisticValuesAsync()
         {
             List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
@@ -290,7 +290,7 @@
             return vehicle;
         }
 
-        private async Task<List<ResponseMessageDTO>> DeleteVehicles(List<int> vehiclesIds)
+        private async Task<List<ResponseMessageDTO>> DeleteAsync(List<int> vehiclesIds)
         {
             List<ResponseMessageDTO> responseMessageDTOs = new();
 
