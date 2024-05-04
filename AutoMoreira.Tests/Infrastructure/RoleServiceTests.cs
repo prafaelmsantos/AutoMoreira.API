@@ -235,12 +235,16 @@
                 .ThrowAsync<Exception>();
         }
 
-        [Fact]
-        public async Task UpdateRoleAsync_RoleIsReadOnlyException_ThrowsExceptionAsync()
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        public async Task UpdateRoleAsync_RoleIsReadOnlyException_ThrowsExceptionAsync(bool isDefault, bool isReadOnly)
         {
             // Arrange   
             RoleDTO dto = RoleBuilder.RoleDTO();
-            dto.IsReadOnly = true;
+            dto.IsDefault = isDefault;
+            dto.IsReadOnly = isReadOnly;
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(RoleBuilder.FullRole(dto));
 
@@ -289,7 +293,8 @@
 
             RoleDTO defaultRoleDTO = RoleBuilder.RoleDTO();
             defaultRoleDTO.IsDefault = true;
-            
+            defaultRoleDTO.IsReadOnly = false;
+
             Role role = RoleBuilder.FullRole(roleDTO);
             List<ResponseMessageDTO> responseMessageDTOs = RoleBuilder.ResponseMessageDTOList(role);
 
@@ -423,13 +428,13 @@
             RoleDTO roleDTO = RoleBuilder.RoleDTO();
             roleDTO.IsDefault = false;
             roleDTO.IsReadOnly = false;
+            Role role = RoleBuilder.FullRole(roleDTO);
 
             userRole.RoleId = roleDTO.Id;
 
             RoleDTO defaultRoleDTO = RoleBuilder.RoleDTO();
             defaultRoleDTO.IsDefault = true;
-
-            Role role = RoleBuilder.FullRole(roleDTO);
+            defaultRoleDTO.IsReadOnly = false;
 
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
@@ -566,6 +571,7 @@
 
             RoleDTO defaultRoleDTO = RoleBuilder.RoleDTO();
             defaultRoleDTO.IsDefault = true;
+            defaultRoleDTO.IsReadOnly = false;
 
             Role role = RoleBuilder.FullRole(roleDTO);
             string errorMessage = DomainResource.DeleteRolesAsyncException;
@@ -620,6 +626,7 @@
 
             RoleDTO defaultRoleDTO = RoleBuilder.RoleDTO();
             defaultRoleDTO.IsDefault = true;
+            defaultRoleDTO.IsReadOnly = false;
 
             Role role = RoleBuilder.FullRole(roleDTO);
             string errorMessage = DomainResource.DeleteRolesAsyncException;

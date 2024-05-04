@@ -12,7 +12,7 @@
             Users = new List<User>();
         }
 
-        public Role(int id, string name, bool isReadOnly = false, bool isDefault = false)
+        public Role(int id, string name, bool isDefault = false, bool isReadOnly = false)
         {
             id.Throw(() => throw new Exception(DomainResource.RoleIdNeedsToBeSpecifiedException))
               .IfNegativeOrZero();

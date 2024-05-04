@@ -112,8 +112,8 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "c6e7d6e7-1054-4532-aa1d-731367cfea4e",
-                            IsDefault = false,
+                            ConcurrencyStamp = "47d13d2d-de91-4ffa-b40c-4a13560566b0",
+                            IsDefault = true,
                             IsReadOnly = true,
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
@@ -121,11 +121,20 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e0cb6193-d91e-41ee-b6fd-a14140803f86",
+                            ConcurrencyStamp = "e12187d4-3326-470e-af73-3b0f22ea875b",
                             IsDefault = true,
-                            IsReadOnly = true,
+                            IsReadOnly = false,
                             Name = "Colaborador",
                             NormalizedName = "COLABORADOR"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "61f47d55-4031-4ad6-97bd-acaf2408cac0",
+                            IsDefault = false,
+                            IsReadOnly = false,
+                            Name = "Comercial",
+                            NormalizedName = "COMERCIAL"
                         });
                 });
 
@@ -255,7 +264,7 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7bf37a7-e413-4691-8d83-306dbbd09338",
+                            ConcurrencyStamp = "199f3200-938e-4d16-863e-35e683432889",
                             DarkMode = false,
                             Email = "automoreiraportugal@gmail.com",
                             EmailConfirmed = true,
@@ -265,10 +274,10 @@ namespace AutoMoreira.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
                             NormalizedUserName = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGqZx+fdFcb52kS59k56xWYQ5HhSnEMp7QhbwwkRmxOOuBZ1HR9j7bk0t/KSqWEqmQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHDn7xnwovpGMqhsT0gl4E1MGfrVoMTHSCswZ41MpeMZGPzmdLOti42PfCZ3ndUsoQ==",
                             PhoneNumber = "231472555",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "349c84bd-0ea4-47e3-89d2-e4a951d2c905",
+                            SecurityStamp = "ce5b0ce7-55aa-4531-a057-b6aa3bc143ce",
                             TwoFactorEnabled = false,
                             UserName = "automoreiraportugal@gmail.com"
                         });

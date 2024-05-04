@@ -23,7 +23,7 @@
         }
         public static Role FullRole(RoleDTO dto)
         {
-            return new(dto.Id, dto.Name, dto.IsReadOnly, dto.IsDefault);
+            return new(dto.Id, dto.Name, dto.IsDefault, dto.IsReadOnly);
         }
         public static List<Role> RoleList(RoleDTO dto)
         {

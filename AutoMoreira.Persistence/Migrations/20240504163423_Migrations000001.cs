@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AutoMoreira.Persistence.Migrations
 {
-    public partial class _000001 : Migration
+    public partial class Migrations000001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -240,9 +240,9 @@ namespace AutoMoreira.Persistence.Migrations
                     version = table.Column<string>(type: "text", nullable: true),
                     fuel_type = table.Column<int>(type: "integer", nullable: false),
                     price = table.Column<double>(type: "double precision", nullable: false),
-                    mileage = table.Column<double>(type: "double precision", nullable: false),
+                    mileage = table.Column<int>(type: "integer", nullable: false),
                     year = table.Column<int>(type: "integer", nullable: false),
-                    color = table.Column<string>(type: "text", nullable: false),
+                    color = table.Column<string>(type: "text", nullable: true),
                     doors = table.Column<int>(type: "integer", nullable: false),
                     transmission = table.Column<int>(type: "integer", nullable: false),
                     engine_size = table.Column<int>(type: "integer", nullable: false),
@@ -270,7 +270,8 @@ namespace AutoMoreira.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     url = table.Column<string>(type: "text", nullable: false),
-                    vehicleId = table.Column<int>(type: "integer", nullable: false)
+                    vehicleId = table.Column<int>(type: "integer", nullable: false),
+                    is_main = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -301,18 +302,23 @@ namespace AutoMoreira.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "is_read_only", "name", "normalized_name" },
-                values: new object[] { 1, "3f5814c9-ee24-4b35-a701-e9137bca961d", true, "Administrador", "ADMINISTRADOR" });
+                columns: new[] { "id", "concurrency_stamp", "is_default", "is_read_only", "name", "normalized_name" },
+                values: new object[] { 1, "47d13d2d-de91-4ffa-b40c-4a13560566b0", true, true, "Administrador", "ADMINISTRADOR" });
 
             migrationBuilder.InsertData(
                 table: "roles",
-                columns: new[] { "id", "concurrency_stamp", "is_default", "is_read_only", "name", "normalized_name" },
-                values: new object[] { 2, "c3e59ecd-c99f-40a1-b7ca-7b79adc1c030", true, true, "Colaborador", "COLABORADOR" });
+                columns: new[] { "id", "concurrency_stamp", "is_default", "name", "normalized_name" },
+                values: new object[] { 2, "e12187d4-3326-470e-af73-3b0f22ea875b", true, "Colaborador", "COLABORADOR" });
+
+            migrationBuilder.InsertData(
+                table: "roles",
+                columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
+                values: new object[] { 3, "61f47d55-4031-4ad6-97bd-acaf2408cac0", "Comercial", "COMERCIAL" });
 
             migrationBuilder.InsertData(
                 table: "users",
                 columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "first_name", "image", "is_default", "last_name", "lockout_end", "normalized_email", "normalized_user_name", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "user_name" },
-                values: new object[] { 1, 0, "c0aab5e2-4d6f-4093-a2ad-f85ad77c9169", "automoreiraportugal@gmail.com", true, "Auto", null, true, "Moreira", null, "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AQAAAAEAACcQAAAAEDMMFMlNH0fzo8Rci3d1YLHRv9WrmvHQMY0hJ4srfDVy9v1K42u9k2Zd0tkHEvo0pA==", "231472555", true, "7a169789-ef15-4992-a704-426d2a56dda1", "automoreiraportugal@gmail.com" });
+                values: new object[] { 1, 0, "199f3200-938e-4d16-863e-35e683432889", "automoreiraportugal@gmail.com", true, "Auto", null, true, "Moreira", null, "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AQAAAAEAACcQAAAAEHDn7xnwovpGMqhsT0gl4E1MGfrVoMTHSCswZ41MpeMZGPzmdLOti42PfCZ3ndUsoQ==", "231472555", true, "ce5b0ce7-55aa-4531-a057-b6aa3bc143ce", "automoreiraportugal@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "models",
@@ -340,15 +346,15 @@ namespace AutoMoreira.Persistence.Migrations
                 columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mileage", "model_id", "observations", "opportunity", "power", "price", "sold_date", "transmission", "version", "year" },
                 values: new object[,]
                 {
-                    { 1, "Azul", 5, 1999, 2, 2000.0, 1, "Garantia de 2 anos", true, 140, 40000.0, null, 1, "Sportline", 2022 },
-                    { 2, "Cinza", 5, 1999, 3, 7000.0, 2, "Garantia de 2 anos", true, 140, 27000.0, null, 2, "AMG", 2021 },
-                    { 3, "Vermelho", 5, 1999, 1, 0.0, 3, "Garantia de 2 anos", true, 140, 29000.0, null, 2, "Sport", 2023 }
+                    { 1, "Azul", 5, 1999, 2, 2000, 1, "Garantia de 2 anos", true, 140, 40000.0, null, 1, "Sportline", 2022 },
+                    { 2, "Cinza", 5, 1999, 3, 7000, 2, "Garantia de 2 anos", true, 140, 27000.0, null, 2, "AMG", 2021 },
+                    { 3, "Vermelho", 5, 1999, 1, 0, 3, "Garantia de 2 anos", true, 140, 29000.0, null, 2, "Sport", 2023 }
                 });
 
             migrationBuilder.InsertData(
                 table: "vehicles",
                 columns: new[] { "id", "color", "doors", "engine_size", "fuel_type", "mileage", "model_id", "observations", "power", "price", "sold_date", "transmission", "version", "year" },
-                values: new object[] { 4, "Verde", 5, 1999, 1, 10000.0, 4, "Garantia de 2 anos", 140, 18000.0, null, 1, "GTI", 2022 });
+                values: new object[] { 4, "Verde", 5, 1999, 1, 10000, 4, "Garantia de 2 anos", 140, 18000.0, null, 1, "GTI", 2022 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_identity_role_claim_role_id",

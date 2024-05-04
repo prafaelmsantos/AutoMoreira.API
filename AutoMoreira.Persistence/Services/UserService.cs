@@ -157,7 +157,7 @@
 
                 if (user.IsDefault)
                 {
-                    user = await UpdateWithDefaultRoleAsync(user);                  
+                    user = await UpdateWithAdminRoleAsync(user);                  
                 }
                 else
                 {
@@ -301,7 +301,7 @@
             return user;
         }
 
-        private async Task<User> UpdateWithDefaultRoleAsync(User user)
+        private async Task<User> UpdateWithAdminRoleAsync(User user)
         {
 
             Role? role = await _roleRepository

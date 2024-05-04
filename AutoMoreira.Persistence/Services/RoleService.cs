@@ -89,7 +89,7 @@
                     .Throw(() => throw new Exception(DomainResource.RoleAlreadyExistsException))
                     .IfTrue();
 
-                role.IsReadOnly
+                (role.IsDefault || role.IsReadOnly)
                     .Throw(() => throw new Exception(DomainResource.UpdateDefaultRoleException))
                     .IfTrue();
 
@@ -123,7 +123,7 @@
 
             Role? defaultRole = await _roleRepository
                 .GetAll()
-                .Where(x => x.IsDefault)
+                .Where(x => x.IsDefault && !x.IsReadOnly)
                 .FirstOrDefaultAsync();
 
             defaultRole.ThrowIfNull(() => throw new Exception(DomainResource.DefaultRoleNotFoundException));

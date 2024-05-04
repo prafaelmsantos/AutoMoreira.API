@@ -35,9 +35,9 @@
               new Vehicle(4, 4, "GTI", FUEL.Petrol, 18000, 10000, 2022, "Verde", 5, TRANSMISSION.Manual, 1999, 140, "Garantia de 2 anos", false)
               );
 
-            Role role = new(1, "Administrador", true);
+            Role role = new(1, "Administrador", true, true);
 
-            modelBuilder.Entity<Role>().HasData(role, new(2, "Colaborador", true, true));
+            modelBuilder.Entity<Role>().HasData(role, new(2, "Colaborador", true), new(3, "Comercial"));
 
             var hasher = new PasswordHasher<User>();
 
