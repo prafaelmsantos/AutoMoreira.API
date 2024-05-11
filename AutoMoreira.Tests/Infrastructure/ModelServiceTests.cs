@@ -18,7 +18,7 @@
             IMapper mapper = new Mapper(configuration);
 
             _modelRepositoryMock = new Mock<IModelRepository>(MockBehavior.Strict);
-            _modelService = new ModelService(_mapper, _modelRepositoryMock.Object);
+            _modelService = new ModelService(Mapper, _modelRepositoryMock.Object);
         }
 
         #endregion
@@ -47,7 +47,7 @@
         }
 
         [Fact]
-        public async Task GetAllModelsAsync_GetAll_NotBreak()
+        public async Task GetAllModelsAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             _modelRepositoryMock.Setup(x => x.GetAll())
@@ -87,23 +87,22 @@
         public async Task GetModelByIdAsync_ModelNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            Model? model = null;
-
-            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(model);
+            _modelRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Model>(ModelBuilder.IQueryableEmpty()));
 
             // Act & Assert
-            await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(0)).Should()
+            await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(It.IsAny<int>())).Should()
                 .ThrowAsync<Exception>();
         }
 
         [Fact]
-        public async Task GetModelByIdAsync_FindByIdAsync_NotBreak()
+        public async Task GetModelByIdAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange
-            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
+            _modelRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
-            await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(0)).Should()
+            await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(It.IsAny<int>())).Should()
                 .ThrowAsync<Exception>();
         }
 
@@ -133,18 +132,17 @@
         }
 
         [Fact]
-        public async Task GetModelsByMarkIdAsync_GetAll_NotBreak()
+        public async Task GetModelsByMarkIdAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _modelRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _modelRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
-            await FluentActions.Invoking(async () => await _modelService.GetModelsByMarkIdAsync(0)).Should()
+            await FluentActions.Invoking(async () => await _modelService.GetModelsByMarkIdAsync(It.IsAny<int>())).Should()
                 .ThrowAsync<Exception>();
         }
         #endregion
-        
+
         #region AddModelAsync
 
         [Fact]
@@ -166,7 +164,7 @@
             result.Name.Should().Be(dto.Name);
             result.MarkId.Should().Be(dto.MarkId);
 
-            _modelRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);        
+            _modelRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _modelRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Model>()), Times.Once);
             _modelRepositoryMock.VerifyNoOtherCalls();
         }
@@ -186,7 +184,7 @@
         }
 
         [Fact]
-        public async Task AddModelAsync_AddAsync_NotBreak()
+        public async Task AddModelAsync_AddAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             ModelDTO dto = ModelBuilder.ModelDTO();
@@ -263,7 +261,7 @@
         }
 
         [Fact]
-        public async Task UpdateModelAsync_UpdateAsync_NotBreak()
+        public async Task UpdateModelAsync_UpdateAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             ModelDTO dto = ModelBuilder.ModelDTO();
@@ -307,7 +305,7 @@
             _modelRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _modelRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Model>()), Times.Once);
             _modelRepositoryMock.VerifyNoOtherCalls();
-            
+
         }
 
         [Fact]
@@ -316,7 +314,7 @@
             // Arrange
             Model? model = null;
             string errorMessage = DomainResource.ModelNotFoundException;
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(model);
 
@@ -337,7 +335,7 @@
             // Arrange
             string errorMessage = DomainResource.DeleteModelsAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
@@ -361,7 +359,7 @@
             Model model = ModelBuilder.Model(dto);
             string errorMessage = DomainResource.DeleteModelsAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage, model.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, model.Name);
 
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(model);
 

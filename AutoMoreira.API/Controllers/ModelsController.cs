@@ -1,6 +1,4 @@
-﻿using AutoMoreira.Core.Dto;
-
-namespace AutoMoreira.API.Controllers
+﻿namespace AutoMoreira.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -140,7 +138,7 @@ namespace AutoMoreira.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            } 
+            }
         }
 
         #endregion

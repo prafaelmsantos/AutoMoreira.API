@@ -1,10 +1,10 @@
 ﻿namespace AutoMoreira.Persistence.Context
 {
-    public class AppDbContext : IdentityDbContext<User, Role, int, 
-                                                   IdentityUserClaim<int>, 
-                                                   UserRole, 
-                                                   IdentityUserLogin<int>, 
-                                                   IdentityRoleClaim<int>, 
+    public class AppDbContext : IdentityDbContext<User, Role, int,
+                                                   IdentityUserClaim<int>,
+                                                   UserRole,
+                                                   IdentityUserLogin<int>,
+                                                   IdentityRoleClaim<int>,
                                                    IdentityUserToken<int>>
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -21,8 +21,8 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Necessario para o User se não, não funciona
-            
+            base.OnModelCreating(modelBuilder); // Necessario para o IdentityDbContext
+
             modelBuilder.ApplyConfiguration(new VehicleMap());
             modelBuilder.ApplyConfiguration(new VehicleImageMap());
             modelBuilder.ApplyConfiguration(new MarkMap());

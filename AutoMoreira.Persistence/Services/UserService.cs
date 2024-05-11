@@ -3,31 +3,33 @@
     public class UserService : IUserService
     {
         #region Private variables
+
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;   
+        private readonly SignInManager<User> _signInManager;
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailService _emailService;
+
         #endregion
 
         #region Constructors
         public UserService(
             IMapper mapper,
-            UserManager<User> userManager, 
-            SignInManager<User> signInManager,        
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
-            IEmailService emailService 
+            IEmailService emailService
             )
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
-            
+
             _userRepository = userRepository;
             _roleRepository = roleRepository;
-            _emailService = emailService;         
+            _emailService = emailService;
         }
 
         #endregion
@@ -157,7 +159,7 @@
 
                 if (user.IsDefault)
                 {
-                    user = await UpdateWithAdminRoleAsync(user);                  
+                    user = await UpdateWithAdminRoleAsync(user);
                 }
                 else
                 {

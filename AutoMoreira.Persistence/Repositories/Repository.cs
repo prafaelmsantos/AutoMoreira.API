@@ -8,12 +8,15 @@
         #endregion
 
         #region constructor
+
         public Repository(AppDbContext context)
         {
             _context = context;
             Entity = _context.Set<T>();
         }
         #endregion
+
+        #region Public methods
 
         public virtual async Task<T> AddAsync(T entity)
         {
@@ -43,7 +46,6 @@
             return entities;
         }
 
-
         public virtual async Task<bool> RemoveAsync(T entity)
         {
             Entity.Remove(entity);
@@ -58,7 +60,6 @@
             return true;
         }
 
-
         public virtual IQueryable<T> GetAll() => Entity;
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
@@ -66,11 +67,10 @@
             return await Entity.ToListAsync();
         }
 
-
-        public virtual async Task<T> FindByIdAsync(int Id)
+        public virtual async Task<T> FindByIdAsync(int id)
         {
 #pragma warning disable CS8603 // Possible null reference return.
-            return await Entity.FindAsync(Id);
+            return await Entity.FindAsync(id);
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
@@ -79,6 +79,10 @@
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
+
+        #region Protected methods
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -95,5 +99,6 @@
             }
         }
 
+        #endregion
     }
 }

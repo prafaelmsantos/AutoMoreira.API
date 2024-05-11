@@ -17,7 +17,7 @@
             _mapper = mapper;
             _roleRepository = roleRepository;
             _userRoleRepository = userRoleRepository;
-            _userRepository = userRepository;        
+            _userRepository = userRepository;
         }
         #endregion
 
@@ -134,7 +134,7 @@
 
                 user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
 
-                await _userRoleRepository.RemoveRangeAsync(userRoles.Where(x => x.UserId ==  userRole.UserId));
+                await _userRoleRepository.RemoveRangeAsync(userRoles.Where(x => x.UserId == userRole.UserId));
 
                 user.SetRoles(new List<Role> { defaultRole });
                 await _userRepository.UpdateAsync(user);

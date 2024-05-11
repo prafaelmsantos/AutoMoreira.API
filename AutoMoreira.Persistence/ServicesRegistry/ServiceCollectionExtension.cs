@@ -8,7 +8,8 @@
         }
         public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //Repositories
+            #region Repositories
+
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IVehicleImageRepository, VehicleImageRepository>();
             services.AddScoped<IMarkRepository, MarkRepository>();
@@ -19,7 +20,9 @@
             services.AddScoped<IVisitorRepository, VisitorRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
-            //Services
+            #endregion
+
+            #region Services
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IMarkService, MarkService>();
             services.AddScoped<IModelService, ModelService>();
@@ -49,7 +52,7 @@
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();//Se nao adicionar o Default Token, o no UserService, ele não faz o Generate/reset token
 
-            
+
             services
             .AddGraphQLServer()
             .AddApolloTracing(HotChocolate.Execution.Options.TracingPreference.Always)
@@ -71,6 +74,8 @@
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);
 
             return services;
+
+            #endregion
         }
     }
 }

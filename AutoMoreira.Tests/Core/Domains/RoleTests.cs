@@ -20,8 +20,8 @@
             role.NormalizedName.Should().Be(dto.Name.ToUpper()).And.NotBeNullOrWhiteSpace();
             role.IsReadOnly.Should().BeFalse();
             role.IsDefault.Should().BeFalse();
-            role.Users.Should().BeEmpty();         
-        }      
+            role.Users.Should().BeEmpty();
+        }
 
         [Fact]
         public void Constructor_WithValidFullParameters_InitializesProperties()
@@ -39,7 +39,7 @@
             role.IsDefault.Should().Be(dto.IsDefault);
             role.Users.Should().BeEmpty();
         }
-        
+
         [Fact]
         public void TestMap_InitializesProperties()
         {
@@ -50,7 +50,7 @@
             Role role = RoleBuilder.Role(dto);
 
             // Act
-            RoleDTO result = _mapper.Map<RoleDTO>(role);
+            RoleDTO result = Mapper.Map<RoleDTO>(role);
 
             // Assert
             result.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
@@ -66,7 +66,7 @@
             Role role = RoleBuilder.FullRole(dto);
 
             // Act
-            RoleDTO result = _mapper.Map<RoleDTO>(role);
+            RoleDTO result = Mapper.Map<RoleDTO>(role);
 
             // Assert
             result.Id.Should().Be(dto.Id).And.BeGreaterThan(0);
@@ -124,7 +124,7 @@
         }
 
         [Fact]
-        public void Method_SetName_WithValidParameters()
+        public void SetName_WithValidParameters()
         {
             // Arrange
             RoleDTO dto = RoleBuilder.RoleDTO();
@@ -141,7 +141,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_SetName_WithInvalidName_ThrowsArgumentException(string? name)
+        public void SetName_WithInvalidName_ThrowsArgumentException(string? name)
         {
             // Arrange
             Role role = RoleBuilder.Role();

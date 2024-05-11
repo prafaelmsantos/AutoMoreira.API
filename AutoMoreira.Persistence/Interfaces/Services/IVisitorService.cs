@@ -7,6 +7,6 @@
         Task<ResponseCompleteVisitorDTO> GetAllVisitoresWithYearComparisonAsync();
 
 
-        Task<VisitorDTO> CreateOrUpdateVisitorAsync();     
+        Task<VisitorDTO> CreateOrUpdateVisitorAsync();
     }
 }

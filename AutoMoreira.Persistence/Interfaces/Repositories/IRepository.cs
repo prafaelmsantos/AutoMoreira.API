@@ -14,9 +14,8 @@
         IQueryable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
 
-        Task<T> FindByIdAsync(int Id);
+        Task<T> FindByIdAsync(int id);
 
         void Dispose();
-
     }
 }

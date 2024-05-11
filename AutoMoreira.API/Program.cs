@@ -1,4 +1,4 @@
-namespace AutoMoreira.API
+﻿namespace AutoMoreira.API
 {
     public class Program
     {

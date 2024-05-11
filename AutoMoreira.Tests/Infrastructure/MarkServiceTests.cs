@@ -18,7 +18,7 @@
             IMapper mapper = new Mapper(configuration);
 
             _markRepositoryMock = new Mock<IMarkRepository>(MockBehavior.Strict);
-            _markService = new MarkService(_mapper, _markRepositoryMock.Object);
+            _markService = new MarkService(Mapper, _markRepositoryMock.Object);
         }
 
         #endregion
@@ -47,11 +47,10 @@
         }
 
         [Fact]
-        public async Task GetAllMarksAsync_GetAll_NotBreak()
+        public async Task GetAllMarksAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _markRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _markRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.GetAllMarksAsync()).Should()
@@ -89,18 +88,18 @@
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(mark);
 
             // Act & Assert
-            await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(0)).Should()
+            await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(It.IsAny<int>())).Should()
                 .ThrowAsync<Exception>();
         }
 
         [Fact]
-        public async Task GetMarkByIdAsync_FindByIdAsync_NotBreak()
+        public async Task GetMarkByIdAsync_FindByIdAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
             // Act & Assert
-            await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(0)).Should()
+            await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(It.IsAny<int>())).Should()
                 .ThrowAsync<Exception>();
         }
 
@@ -127,7 +126,7 @@
             result.Name.Should().Be(dto.Name);
 
             _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
-            _markRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Mark>()), Times.Once);      
+            _markRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Mark>()), Times.Once);
             _markRepositoryMock.VerifyNoOtherCalls();
         }
 
@@ -146,7 +145,7 @@
         }
 
         [Fact]
-        public async Task AddMarkAsync_AddAsync_NotBreak()
+        public async Task AddMarkAsync_AddAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             MarkDTO dto = MarkBuilder.MarkDTO();
@@ -185,7 +184,7 @@
             // Assert
             result.Should().NotBeNull();
             result.Name.Should().Be(dto.Name);
-       
+
             _markRepositoryMock.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
             _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _markRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Mark>()), Times.Once);
@@ -223,7 +222,7 @@
         }
 
         [Fact]
-        public async Task UpdateMarkAsync_UpdateAsync_NotBreak()
+        public async Task UpdateMarkAsync_UpdateAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             MarkDTO dto = MarkBuilder.MarkDTO();
@@ -275,7 +274,7 @@
             // Arrange
             Mark? mark = null;
             string errorMessage = DomainResource.MarkNotFoundException;
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(mark);
 
@@ -296,7 +295,7 @@
             // Arrange
             string errorMessage = DomainResource.DeleteMarksAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
@@ -320,7 +319,7 @@
             Mark mark = MarkBuilder.Mark(dto);
             string errorMessage = DomainResource.DeleteMarksAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage, mark.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, mark.Name);
 
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(mark);
 

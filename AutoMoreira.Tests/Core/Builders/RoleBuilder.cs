@@ -2,19 +2,20 @@
 {
     public class RoleBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static Role Role()
         {
-            return new(_data.Company.CompanyName());
+            return new(data.Company.CompanyName());
         }
         public static RoleDTO RoleDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Name = _data.Company.CompanyName(),
-                IsDefault = _data.Random.Bool(),
-                IsReadOnly = _data.Random.Bool()
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Name = data.Company.CompanyName(),
+                IsDefault = data.Random.Bool(),
+                IsReadOnly = data.Random.Bool()
             };
         }
         public static Role Role(RoleDTO dto)
@@ -51,7 +52,7 @@
         }
         public static List<ResponseMessageDTO> ResponseMessageDTOList(Role role)
         {
-            List<ResponseMessageDTO> responseMessageDTOs = new() { 
+            List<ResponseMessageDTO> responseMessageDTOs = new() {
                 new ResponseMessageDTO {
                     Entity = new MinimumDTO() { Id = role.Id, Name = role.Name },
                     OperationSuccess = true,

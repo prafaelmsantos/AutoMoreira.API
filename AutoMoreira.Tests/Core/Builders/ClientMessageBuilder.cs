@@ -2,21 +2,22 @@
 {
     public class ClientMessageBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static ClientMessage ClientMessage()
         {
-            return new(_data.Person.FullName, _data.Person.Email, _data.Random.Long(200000000, 999999999), _data.Lorem.Text());
+            return new(data.Person.FullName, data.Person.Email, data.Random.Long(200000000, 999999999), data.Lorem.Text());
         }
         public static ClientMessageDTO ClientMessageDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Name = _data.Person.FullName,
-                Email = _data.Person.Email,
-                PhoneNumber = _data.Random.Long(200000000, 999999999),
-                Message = _data.Lorem.Text(),
-                Status = _data.Random.Enum<STATUS>(),
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Name = data.Person.FullName,
+                Email = data.Person.Email,
+                PhoneNumber = data.Random.Long(200000000, 999999999),
+                Message = data.Lorem.Text(),
+                Status = data.Random.Enum<STATUS>(),
                 CreatedDate = DateTime.UtcNow
             };
         }
@@ -42,7 +43,7 @@
         }
         public static List<ResponseMessageDTO> ResponseMessageDTOList(ClientMessage clientMessage)
         {
-            List<ResponseMessageDTO> responseMessageDTOs = new() { 
+            List<ResponseMessageDTO> responseMessageDTOs = new() {
                 new ResponseMessageDTO {
                     Entity = new MinimumDTO() { Id = clientMessage.Id, Name = clientMessage.Name },
                     OperationSuccess = true,

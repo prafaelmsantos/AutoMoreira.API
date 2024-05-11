@@ -17,7 +17,7 @@
 
             // Assert
             mark.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
-            mark.Models.Should().BeEmpty();         
+            mark.Models.Should().BeEmpty();
         }
 
         [Fact]
@@ -43,7 +43,7 @@
             Mark mark = MarkBuilder.Mark(dto);
 
             // Act
-            MarkDTO result = _mapper.Map<MarkDTO>(mark);
+            MarkDTO result = Mapper.Map<MarkDTO>(mark);
 
             // Assert
             result.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
@@ -58,7 +58,7 @@
             Mark mark = MarkBuilder.FullMark(dto);
 
             // Act
-            MarkDTO result = _mapper.Map<MarkDTO>(mark);
+            MarkDTO result = Mapper.Map<MarkDTO>(mark);
 
             // Assert
             result.Id.Should().Be(dto.Id).And.BeGreaterThan(0);
@@ -114,7 +114,7 @@
         }
 
         [Fact]
-        public void Method_SetName_WithValidParameters()
+        public void SetName_WithValidParameters()
         {
             // Arrange
             MarkDTO dto = MarkBuilder.MarkDTO();
@@ -131,7 +131,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_SetName_WithInvalidName_ThrowsArgumentException(string? name)
+        public void SetName_WithInvalidName_ThrowsArgumentException(string? name)
         {
             // Arrange
             Mark mark = MarkBuilder.Mark();

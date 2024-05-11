@@ -19,7 +19,7 @@
             model.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
             model.MarkId.Should().Be(dto.MarkId).And.BeGreaterThan(0);
             model.Mark.Should().Be(dto.Mark).And.BeNull();
-            model.Vehicles.Should().BeEmpty();         
+            model.Vehicles.Should().BeEmpty();
         }
 
         [Fact]
@@ -47,7 +47,7 @@
             Model model = ModelBuilder.Model(dto);
 
             // Act
-            ModelDTO result = _mapper.Map<ModelDTO>(model);
+            ModelDTO result = Mapper.Map<ModelDTO>(model);
 
             // Assert
             result.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
@@ -63,7 +63,7 @@
             Model model = ModelBuilder.FullModel(dto);
 
             // Act
-            ModelDTO result = _mapper.Map<ModelDTO>(model);
+            ModelDTO result = Mapper.Map<ModelDTO>(model);
 
             // Assert
             result.Id.Should().Be(dto.Id).And.BeGreaterThan(0);
@@ -150,7 +150,7 @@
         }
 
         [Fact]
-        public void Method_UpdateModel_WithValidParameters()
+        public void Update_WithValidParameters()
         {
             // Arrange
             ModelDTO dto = ModelBuilder.ModelDTO();
@@ -168,7 +168,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_UpdateModel_WithInvalidName_ThrowsArgumentException(string? name)
+        public void Update_WithInvalidName_ThrowsArgumentException(string? name)
         {
             // Arrange
             Model model = ModelBuilder.Model();
@@ -182,7 +182,7 @@
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Method_UpdateModel_WithInvalidMarkId_ThrowsArgumentException(int markId)
+        public void Update_WithInvalidMarkId_ThrowsArgumentException(int markId)
         {
             // Arrange
             Model model = ModelBuilder.Model();

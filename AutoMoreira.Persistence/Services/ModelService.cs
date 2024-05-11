@@ -14,7 +14,7 @@
         public ModelService(IMapper mapper, IModelRepository modelRepository)
         {
             _mapper = mapper;
-            _modelRepository = modelRepository;         
+            _modelRepository = modelRepository;
         }
 
         #endregion
@@ -60,7 +60,7 @@
                 throw new Exception($"{DomainResource.GetModelByIdAsyncException} {ex.Message}");
             }
         }
-        
+
         public async Task<List<ModelDTO>> GetModelsByMarkIdAsync(int markId)
         {
             try
@@ -79,7 +79,7 @@
                 throw new Exception($"{DomainResource.GetModelsByMarkIdAsyncException} {ex.Message}");
             }
         }
-       
+
         public async Task<ModelDTO> AddModelAsync(ModelDTO modelDTO)
         {
             try
@@ -122,7 +122,7 @@
             {
                 throw new Exception($"{DomainResource.UpdateModelAsyncException} {ex.Message}");
             }
-        }  
+        }
 
         public async Task<List<ResponseMessageDTO>> DeleteModelsAsync(List<int> modelsIds)
         {

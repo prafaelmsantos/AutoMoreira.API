@@ -15,7 +15,7 @@
         public ClientMessageService(IMapper mapper, IClientMessageRepository clientMessageRepository, IEmailService emailService)
         {
             _mapper = mapper;
-            _clientMessageRepository = clientMessageRepository;       
+            _clientMessageRepository = clientMessageRepository;
             _emailService = emailService;
         }
 

@@ -5,48 +5,53 @@
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<User> GetUsers([Service] IUserRepository _repo)
+        public IQueryable<User> GetUsers([Service] IUserRepository repo)
         {
-            return _repo.GetAll().Include(x => x.Roles);
+            return repo.GetAll().Include(x => x.Roles);
         }
+
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Role> GetRoles([Service] IRoleRepository _repo)
+        public IQueryable<Role> GetRoles([Service] IRoleRepository repo)
         {
-            return _repo.GetAll();
+            return repo.GetAll();
         }
+
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository _repo)
+        public IQueryable<Vehicle> GetVehicles([Service] IVehicleRepository repo)
         {
-            return _repo
+            return repo
                 .GetAll()
                 .Include(x => x.VehicleImages)
                 .Include(x => x.Model)
                 .ThenInclude(x => x.Mark);
         }
+
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Mark> GetMarks([Service] IMarkRepository _repo)
+        public IQueryable<Mark> GetMarks([Service] IMarkRepository repo)
         {
-            return _repo.GetAll();
+            return repo.GetAll();
         }
+
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Model> GetModels([Service] IModelRepository _repo)
+        public IQueryable<Model> GetModels([Service] IModelRepository repo)
         {
-            return _repo.GetAll().Include(x => x.Mark);
+            return repo.GetAll().Include(x => x.Mark);
         }
+
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<ClientMessage> GetClientMessages([Service] IClientMessageRepository _repo)
+        public IQueryable<ClientMessage> GetClientMessages([Service] IClientMessageRepository repo)
         {
-            return _repo.GetAll();
+            return repo.GetAll();
         }
     }
 }

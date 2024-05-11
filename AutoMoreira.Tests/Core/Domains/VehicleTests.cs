@@ -32,7 +32,7 @@
             vehicle.Sold.Should().Be(dto.Sold);
             vehicle.SoldDate.Should().Be(dto.SoldDate);
             vehicle.VehicleImages.Should().NotBeNull().And.BeEmpty();
-        }      
+        }
 
         [Fact]
         public void Constructor_WithValidFullParameters_InitializesProperties()
@@ -60,7 +60,7 @@
             vehicle.Opportunity.Should().Be(dto.Opportunity);
             vehicle.VehicleImages.Should().NotBeNull().And.BeEmpty();
         }
-        
+
         [Fact]
         public void TestMap_InitializesProperties()
         {
@@ -69,7 +69,7 @@
             Vehicle vehicle = VehicleBuilder.Vehicle(dto);
 
             // Act
-            VehicleDTO result = _mapper.Map<VehicleDTO>(vehicle);
+            VehicleDTO result = Mapper.Map<VehicleDTO>(vehicle);
 
             // Assert
             result.ModelId.Should().Be(dto.ModelId);
@@ -98,7 +98,7 @@
             Vehicle vehicle = VehicleBuilder.FullVehicle(dto);
 
             // Act
-            VehicleDTO result = _mapper.Map<VehicleDTO>(vehicle);
+            VehicleDTO result = Mapper.Map<VehicleDTO>(vehicle);
 
             // Assert
             result.ModelId.Should().Be(dto.ModelId);
@@ -433,7 +433,7 @@
         }
 
         [Fact]
-        public void Method_Update_WithValidParameters()
+        public void Update_WithValidParameters()
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -465,7 +465,7 @@
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Method_Update_WithInvalidModelId_ThrowsArgumentException(int modelId)
+        public void Update_WithInvalidModelId_ThrowsArgumentException(int modelId)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -485,7 +485,7 @@
         [InlineData(10)]
         [InlineData(100)]
         [InlineData(1000)]
-        public void Method_Update_WithInvalidFuelType_ThrowsArgumentException(int fuelType)
+        public void Update_WithInvalidFuelType_ThrowsArgumentException(int fuelType)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -506,7 +506,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidPrice_ThrowsArgumentException(double price)
+        public void Update_WithInvalidPrice_ThrowsArgumentException(double price)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -527,7 +527,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidMileage_ThrowsArgumentException(int mileage)
+        public void Update_WithInvalidMileage_ThrowsArgumentException(int mileage)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -548,7 +548,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidYear_ThrowsArgumentException(int year)
+        public void Update_WithInvalidYear_ThrowsArgumentException(int year)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -569,7 +569,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidDoors_ThrowsArgumentException(int doors)
+        public void Update_WithInvalidDoors_ThrowsArgumentException(int doors)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -589,7 +589,7 @@
         [InlineData(10)]
         [InlineData(100)]
         [InlineData(1000)]
-        public void Method_Update_WithInvalidTransmission_ThrowsArgumentException(int transmission)
+        public void Update_WithInvalidTransmission_ThrowsArgumentException(int transmission)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -610,7 +610,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidEngineSize_ThrowsArgumentException(int engineSize)
+        public void Update_WithInvalidEngineSize_ThrowsArgumentException(int engineSize)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -631,7 +631,7 @@
         [InlineData(-10)]
         [InlineData(-100)]
         [InlineData(-1000)]
-        public void Method_Update_WithInvalidPower_ThrowsArgumentException(int power)
+        public void Update_WithInvalidPower_ThrowsArgumentException(int power)
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -648,7 +648,7 @@
         }
 
         [Fact]
-        public void Method_SetVehicleImages_WithValidParameters()
+        public void SetVehicleImages_WithValidParameters()
         {
             // Arrange
             VehicleDTO dto = VehicleBuilder.VehicleDTO();

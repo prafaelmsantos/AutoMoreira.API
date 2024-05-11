@@ -9,7 +9,7 @@
         public FUEL FuelType { get; private set; }
         public double Price { get; private set; }
         public int Mileage { get; private set; }
-        
+
         public int Year { get; private set; }
         public string? Color { get; private set; }
         public int Doors { get; private set; }
@@ -24,13 +24,13 @@
         public virtual ICollection<VehicleImage> VehicleImages { get; private set; }
 
 
-        public Vehicle() 
+        public Vehicle()
         {
             VehicleImages = new List<VehicleImage>();
         }
 
-        public Vehicle(int id, int modelId, string? version, FUEL fuelType, 
-            double price, int mileage, int year, string? color, int doors, TRANSMISSION transmission, 
+        public Vehicle(int id, int modelId, string? version, FUEL fuelType,
+            double price, int mileage, int year, string? color, int doors, TRANSMISSION transmission,
             int engineSize, int power, string? observations, bool opportunity)
         {
             id.Throw(() => throw new Exception(DomainResource.VehicleIdNeedsToBeSpecifiedException))
@@ -84,7 +84,7 @@
             VehicleImages = new List<VehicleImage>();
         }
 
-        public Vehicle(int modelId, string? version, FUEL fuelType, double price, int mileage, int year, string? color, int doors, 
+        public Vehicle(int modelId, string? version, FUEL fuelType, double price, int mileage, int year, string? color, int doors,
             TRANSMISSION transmission, int engineSize, int power, string? observations, bool opportunity, bool sold, DateTime? soldDate)
         {
             modelId.Throw(() => throw new Exception(DomainResource.VehicleModelIdNeedsToBeSpecifiedException))

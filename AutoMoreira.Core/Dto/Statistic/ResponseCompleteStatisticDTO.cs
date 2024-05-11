@@ -2,6 +2,6 @@
 {
     public class ResponseCompleteStatisticDTO : ResponseStatisticDTO
     {
-        public List<StatisticDTO> LastStatistics { get; set; } = null!;
+        public List<StatisticDTO> LastStatistics { get; set; } = new();
     }
 }

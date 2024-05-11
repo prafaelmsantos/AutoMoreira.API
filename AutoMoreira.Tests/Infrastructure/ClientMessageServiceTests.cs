@@ -20,7 +20,7 @@
 
             _clientMessageRepositoryMock = new Mock<IClientMessageRepository>(MockBehavior.Strict);
             _emailServiceMock = new Mock<IEmailService>(MockBehavior.Strict);
-            _clientMessageService = new ClientMessageService(_mapper, _clientMessageRepositoryMock.Object, _emailServiceMock.Object);
+            _clientMessageService = new ClientMessageService(Mapper, _clientMessageRepositoryMock.Object, _emailServiceMock.Object);
         }
 
         #endregion
@@ -51,7 +51,7 @@
         }
 
         [Fact]
-        public async Task GetAllClientMessagesAsync_GetAll_NotBreak()
+        public async Task GetAllClientMessagesAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             _clientMessageRepositoryMock.Setup(x => x.GetAll())
@@ -61,7 +61,7 @@
             await FluentActions.Invoking(async () => await _clientMessageService.GetAllClientMessagesAsync()).Should()
                 .ThrowAsync<Exception>();
         }
-        
+
         #endregion
 
         #region GetMarkByIdAsync
@@ -109,7 +109,7 @@
         }
 
         [Fact]
-        public async Task GetClientMessageByIdAsync_FindByIdAsync_NotBreak()
+        public async Task GetClientMessageByIdAsync_FindByIdAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
@@ -157,7 +157,7 @@
         }
 
         [Fact]
-        public async Task AddClientMessageAsync_AddAsync_NotBreak()
+        public async Task AddClientMessageAsync_AddAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();
@@ -223,7 +223,7 @@
         }
 
         [Fact]
-        public async Task UpdateClientMessageStatusAsync_UpdateAsync_NotBreak()
+        public async Task UpdateClientMessageStatusAsync_UpdateAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();
@@ -278,7 +278,7 @@
             // Arrange
             ClientMessage? clientMessage = null;
             string errorMessage = DomainResource.ClientMessageNotFoundException;
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(clientMessage);
 
@@ -299,7 +299,7 @@
             // Arrange
             string errorMessage = DomainResource.DeleteClientMessagesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
@@ -323,7 +323,7 @@
             ClientMessage clientMessage = ClientMessageBuilder.ClientMessage(dto);
             string errorMessage = DomainResource.DeleteClientMessagesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage, clientMessage.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, clientMessage.Name);
 
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(clientMessage);
 

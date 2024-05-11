@@ -2,17 +2,18 @@
 {
     public class MarkBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static Mark Mark()
         {
-            return new(_data.Company.CompanyName());
+            return new(data.Company.CompanyName());
         }
         public static MarkDTO MarkDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Name = _data.Company.CompanyName() 
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Name = data.Company.CompanyName()
             };
         }
         public static Mark Mark(MarkDTO dto)
@@ -41,7 +42,7 @@
         }
         public static List<ResponseMessageDTO> ResponseMessageDTOList(Mark mark)
         {
-            List<ResponseMessageDTO> responseMessageDTOs = new() { 
+            List<ResponseMessageDTO> responseMessageDTOs = new() {
                 new ResponseMessageDTO {
                     Entity = new MinimumDTO() { Id = mark.Id, Name = mark.Name },
                     OperationSuccess = true,

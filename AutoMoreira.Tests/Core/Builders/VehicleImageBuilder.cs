@@ -2,30 +2,31 @@
 {
     public class VehicleImageBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static VehicleImage VehicleImage()
         {
-            return new(_data.Internet.Url());
+            return new(data.Internet.Url());
         }
         public static VehicleImageDTO VehicleImageDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Url = _data.Internet.Url(),
-                VehicleId = _data.Random.Int(1),
-                IsMain = _data.Random.Bool()
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Url = data.Internet.Url(),
+                VehicleId = data.Random.Int(1),
+                IsMain = data.Random.Bool()
             };
         }
         public static VehicleImage VehicleImage(VehicleImageDTO dto)
         {
             return new(dto.Url);
-        }    
+        }
         public static List<VehicleImage> VehicleImageList(VehicleImageDTO dto)
         {
             return new List<VehicleImage>() { VehicleImage(dto) };
         }
-        public static List<VehicleImageDTO> VehicleImageListDTO(VehicleImageDTO dto)
+        public static List<VehicleImageDTO> VehicleImageDTOList(VehicleImageDTO dto)
         {
             return new List<VehicleImageDTO>() { dto };
         }

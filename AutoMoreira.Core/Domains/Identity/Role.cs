@@ -7,7 +7,7 @@
         public bool IsDefault { get; private set; } = false;
         public bool IsReadOnly { get; private set; } = false;
 
-        public Role() 
+        public Role()
         {
             Users = new List<User>();
         }

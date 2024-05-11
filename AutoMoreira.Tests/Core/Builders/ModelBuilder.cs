@@ -2,18 +2,19 @@
 {
     public class ModelBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static Model Model()
         {
-            return new(_data.Company.CompanyName(), _data.Random.Int(1));
+            return new(data.Company.CompanyName(), data.Random.Int(1));
         }
         public static ModelDTO ModelDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Name = _data.Company.CompanyName(),
-                MarkId = _data.Random.Int(1),
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Name = data.Company.CompanyName(),
+                MarkId = data.Random.Int(1),
             };
         }
         public static Model Model(ModelDTO dto)

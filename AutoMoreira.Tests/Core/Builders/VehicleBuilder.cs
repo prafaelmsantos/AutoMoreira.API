@@ -2,73 +2,74 @@
 {
     public class VehicleBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static Vehicle Vehicle()
         {
-            int modelId = _data.Random.Int(1);
-            string version = _data.Vehicle.Model();
-            FUEL fuelType = _data.PickRandom<FUEL>();
-            double price = _data.Random.Double(0);
-            int mileage = _data.Random.Int(0);
-            int year = _data.Date.Recent(0).Year;
-            string color = _data.Commerce.Color();
-            int doors = _data.Random.Int(2, 5);
-            TRANSMISSION transmission = _data.PickRandom<TRANSMISSION>();
-            int engineSize = _data.Random.Int(0);
-            int power = _data.Random.Int(0);
-            string observations = _data.Lorem.Sentence();
-            bool opportunity = _data.Random.Bool();
-            bool sold = _data.Random.Bool();
-            DateTime? soldDate = sold ? _data.Date.Recent(0) : null;
+            int modelId = data.Random.Int(1);
+            string version = data.Vehicle.Model();
+            FUEL fuelType = data.PickRandom<FUEL>();
+            double price = data.Random.Double(0);
+            int mileage = data.Random.Int(0);
+            int year = data.Date.Recent(0).Year;
+            string color = data.Commerce.Color();
+            int doors = data.Random.Int(2, 5);
+            TRANSMISSION transmission = data.PickRandom<TRANSMISSION>();
+            int engineSize = data.Random.Int(0);
+            int power = data.Random.Int(0);
+            string observations = data.Lorem.Sentence();
+            bool opportunity = data.Random.Bool();
+            bool sold = data.Random.Bool();
+            DateTime? soldDate = sold ? data.Date.Recent(0) : null;
 
             return new(modelId, version, fuelType, price, mileage, year, color, doors, transmission, engineSize, power, observations, opportunity, sold, soldDate);
         }
         public static Vehicle FullVehicle()
         {
-            int id = _data.Random.Int(1);
-            int modelId = _data.Random.Int(1);
-            string version = _data.Vehicle.Model();
-            FUEL fuelType = _data.PickRandom<FUEL>();
-            double price = _data.Random.Double(0);
-            int mileage = _data.Random.Int(0);
-            int year = _data.Date.Recent(0).Year;
-            string color = _data.Commerce.Color();
-            int doors = _data.Random.Int(2, 5);
-            TRANSMISSION transmission = _data.PickRandom<TRANSMISSION>();
-            int engineSize = _data.Random.Int(0);
-            int power = _data.Random.Int(0);
-            string observations = _data.Lorem.Sentence();
-            bool opportunity = _data.Random.Bool();
+            int id = data.Random.Int(1);
+            int modelId = data.Random.Int(1);
+            string version = data.Vehicle.Model();
+            FUEL fuelType = data.PickRandom<FUEL>();
+            double price = data.Random.Double(0);
+            int mileage = data.Random.Int(0);
+            int year = data.Date.Recent(0).Year;
+            string color = data.Commerce.Color();
+            int doors = data.Random.Int(2, 5);
+            TRANSMISSION transmission = data.PickRandom<TRANSMISSION>();
+            int engineSize = data.Random.Int(0);
+            int power = data.Random.Int(0);
+            string observations = data.Lorem.Sentence();
+            bool opportunity = data.Random.Bool();
 
             return new(id, modelId, version, fuelType, price, mileage, year, color, doors, transmission, engineSize, power, observations, opportunity);
         }
         public static VehicleDTO VehicleDTO()
         {
-            bool sold = _data.Random.Bool();
-            return new() {
-                Id = _data.Random.Int(1),
-                ModelId = _data.Random.Int(1),
-                Version = _data.Vehicle.Model(),
-                FuelType = _data.PickRandom<FUEL>(),
-                Price = _data.Random.Double(0),
-                Mileage = _data.Random.Int(0),
-                Year = _data.Date.Recent(0).Year,
-                Color = _data.Commerce.Color(),
-                Doors = _data.Random.Int(2, 5),
-                Transmission = _data.PickRandom<TRANSMISSION>(),
-                EngineSize = _data.Random.Int(0),
-                Power = _data.Random.Int(0),
-                Observations = _data.Lorem.Sentence(),
-                Opportunity = _data.Random.Bool(),
+            bool sold = data.Random.Bool();
+            return new()
+            {
+                Id = data.Random.Int(1),
+                ModelId = data.Random.Int(1),
+                Version = data.Vehicle.Model(),
+                FuelType = data.PickRandom<FUEL>(),
+                Price = data.Random.Double(0),
+                Mileage = data.Random.Int(0),
+                Year = data.Date.Recent(0).Year,
+                Color = data.Commerce.Color(),
+                Doors = data.Random.Int(2, 5),
+                Transmission = data.PickRandom<TRANSMISSION>(),
+                EngineSize = data.Random.Int(0),
+                Power = data.Random.Int(0),
+                Observations = data.Lorem.Sentence(),
+                Opportunity = data.Random.Bool(),
                 Sold = sold,
-                SoldDate = sold ? _data.Date.Past() : null,
+                SoldDate = sold ? data.Date.Past() : null,
                 VehicleImages = new()
             };
         }
         public static Vehicle Vehicle(VehicleDTO dto)
         {
-            return new(dto.ModelId, dto.Version, dto.FuelType, dto.Price, dto.Mileage, dto.Year, dto.Color, dto.Doors, dto.Transmission, dto.EngineSize, 
+            return new(dto.ModelId, dto.Version, dto.FuelType, dto.Price, dto.Mileage, dto.Year, dto.Color, dto.Doors, dto.Transmission, dto.EngineSize,
                 dto.Power, dto.Observations, dto.Opportunity, dto.Sold, dto.SoldDate);
         }
         public static Vehicle FullVehicle(VehicleDTO dto)
@@ -94,7 +95,7 @@
         }
         public static List<ResponseMessageDTO> ResponseMessageDTOList(Vehicle vehicle)
         {
-            List<ResponseMessageDTO> responseMessageDTOs = new() { 
+            List<ResponseMessageDTO> responseMessageDTOs = new() {
                 new ResponseMessageDTO {
                     Entity = new MinimumDTO() { Id = vehicle.Id, Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty },
                     OperationSuccess = true,

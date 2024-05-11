@@ -27,8 +27,8 @@
             user.LastName.Should().Be(dto.LastName).And.NotBeNullOrWhiteSpace();
             user.Image.Should().BeNull();
             user.IsDefault.Should().BeFalse();
-            user.Roles.Should().BeEmpty();         
-        }      
+            user.Roles.Should().BeEmpty();
+        }
 
         [Fact]
         public void Constructor_WithValidFullParameters_InitializesProperties()
@@ -53,7 +53,7 @@
             user.IsDefault.Should().Be(dto.IsDefault);
             user.Roles.Should().BeEmpty();
         }
-        
+
         [Fact]
         public void TestMap_InitializesProperties()
         {
@@ -62,7 +62,7 @@
             User user = UserBuilder.FullUser(dto);
 
             // Act
-            UserDTO result = _mapper.Map<UserDTO>(user);
+            UserDTO result = Mapper.Map<UserDTO>(user);
 
             // Assert
             result.Email.Should().Be(dto.Email).And.NotBeNullOrWhiteSpace();
@@ -82,7 +82,7 @@
             User user = UserBuilder.FullUser(dto);
 
             // Act
-            UserDTO result = _mapper.Map<UserDTO>(user);
+            UserDTO result = Mapper.Map<UserDTO>(user);
 
             // Assert
             result.Id.Should().Be(dto.Id).And.BeGreaterThan(0);
@@ -237,7 +237,7 @@
         }
 
         [Fact]
-        public void Method_Update_WithValidParameters()
+        public void Update_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -265,7 +265,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_Update_WithInvalidEmail_ThrowsArgumentException(string? email)
+        public void Update_WithInvalidEmail_ThrowsArgumentException(string? email)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -280,7 +280,7 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public void Method_Update_WithInvalidPhoneNumber_ThrowsArgumentException(string? phoneNumber)
+        public void Update_WithInvalidPhoneNumber_ThrowsArgumentException(string? phoneNumber)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -296,7 +296,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_Update_WithInvalidFirstName_ThrowsArgumentException(string? firstName)
+        public void Update_WithInvalidFirstName_ThrowsArgumentException(string? firstName)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -312,7 +312,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_Update_WithInvalidLastName_ThrowsArgumentException(string? lastName)
+        public void Update_WithInvalidLastName_ThrowsArgumentException(string? lastName)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -327,7 +327,7 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public void Method_Update_WithInvalidImage_ThrowsArgumentException(string? image)
+        public void Update_WithInvalidImage_ThrowsArgumentException(string? image)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -340,7 +340,7 @@
         }
 
         [Fact]
-        public void Method_SetDarkMode_WithValidParameters()
+        public void SetDarkMode_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -354,7 +354,7 @@
         }
 
         [Fact]
-        public void Method_SetImage_WithValidParameters()
+        public void SetImage_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -370,7 +370,7 @@
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public void Method_SetImage_WithInvalidImage_ThrowsArgumentException(string? image)
+        public void SetImage_WithInvalidImage_ThrowsArgumentException(string? image)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -383,7 +383,7 @@
         }
 
         [Fact]
-        public void Method_SetRoles_WithValidParameters()
+        public void SetRoles_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -400,7 +400,7 @@
         }
 
         [Fact]
-        public void Method_SetPasswordHash_WithValidParameters()
+        public void SetPasswordHash_WithValidParameters()
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();
@@ -418,7 +418,7 @@
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void Method_SetPasswordHash_WithInvalidPasswordHash_ThrowsArgumentException(string? password)
+        public void SetPasswordHash_WithInvalidPasswordHash_ThrowsArgumentException(string? password)
         {
             // Arrange
             UserDTO dto = UserBuilder.UserDTO();

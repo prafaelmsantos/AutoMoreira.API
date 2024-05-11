@@ -119,7 +119,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            } 
+            }
         }
         #endregion
     }

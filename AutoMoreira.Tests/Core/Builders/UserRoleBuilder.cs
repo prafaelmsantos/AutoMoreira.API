@@ -2,11 +2,11 @@
 {
     public class UserRoleBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static UserRole UserRole()
         {
-            return new(_data.Random.Int(1), _data.Random.Int(1));
+            return new(data.Random.Int(1), data.Random.Int(1));
         }
         public static UserRole UserRole(int userId, int roleId)
         {

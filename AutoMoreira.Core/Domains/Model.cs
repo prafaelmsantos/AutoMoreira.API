@@ -30,7 +30,7 @@
         public Model(int id, string name, int markId)
         {
             id.Throw(() => throw new Exception(DomainResource.ModelIdNeedsToBeSpecifiedException))
-              .IfNegativeOrZero();        
+              .IfNegativeOrZero();
 
             name.ThrowIfNull(() => throw new Exception(DomainResource.ModelNameNeedsToBeSpecifiedException))
                 .IfWhiteSpace();

@@ -29,7 +29,7 @@
             VehicleImage vehicleImage = VehicleImageBuilder.VehicleImage(dto);
 
             // Act
-            VehicleImageDTO result = _mapper.Map<VehicleImageDTO>(vehicleImage);
+            VehicleImageDTO result = Mapper.Map<VehicleImageDTO>(vehicleImage);
 
             // Assert
             result.Url.Should().Be(dto.Url).And.NotBeNullOrWhiteSpace();
@@ -54,7 +54,7 @@
         }
 
         [Fact]
-        public void Method_SetIsMain_WithValidParameters()
+        public void SetIsMain_WithValidParameters()
         {
             // Arrange
             VehicleImage VehicleImage = VehicleImageBuilder.VehicleImage();

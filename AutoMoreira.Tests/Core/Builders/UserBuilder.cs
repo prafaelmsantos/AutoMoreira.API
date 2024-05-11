@@ -2,41 +2,42 @@
 {
     public class UserBuilder
     {
-        private static readonly Faker _data = new("en");
+        private static readonly Faker data = new("en");
 
         public static User User()
         {
-            string email = _data.Internet.Email();
-            string phoneNumber = _data.Phone.PhoneNumber();
-            string firstName = _data.Name.FirstName();
-            string lastName = _data.Name.LastName();
+            string email = data.Internet.Email();
+            string phoneNumber = data.Phone.PhoneNumber();
+            string firstName = data.Name.FirstName();
+            string lastName = data.Name.LastName();
 
             return new(email, phoneNumber, firstName, lastName);
         }
         public static User FullUser()
         {
-            int id = _data.Random.Int(1);
-            string email = _data.Internet.Email();
-            string phoneNumber = _data.Phone.PhoneNumber();
-            string firstName = _data.Name.FirstName();
-            string lastName = _data.Name.LastName();
-            bool isDefault = _data.Random.Bool();
+            int id = data.Random.Int(1);
+            string email = data.Internet.Email();
+            string phoneNumber = data.Phone.PhoneNumber();
+            string firstName = data.Name.FirstName();
+            string lastName = data.Name.LastName();
+            bool isDefault = data.Random.Bool();
 
             return new(id, email, phoneNumber, firstName, lastName, isDefault);
         }
         public static UserDTO UserDTO()
         {
-            return new() { 
-                Id = _data.Random.Int(1), 
-                Email = _data.Internet.Email(),
-                PhoneNumber = _data.Phone.PhoneNumber(),
-                FirstName = _data.Name.FirstName(),
-                LastName = _data.Name.LastName(),
-                Image = _data.Image.PlaceImgUrl(),
-                Password = _data.Random.Guid().ToString(),
-                Token = _data.Random.Guid().ToString(),
-                DarkMode = _data.Random.Bool(),
-                IsDefault = _data.Random.Bool(),
+            return new()
+            {
+                Id = data.Random.Int(1),
+                Email = data.Internet.Email(),
+                PhoneNumber = data.Phone.PhoneNumber(),
+                FirstName = data.Name.FirstName(),
+                LastName = data.Name.LastName(),
+                Image = data.Image.PlaceImgUrl(),
+                Password = data.Random.Guid().ToString(),
+                Token = data.Random.Guid().ToString(),
+                DarkMode = data.Random.Bool(),
+                IsDefault = data.Random.Bool(),
                 Roles = new()
             };
         }
@@ -106,7 +107,7 @@
         }
         public static List<ResponseMessageDTO> ResponseMessageDTOList(User user)
         {
-            List<ResponseMessageDTO> responseMessageDTOs = new() { 
+            List<ResponseMessageDTO> responseMessageDTOs = new() {
                 new ResponseMessageDTO {
                     Entity = new MinimumDTO() { Id = user.Id, Name = user.Email },
                     OperationSuccess = true,

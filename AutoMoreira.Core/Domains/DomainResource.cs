@@ -70,9 +70,9 @@
         #region User
         public static readonly string UserNotFoundException = "Utilizador não encontrado.";
         public static readonly string UserPasswordNotFoundException = "A palavra-passe é invalida para este utilizador.";
-        
+
         public static readonly string UserIdNeedsToBeSpecifiedException = "O id do utilizador é invalido.";
-        public static readonly string DeleteDefaultUserAsyncException = "O utilizador não pode ser apagado pois é padrão do sistema.";      
+        public static readonly string DeleteDefaultUserAsyncException = "O utilizador não pode ser apagado pois é padrão do sistema.";
         public static readonly string UserEmailNeedsToBeSpecifiedException = "O email do utilizador é invalido.";
         public static readonly string UserPhoneNumberNeedsToBeSpecifiedException = "O contacto do utilizador é invalido.";
         public static readonly string UserFirstNameNeedsToBeSpecifiedException = "O primeiro nome do utilizador é invalido.";
@@ -114,7 +114,7 @@
 
         public static readonly string ClientMessageNotFoundException = "Mensagem de cliente não encontrada.";
 
-        public static readonly string ClientMessageIdNeedsToBeSpecifiedException = "O id da marca é invalido.";      
+        public static readonly string ClientMessageIdNeedsToBeSpecifiedException = "O id da marca é invalido.";
         public static readonly string ClientMessageNameNeedsToBeSpecifiedException = "O nome da mensagem de cliente é invalido.";
         public static readonly string ClientMessageEmailNeedsToBeSpecifiedException = "O email da mensagem de cliente é invalido.";
         public static readonly string ClientMessagePhoneNumberNeedsToBeSpecifiedException = "O contacto da mensagem de cliente é invalido.";
@@ -135,7 +135,7 @@
         public static readonly string GetAllVisitorsWithYearComparisonAsyncException = "Erro ao tentar encontrar dados (por ano) de visitantes.";
         public static readonly string GetAllVisitorsWithMonthComparisonAsyncException = "Erro ao tentar encontrar dados (por mês) de visitantes.";
         public static readonly string CreateOrUpdateVisitorAsyncException = "Erro ao tentar criar/editar o numero total de visitantes.";
-        
+
         #endregion
     }
 }

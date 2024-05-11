@@ -22,7 +22,7 @@
         public bool Sold { get; set; }
         public DateTime? SoldDate { get; set; }
 
-        public List<VehicleImageDTO> VehicleImages { get; set; } = new List<VehicleImageDTO>();
+        public List<VehicleImageDTO> VehicleImages { get; set; } = new();
 
     }
 }

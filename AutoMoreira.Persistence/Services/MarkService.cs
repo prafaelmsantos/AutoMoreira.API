@@ -52,7 +52,7 @@
                 throw new Exception($"{DomainResource.GetMarkByIdAsyncException} {ex.Message}");
             }
         }
-        
+
         public async Task<MarkDTO> AddMarkAsync(MarkDTO markDTO)
         {
             try
@@ -60,7 +60,7 @@
                 MarkExistsAsync(markDTO).Result
                     .Throw(() => throw new Exception(DomainResource.MarkAlreadyExistsException))
                     .IfTrue();
-                
+
                 Mark mark = new(markDTO.Name);
 
                 mark = await _markRepository.AddAsync(mark);
@@ -95,7 +95,7 @@
             {
                 throw new Exception($"{DomainResource.UpdateMarkAsyncException} {ex.Message}");
             }
-        }     
+        }
 
         public async Task<List<ResponseMessageDTO>> DeleteMarksAsync(List<int> marksIds)
         {

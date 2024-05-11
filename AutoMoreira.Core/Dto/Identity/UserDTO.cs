@@ -12,6 +12,6 @@
         public string? Token { get; set; }
         public bool DarkMode { get; set; }
         public bool IsDefault { get; set; }
-        public List<RoleDTO> Roles { get; set; } = new List<RoleDTO>();
+        public List<RoleDTO> Roles { get; set; } = new();
     }
 }

@@ -13,7 +13,7 @@
         public VehicleService(IMapper mapper, IVehicleRepository vehicleRepository)
         {
             _mapper = mapper;
-            _vehicleRepository = vehicleRepository;       
+            _vehicleRepository = vehicleRepository;
         }
 
         #endregion
@@ -30,6 +30,7 @@
                     .Include(x => x.Model)
                     .ThenInclude(x => x.Mark)
                     .OrderBy(x => x.Id)
+                    .AsNoTracking()
                     .ToListAsync();
 
                 return _mapper.Map<List<VehicleDTO>>(vehicles);
@@ -50,6 +51,7 @@
                     .Include(x => x.VehicleImages)
                     .Include(x => x.Model)
                     .ThenInclude(x => x.Mark)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync();
 
                 vehicle.ThrowIfNull(() => throw new Exception(DomainResource.VehicleNotFoundException));
@@ -72,17 +74,17 @@
 
                 return new()
                 {
-                    TotalSalesMonth = new CounterDTO
+                    TotalSalesMonth = new()
                     {
                         Units = salesVehiclesByMonth.Item1,
                         Values = salesVehiclesByMonth.Item2
                     },
-                    TotalSales = new CounterDTO
+                    TotalSales = new()
                     {
                         Units = salesVehicles.Item1,
                         Values = salesVehicles.Item2
                     },
-                    TotalStock = new CounterDTO
+                    TotalStock = new()
                     {
                         Units = stockVehicles.Item1,
                         Values = stockVehicles.Item2
@@ -92,7 +94,7 @@
             catch (Exception ex)
             {
                 throw new Exception($"{DomainResource.GetVehicleCountersAsyncException} {ex.Message}");
-            }          
+            }
         }
 
         public async Task<ResponseCompleteStatisticDTO> GetAllVehiclesWithYearComparisonAsync()
@@ -109,7 +111,7 @@
                     Statistics = currentStatisticsDTO,
                     LastStatistics = lastStatisticsDTO,
                     Value = values.Item1,
-                    ValuePerc =values.Item2
+                    ValuePerc = values.Item2
                 };
             }
             catch (Exception ex)
@@ -156,8 +158,8 @@
         {
             try
             {
-                Vehicle vehicle = new(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage, 
-                    vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power, 
+                Vehicle vehicle = new(vehicleDTO.ModelId, vehicleDTO.Version, vehicleDTO.FuelType, vehicleDTO.Price, vehicleDTO.Mileage,
+                    vehicleDTO.Year, vehicleDTO.Color, vehicleDTO.Doors, vehicleDTO.Transmission, vehicleDTO.EngineSize, vehicleDTO.Power,
                     vehicleDTO.Observations, vehicleDTO.Opportunity, vehicleDTO.Sold, vehicleDTO.SoldDate);
 
                 vehicle = SetVehicleImages(vehicleDTO, vehicle);
@@ -214,6 +216,7 @@
             var vehicles = await _vehicleRepository
                     .GetAll()
                     .Where(x => x.Sold == sold)
+                    .AsNoTracking()
                     .ToListAsync();
 
             if (byMonth)
@@ -228,7 +231,8 @@
         {
             List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
-                   .Where(x => x.SoldDate!.Value.Year == year)
+                   .Where(x => x.SoldDate != null && x.SoldDate.Value.Year == year)
+                   .AsNoTracking()
                    .ToListAsync();
 
             List<StatisticDTO> statisticsDTO = new();
@@ -236,11 +240,11 @@
             List<MONTH> monthList = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().ToList();
 
             monthList.ForEach(month =>
-                statisticsDTO.Add(new StatisticDTO()
+                statisticsDTO.Add(new()
                 {
                     Month = month,
                     Year = year,
-                    Value = vehicles.Where(x => x.Sold && x.SoldDate?.Month == (int)month).Select(x => x.Price).Sum()
+                    Value = vehicles.Where(x => x.Sold && x.SoldDate != null && x.SoldDate.Value.Month == (int)month).Select(x => x.Price).Sum()
                 }));
 
             return statisticsDTO;
@@ -268,6 +272,7 @@
         {
             List<Vehicle> vehicles = await _vehicleRepository
                    .GetAll()
+                   .AsNoTracking()
                    .ToListAsync();
 
             int vehiclesSoldCount = vehicles.Where(x => x.Sold).Count();
@@ -308,7 +313,9 @@
 
                     if (vehicle is not null)
                     {
-                        responseMessageDTO.Entity.Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty;
+                        responseMessageDTO.Entity.Name =
+                            $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty;
+
                         responseMessageDTO.OperationSuccess = await _vehicleRepository.RemoveAsync(vehicle);
                     }
                     else

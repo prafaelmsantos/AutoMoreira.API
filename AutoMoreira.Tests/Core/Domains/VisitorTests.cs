@@ -13,8 +13,8 @@
             Visitor visitor = VisitorBuilder.Visitor();
 
             // Assert
-            visitor.Year.Should().Be(_faker.Date.RecentDateOnly().Year);
-            visitor.Month.Should().Be((MONTH)_faker.Date.RecentDateOnly().Month);
+            visitor.Year.Should().Be(Faker.Date.RecentDateOnly().Year);
+            visitor.Month.Should().Be((MONTH)Faker.Date.RecentDateOnly().Month);
             visitor.Value.Should().Be(1);
         }
 
@@ -26,7 +26,7 @@
             VisitorDTO dto = VisitorBuilder.VisitorDTO(visitor);
 
             // Act
-            Visitor result = _mapper.Map<Visitor>(dto);
+            Visitor result = Mapper.Map<Visitor>(dto);
 
             // Assert
             result.Year.Should().Be(visitor.Year);
@@ -35,7 +35,7 @@
         }
 
         [Fact]
-        public void Method_SetValue_WithValidParameters()
+        public void SetValue_WithValidParameters()
         {
             // Arrange
             Visitor visitor = VisitorBuilder.Visitor();

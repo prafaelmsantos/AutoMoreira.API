@@ -10,8 +10,8 @@
         public void Constructor_WithValidParameters_InitializesProperties()
         {
             // Arrange
-            int userId = _faker.Random.Int(1);
-            int roleId = _faker.Random.Int(1);
+            int userId = Faker.Random.Int(1);
+            int roleId = Faker.Random.Int(1);
 
             // Act
             UserRole userRole = UserRoleBuilder.UserRole(userId, roleId);
@@ -28,7 +28,7 @@
         {
 
             // Act & Assert
-            FluentActions.Invoking(() => UserRoleBuilder.UserRole(userId, _faker.Random.Int(1))).Should()
+            FluentActions.Invoking(() => UserRoleBuilder.UserRole(userId, Faker.Random.Int(1))).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.UserIdNeedsToBeSpecifiedException);
         }
@@ -40,7 +40,7 @@
         {
 
             // Act & Assert
-            FluentActions.Invoking(() => UserRoleBuilder.UserRole(_faker.Random.Int(1), roleId)).Should()
+            FluentActions.Invoking(() => UserRoleBuilder.UserRole(Faker.Random.Int(1), roleId)).Should()
                 .Throw<Exception>()
                 .WithMessage(DomainResource.RoleIdNeedsToBeSpecifiedException);
         }

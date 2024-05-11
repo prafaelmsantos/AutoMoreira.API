@@ -21,7 +21,7 @@
             MapperConfiguration configuration = new(cfg => cfg.AddProfile(myProfile));
             IMapper mapper = new Mapper(configuration);
 
-            
+
             _userManagerMock = new Mock<UserManager<User>>(
                 new Mock<IUserStore<User>>().Object,
                 new Mock<IOptions<IdentityOptions>>().Object,
@@ -48,11 +48,11 @@
             _emailServiceMock = new Mock<IEmailService>(MockBehavior.Strict);
 
             _userService = new UserService(
-                _mapper, 
-                _userManagerMock.Object, 
-                _signInManagerMock.Object, 
-                _userRepositoryMock.Object, 
-                _roleRepositoryMock.Object,  
+                Mapper,
+                _userManagerMock.Object,
+                _signInManagerMock.Object,
+                _userRepositoryMock.Object,
+                _roleRepositoryMock.Object,
                 _emailServiceMock.Object
                 );
         }
@@ -197,7 +197,7 @@
         }
 
         [Fact]
-        public async Task GetUserByEmailAsync_FindByIdAsync_NotBreak()
+        public async Task GetUserByEmailAsync_FindByIdAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange
             _userRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
@@ -215,7 +215,7 @@
         public async Task LoginUserAsync_SignInResultSuccess_Successfully()
         {
             // Arrange   
-            UserDTO dto = UserBuilder.UserDTO();           
+            UserDTO dto = UserBuilder.UserDTO();
             dto.Id = 0;
             User user = UserBuilder.User(dto);
 
@@ -317,7 +317,7 @@
             roleDTO.IsReadOnly = false;
             dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
             User user = UserBuilder.User(dto);
-            
+
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
@@ -494,7 +494,7 @@
             dto.Id = 0;
             dto.IsDefault = false;
             dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
-            User user = UserBuilder.User(dto);      
+            User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)))
@@ -549,7 +549,7 @@
             dto.IsDefault = true;
             dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
             User user = UserBuilder.FullUser(dto);
-            
+
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryableWithRoles(dto)))
@@ -723,7 +723,7 @@
         public async Task UpdateUserAsync_RoleNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            UserDTO dto = UserBuilder.UserDTO();           
+            UserDTO dto = UserBuilder.UserDTO();
             dto.Id = 0;
             Role? role = null;
 
@@ -1344,7 +1344,7 @@
             // Arrange
             User? user = null;
             string errorMessage = DomainResource.UserNotFoundException;
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(user);
 
@@ -1365,7 +1365,7 @@
             // Arrange
             string errorMessage = DomainResource.DeleteUsersAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
             _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
@@ -1389,7 +1389,7 @@
             User user = UserBuilder.User(dto);
             string errorMessage = DomainResource.DeleteUsersAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = BaseBuilder.ResponseMessageDTOErrorList(errorMessage, user.Email);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, user.Email);
 
             _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(user);
 
@@ -1406,6 +1406,7 @@
             _userRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<User>()), Times.Once);
             _userRepositoryMock.VerifyNoOtherCalls();
         }
+
         #endregion
     }
 }

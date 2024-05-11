@@ -1,4 +1,4 @@
-namespace AutoMoreira.API
+ï»¿namespace AutoMoreira.API
 {
     public class Startup
     {
@@ -21,7 +21,8 @@ namespace AutoMoreira.API
 
             //JWT
             //Cada vez que criptografamos com uma chave, tambem temos de discriptografar com a mesma
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x => {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
+            {
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -52,7 +53,7 @@ namespace AutoMoreira.API
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header utilizando o Bearer.
-                                Entre com 'Bearer ' [espaço] então coloque o seu token.
+                                Entre com 'Bearer ' [espaÃ§o] entÃ£o coloque o seu token.
                                 Exemplo: 'Bearer 12345abcdef'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
@@ -79,13 +80,13 @@ namespace AutoMoreira.API
                 });
             });
 
-            //CORS - Dado qualquer header da requisição por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
+            //CORS - Dado qualquer header da requisiÃ§Ã£o por http vinda de qualquer metodo (get, post, delete..) e vindos de qualquer origem
             services.AddCors(o => o.AddPolicy("CustomPolicy", builder =>
             {
-               builder.AllowAnyOrigin()
-                      .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .WithExposedHeaders("Token-Expired"); ;
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithExposedHeaders("Token-Expired"); ;
             }));
         }
 
@@ -113,7 +114,7 @@ namespace AutoMoreira.API
             });
 
             if (env.IsDevelopment())
-            {             
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoMoreira.API v1"));
@@ -125,11 +126,11 @@ namespace AutoMoreira.API
             //Indica que vou trabalhar por rotas.
             app.UseRouting();
 
-            //Auth- 1º autentica e depois autoriza
+            //Auth- 1Âº autentica e depois autoriza
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //E vou retornar determinados endpoints de acordo com a configuração destas rotas dentro do meu controller
+            //E vou retornar determinados endpoints de acordo com a configuraÃ§Ã£o destas rotas dentro do meu controller
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

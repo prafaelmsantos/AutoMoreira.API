@@ -35,7 +35,7 @@
             ClientMessage clientMessage = ClientMessageBuilder.ClientMessage(dto);
 
             // Act
-            ClientMessageDTO result = _mapper.Map<ClientMessageDTO>(clientMessage);
+            ClientMessageDTO result = Mapper.Map<ClientMessageDTO>(clientMessage);
 
             // Assert
             result.Name.Should().Be(dto.Name).And.NotBeNullOrWhiteSpace();
@@ -115,7 +115,7 @@
         }
 
         [Fact]
-        public void Method_SetStatus_WithValidParameters()
+        public void SetStatus_WithValidParameters()
         {
             // Arrange
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();
@@ -132,7 +132,7 @@
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(3)]
-        public void Method_SetName_WithInvalidStatus_ThrowsArgumentException(int status)
+        public void SetName_WithInvalidStatus_ThrowsArgumentException(int status)
         {
             // Arrange
             ClientMessage clientMessage = ClientMessageBuilder.ClientMessage();

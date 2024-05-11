@@ -36,7 +36,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }        
+            }
         }
 
 
@@ -56,7 +56,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }       
+            }
         }
 
 
@@ -106,7 +106,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }     
+            }
         }
 
 
@@ -120,13 +120,13 @@
         public async Task<IActionResult> ResetPassword([FromRoute] string email)
         {
             try
-            {          
+            {
                 return Ok(await _userService.ResetUserPasswordAsync(email));
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }   
+            }
         }
 
 
@@ -146,7 +146,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }  
+            }
         }
 
 
@@ -168,7 +168,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }       
+            }
         }
 
 
@@ -210,7 +210,7 @@
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
-            }    
+            }
         }
 
 

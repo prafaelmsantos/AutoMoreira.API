@@ -3,21 +3,21 @@
     public class BaseClassTests
     {
         #region private variables
-        public readonly Faker _faker;
-        public readonly ITestOutputHelper _output;
-        public readonly string _culture;
-        public readonly IMapper _mapper;
+        public readonly Faker Faker;
+        public readonly ITestOutputHelper Output;
+        public readonly string Culture;
+        public readonly IMapper Mapper;
 
         #endregion
         public BaseClassTests(ITestOutputHelper output)
         {
-            _culture = "en";
-            _faker = new Faker(_culture);
-            _output = output;
+            Culture = "en";
+            Faker = new Faker(Culture);
+            Output = output;
 
             AutoMoreira.Core.Mapper.AutoMapperProfile myProfile = new();
             MapperConfiguration configuration = new(cfg => cfg.AddProfile(myProfile));
-            _mapper = new Mapper(configuration);
+            Mapper = new Mapper(configuration);
             //AutoMapperExtensions.Init(_mapper);
         }
     }

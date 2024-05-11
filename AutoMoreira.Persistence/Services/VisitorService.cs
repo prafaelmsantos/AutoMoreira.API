@@ -13,7 +13,7 @@
         public VisitorService(IMapper mapper, IVisitorRepository visitorRepository)
         {
             _mapper = mapper;
-            _visitorRepository = visitorRepository;         
+            _visitorRepository = visitorRepository;
         }
         #endregion
 
@@ -46,10 +46,10 @@
 
                 var values = GetValuesWithYearComparison(lastVisitors, currentVisitors);
 
-                return new() 
-                { 
-                    Visitors = currentVisitors, 
-                    LastVisitors = lastVisitors,       
+                return new()
+                {
+                    Visitors = currentVisitors,
+                    LastVisitors = lastVisitors,
                     Value = values.Item1,
                     ValuePerc = values.Item2
                 };
@@ -66,11 +66,11 @@
             {
                 List<VisitorDTO> visitorsDTO = await GetAllVisitoresByYear(DateTime.UtcNow.Year);
 
-               var values = GetValuesWithMonthComparison(visitorsDTO);
+                var values = GetValuesWithMonthComparison(visitorsDTO);
 
-                return new() 
-                { 
-                    Visitors = visitorsDTO, 
+                return new()
+                {
+                    Visitors = visitorsDTO,
                     Value = values.Item1,
                     ValuePerc = values.Item2
                 };
@@ -107,7 +107,7 @@
             catch (Exception ex)
             {
                 throw new Exception($"{DomainResource.CreateOrUpdateVisitorAsyncException} {ex.Message}");
-            }         
+            }
         }
 
         #endregion

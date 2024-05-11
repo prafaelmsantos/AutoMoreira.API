@@ -1,8 +1,5 @@
 ﻿namespace Authorization.Tests.Common
 {
-    using System.Linq.Expressions;
-    using Microsoft.EntityFrameworkCore.Query;
-
     internal sealed class TestAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
     {
         public TestAsyncEnumerable(IEnumerable<T> enumerable)
