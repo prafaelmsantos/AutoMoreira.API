@@ -41,16 +41,5 @@
         {
             return new List<Model>().AsQueryable();
         }
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(Model model)
-        {
-            List<ResponseMessageDTO> responseMessageDTOs = new() {
-                new ResponseMessageDTO {
-                    Entity = new MinimumDTO() { Id = model.Id, Name = model.Name },
-                    OperationSuccess = true,
-                    ErrorMessage = null
-                }
-            };
-            return responseMessageDTOs;
-        }
     }
 }

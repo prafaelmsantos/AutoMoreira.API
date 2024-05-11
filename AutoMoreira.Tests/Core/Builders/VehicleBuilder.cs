@@ -93,16 +93,5 @@
         {
             return new List<Vehicle>().AsQueryable();
         }
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(Vehicle vehicle)
-        {
-            List<ResponseMessageDTO> responseMessageDTOs = new() {
-                new ResponseMessageDTO {
-                    Entity = new MinimumDTO() { Id = vehicle.Id, Name = $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty },
-                    OperationSuccess = true,
-                    ErrorMessage = null
-                }
-            };
-            return responseMessageDTOs;
-        }
     }
 }

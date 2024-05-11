@@ -1,5 +1,6 @@
 ﻿namespace AutoMoreira.Persistence.GraphQL
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:All members as static")]
     public class Query
     {
         [UsePaging]

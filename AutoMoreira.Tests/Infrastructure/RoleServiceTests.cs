@@ -93,9 +93,7 @@
         public async Task GetRoleByIdAsync_RoleNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            Role? role = null;
-
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.GetRoleByIdAsync(It.IsAny<int>())).Should()
@@ -210,9 +208,8 @@
         {
             // Arrange   
             RoleDTO dto = RoleBuilder.RoleDTO();
-            Role? role = null;
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.UpdateRoleAsync(dto)).Should()
@@ -296,7 +293,7 @@
             defaultRoleDTO.IsReadOnly = false;
 
             Role role = RoleBuilder.FullRole(roleDTO);
-            List<ResponseMessageDTO> responseMessageDTOs = RoleBuilder.ResponseMessageDTOList(role);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 
@@ -338,12 +335,11 @@
         public async Task DeleteMarksAsync_InvalidRole_RoleNotFoundException()
         {
             // Arrange
-            Role? role = null;
             string errorMessage = DomainResource.RoleNotFoundException;
 
             List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act
             List<ResponseMessageDTO> results = await _roleService.DeleteRolesAsync(new List<int> { 0 });
@@ -382,12 +378,12 @@
 
             string errorMessage = DomainResource.DeleteDefaultRoleAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(role);
 
             // Act
-            List<ResponseMessageDTO> results = await _roleService.DeleteRolesAsync(new List<int> { 0 });
+            List<ResponseMessageDTO> results = await _roleService.DeleteRolesAsync(new List<int> { roleDTO.Id });
 
             // Assert
             results.Should().NotBeEmpty();
@@ -408,7 +404,7 @@
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ThrowsAsync(new Exception());
 
             // Act
-            List<ResponseMessageDTO> results = await _roleService.DeleteRolesAsync(new List<int> { 0 });
+            List<ResponseMessageDTO> results = await _roleService.DeleteRolesAsync(new List<int>() { 0 });
 
             // Assert
             results.Should().NotBeEmpty();
@@ -438,7 +434,7 @@
 
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name, role.Id);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 
@@ -491,7 +487,7 @@
 
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name, role.Id);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 
@@ -519,7 +515,6 @@
         public async Task DeleteRolesAsync_UpdateUserWithDefaultRole_UserNotFound_DeleteRolesAsyncException()
         {
             // Arrange
-            User? user = null;
             UserRole userRole = UserRoleBuilder.UserRole();
 
             RoleDTO roleDTO = RoleBuilder.RoleDTO();
@@ -530,7 +525,7 @@
 
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name, role.Id);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 
@@ -539,7 +534,7 @@
                 .Returns(new TestAsyncEnumerable<UserRole>(UserRoleBuilder.IQueryable(userRole.UserId, userRole.RoleId)));
             _roleRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<Role>(RoleBuilder.FullIQueryable(roleDTO)));
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(user);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
 
             // Act
@@ -576,7 +571,7 @@
             Role role = RoleBuilder.FullRole(roleDTO);
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name, role.Id);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 
@@ -631,7 +626,7 @@
             Role role = RoleBuilder.FullRole(roleDTO);
             string errorMessage = DomainResource.DeleteRolesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Name, role.Id);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, role.Id, role.Name);
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(role);
 

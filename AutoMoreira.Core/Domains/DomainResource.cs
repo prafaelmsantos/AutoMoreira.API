@@ -17,7 +17,7 @@
         public static readonly string UpdateMarkAsyncException = "Erro ao tentar atualizar a marca.";
         public static readonly string GetAllMarksAsyncException = "Erro ao tentar encontrar marcas.";
         public static readonly string GetMarkByIdAsyncException = "Erro ao tentar encontrar marca por id.";
-        public static readonly string DeleteMarksAsyncException = "Erro ao tentar encontrar apagar marcas.";
+        public static readonly string DeleteMarksAsyncException = "Erro ao tentar apagar marcas.";
         #endregion
 
         #region Model
@@ -32,7 +32,7 @@
         public static readonly string GetAllModelsAsyncException = "Erro ao tentar encontrar modelos.";
         public static readonly string GetModelByIdAsyncException = "Erro ao tentar encontrar modelo por id.";
         public static readonly string GetModelsByMarkIdAsyncException = "Erro ao tentar encontrar modelos por marca id.";
-        public static readonly string DeleteModelsAsyncException = "Erro ao tentar encontrar apagar modelos.";
+        public static readonly string DeleteModelsAsyncException = "Erro ao tentar apagar modelos.";
         #endregion
 
         #region Vehicle
@@ -58,6 +58,7 @@
         public static readonly string GetVehiclePieStatisticsAsyncException = "Erro ao tentar encontrar dados de vendas de veículos.";
         public static readonly string AddVehicleAsyncException = "Erro ao tentar criar o veículo.";
         public static readonly string UpdateVehicleAsyncException = "Erro ao tentar atualizar o veículo.";
+        public static readonly string DeleteVehiclesAsyncException = "Erro ao tentar apagar veículos.";
 
         #endregion
 
@@ -69,7 +70,7 @@
 
         #region User
         public static readonly string UserNotFoundException = "Utilizador não encontrado.";
-        public static readonly string UserPasswordNotFoundException = "A palavra-passe é invalida para este utilizador.";
+        public static readonly string UserPasswordNotFoundException = "A palavra-passe do utilizador é invalida.";
 
         public static readonly string UserIdNeedsToBeSpecifiedException = "O id do utilizador é invalido.";
         public static readonly string DeleteDefaultUserAsyncException = "O utilizador não pode ser apagado pois é padrão do sistema.";
@@ -77,8 +78,8 @@
         public static readonly string UserPhoneNumberNeedsToBeSpecifiedException = "O contacto do utilizador é invalido.";
         public static readonly string UserFirstNameNeedsToBeSpecifiedException = "O primeiro nome do utilizador é invalido.";
         public static readonly string UserLastNameNeedsToBeSpecifiedException = "O ultimo nome do utilizador é invalido.";
-        public static readonly string UserImageNeedsToBeSpecifiedException = "A imagem do utilizador é invalido.";
-        public static readonly string UserPasswordHashNeedsToBeSpecifiedException = "A password do utilizador é invalido.";
+        public static readonly string UserImageNeedsToBeSpecifiedException = "A imagem do utilizador é invalida.";
+        public static readonly string UserPasswordHashNeedsToBeSpecifiedException = "A palavra-passe do utilizador é invalida.";
         public static readonly string UserAlreadyExistsException = "O utilizador já existe.";
 
         public static readonly string GetAllUsersAsyncException = "Erro ao tentar encontrar utilizadores.";
@@ -105,7 +106,7 @@
         public static readonly string UpdateRoleAsyncException = "Erro ao tentar atualizar o cargo.";
         public static readonly string GetAllRolesAsyncException = "Erro ao tentar encontrar cargos.";
         public static readonly string GetRoleByIdAsyncException = "Erro ao tentar encontrar cargo por id.";
-        public static readonly string UpdateDefaultRoleException = "Cargo não pode ser atualizado pois é padrão do sistema.";
+        public static readonly string UpdateDefaultRoleException = "O cargo não pode ser atualizado pois é padrão do sistema.";
         public static readonly string DeleteRolesAsyncException = "Erro ao tentar apagar cargos.";
         public static readonly string DeleteDefaultRoleAsyncException = "O cargo não pode ser apagado pois é padrão do sistema.";
         #endregion
@@ -132,8 +133,8 @@
         #region Visitor
 
         public static readonly string GetVisitorCountersAsyncException = "Erro ao tentar encontrar o numero total de visitantes.";
-        public static readonly string GetAllVisitorsWithYearComparisonAsyncException = "Erro ao tentar encontrar dados (por ano) de visitantes.";
-        public static readonly string GetAllVisitorsWithMonthComparisonAsyncException = "Erro ao tentar encontrar dados (por mês) de visitantes.";
+        public static readonly string GetAllVisitorsWithYearComparisonAsyncException = "Erro ao tentar encontrar o numero total (por ano) de visitantes.";
+        public static readonly string GetAllVisitorsWithMonthComparisonAsyncException = "Erro ao tentar encontrar o numero total (por mês) de visitantes.";
         public static readonly string CreateOrUpdateVisitorAsyncException = "Erro ao tentar criar/editar o numero total de visitantes.";
 
         #endregion

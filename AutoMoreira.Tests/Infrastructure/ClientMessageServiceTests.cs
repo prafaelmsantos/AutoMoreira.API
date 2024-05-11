@@ -254,7 +254,7 @@
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();
             dto.Id = 0;
             ClientMessage clientMessage = ClientMessageBuilder.ClientMessage(dto);
-            List<ResponseMessageDTO> responseMessageDTOs = ClientMessageBuilder.ResponseMessageDTOList(clientMessage);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, clientMessage.Id, clientMessage.Name);
 
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(clientMessage);
 
@@ -323,7 +323,7 @@
             ClientMessage clientMessage = ClientMessageBuilder.ClientMessage(dto);
             string errorMessage = DomainResource.DeleteClientMessagesAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, clientMessage.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, clientMessage.Id, clientMessage.Name);
 
             _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(clientMessage);
 

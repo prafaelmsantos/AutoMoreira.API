@@ -57,13 +57,13 @@
         public void SetIsMain_WithValidParameters()
         {
             // Arrange
-            VehicleImage VehicleImage = VehicleImageBuilder.VehicleImage();
+            VehicleImage vehicleImage = VehicleImageBuilder.VehicleImage();
 
             // Act
-            VehicleImage.SetIsMain();
+            vehicleImage.SetIsMain();
 
             // Assert
-            VehicleImage.IsMain.Should().BeTrue();
+            vehicleImage.IsMain.Should().BeTrue();
         }
     }
 }

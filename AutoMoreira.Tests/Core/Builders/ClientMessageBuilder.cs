@@ -41,16 +41,5 @@
         {
             return new List<ClientMessage>().AsQueryable();
         }
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(ClientMessage clientMessage)
-        {
-            List<ResponseMessageDTO> responseMessageDTOs = new() {
-                new ResponseMessageDTO {
-                    Entity = new MinimumDTO() { Id = clientMessage.Id, Name = clientMessage.Name },
-                    OperationSuccess = true,
-                    ErrorMessage = null
-                }
-            };
-            return responseMessageDTOs;
-        }
     }
 }

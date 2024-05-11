@@ -224,7 +224,7 @@
                 vehicles = vehicles.Where(x => x.SoldDate?.Month == DateTime.UtcNow.Month).ToList();
             }
 
-            return (vehicles.Count(), vehicles.Select(x => x.Price).Sum());
+            return (vehicles.Count, vehicles.Select(x => x.Price).Sum());
         }
 
         private async Task<List<StatisticDTO>> GetStatisticsByYearAsync(int year)
@@ -313,25 +313,29 @@
 
                     if (vehicle is not null)
                     {
-                        responseMessageDTO.Entity.Name =
-                            $"{vehicle.Model.Mark.Name} {vehicle.Model.Name}" + vehicle.Version != null ? $" {vehicle.Version}" : String.Empty;
+                        responseMessageDTO.Entity.Name = GetVehicleName(vehicle);
 
                         responseMessageDTO.OperationSuccess = await _vehicleRepository.RemoveAsync(vehicle);
                     }
                     else
                     {
-                        responseMessageDTO.ErrorMessage = DomainResource.ClientMessageNotFoundException;
+                        responseMessageDTO.ErrorMessage = DomainResource.VehicleNotFoundException;
                     }
                 }
                 catch (Exception)
                 {
-                    responseMessageDTO.ErrorMessage = DomainResource.DeleteClientMessagesAsyncException;
+                    responseMessageDTO.ErrorMessage = DomainResource.DeleteVehiclesAsyncException;
                 }
 
                 responseMessageDTOs.Add(responseMessageDTO);
             }
 
             return responseMessageDTOs;
+        }
+
+        private static string GetVehicleName(Vehicle vehicle)
+        {
+            return $"{vehicle.Model?.Mark?.Name ?? string.Empty}-{vehicle.Model?.Name ?? string.Empty}".Trim();
         }
 
         #endregion

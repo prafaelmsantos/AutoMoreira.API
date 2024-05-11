@@ -399,13 +399,12 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
-            Role? role = null;
 
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
             _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!
-                .ReturnsAsync(role);
+                .ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
@@ -725,13 +724,12 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
             dto.Id = 0;
-            Role? role = null;
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)))
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
@@ -923,9 +921,8 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
-            User? user = null;
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(user);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserModeAsync(dto.Id, dto.DarkMode)).Should()
@@ -999,9 +996,8 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
-            User? user = null;
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(user);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserImageAsync(dto.Id, dto.Image)).Should()
@@ -1320,7 +1316,7 @@
             UserDTO dto = UserBuilder.UserDTO();
             dto.Id = 0;
             User user = UserBuilder.User(dto);
-            List<ResponseMessageDTO> responseMessageDTOs = UserBuilder.ResponseMessageDTOList(user);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, user.Id, user.Email);
 
             _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(user);
 
@@ -1342,11 +1338,10 @@
         public async Task DeleteUsersAsync_InvalidUser_UserNotFoundException()
         {
             // Arrange
-            User? user = null;
             string errorMessage = DomainResource.UserNotFoundException;
             List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(user);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act
             List<ResponseMessageDTO> results = await _userService.DeleteUsersAsync(new List<int> { 0 });
@@ -1389,7 +1384,7 @@
             User user = UserBuilder.User(dto);
             string errorMessage = DomainResource.DeleteUsersAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, user.Email);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, user.Id, user.Email);
 
             _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(user);
 

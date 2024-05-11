@@ -235,9 +235,8 @@
         {
             // Arrange   
             ModelDTO dto = ModelBuilder.ModelDTO();
-            Model? Model = null;
 
-            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(Model);
+            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.UpdateModelAsync(dto)).Should()
@@ -289,7 +288,7 @@
             ModelDTO dto = ModelBuilder.ModelDTO();
             dto.Id = 0;
             Model model = ModelBuilder.Model(dto);
-            List<ResponseMessageDTO> responseMessageDTOs = ModelBuilder.ResponseMessageDTOList(model);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, model.Id, model.Name);
 
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(model);
 
@@ -359,7 +358,7 @@
             Model model = ModelBuilder.Model(dto);
             string errorMessage = DomainResource.DeleteModelsAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, model.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, model.Id, model.Name);
 
             _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(model);
 

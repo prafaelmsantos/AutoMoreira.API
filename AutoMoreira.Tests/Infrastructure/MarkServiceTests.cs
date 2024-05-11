@@ -250,7 +250,7 @@
             MarkDTO dto = MarkBuilder.MarkDTO();
             dto.Id = 0;
             Mark mark = MarkBuilder.Mark(dto);
-            List<ResponseMessageDTO> responseMessageDTOs = MarkBuilder.ResponseMessageDTOList(mark);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, mark.Id, mark.Name);
 
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(mark);
 
@@ -272,11 +272,10 @@
         public async Task DeleteMarksAsync_InvalidMark_MarkNotFoundException()
         {
             // Arrange
-            Mark? mark = null;
             string errorMessage = DomainResource.MarkNotFoundException;
             List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
-            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(mark);
+            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
 
             // Act
             List<ResponseMessageDTO> results = await _markService.DeleteMarksAsync(new List<int> { 0 });
@@ -319,7 +318,7 @@
             Mark mark = MarkBuilder.Mark(dto);
             string errorMessage = DomainResource.DeleteMarksAsyncException;
 
-            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, mark.Name);
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, mark.Id, mark.Name);
 
             _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(mark);
 
@@ -336,6 +335,7 @@
             _markRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Mark>()), Times.Once);
             _markRepositoryMock.VerifyNoOtherCalls();
         }
+
         #endregion
     }
 }

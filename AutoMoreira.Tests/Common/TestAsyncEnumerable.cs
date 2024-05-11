@@ -27,9 +27,9 @@
 
         public T Current => _enumerator.Current;
 
-        public ValueTask DisposeAsync() => new ValueTask(Task.Run(() => _enumerator.Dispose()));
+        public ValueTask DisposeAsync() => new(Task.Run(() => _enumerator.Dispose()));
 
-        public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(_enumerator.MoveNext());
+        public ValueTask<bool> MoveNextAsync() => new(_enumerator.MoveNext());
     }
 
     internal sealed class TestAsyncQueryProvider<TEntity> : IAsyncQueryProvider

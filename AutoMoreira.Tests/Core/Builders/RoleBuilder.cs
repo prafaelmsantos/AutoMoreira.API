@@ -50,16 +50,5 @@
         {
             return new List<Role>().AsQueryable();
         }
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(Role role)
-        {
-            List<ResponseMessageDTO> responseMessageDTOs = new() {
-                new ResponseMessageDTO {
-                    Entity = new MinimumDTO() { Id = role.Id, Name = role.Name },
-                    OperationSuccess = true,
-                    ErrorMessage = null
-                }
-            };
-            return responseMessageDTOs;
-        }
     }
 }

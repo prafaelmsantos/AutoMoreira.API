@@ -50,8 +50,7 @@
         public async Task GetAllVehiclesAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _vehicleRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _vehicleRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetAllVehiclesAsync()).Should()
@@ -62,7 +61,7 @@
         #region GetVehicleByIdAsync
 
         [Fact]
-        public async Task GetVehicleByIdAsync_ValidModel_Successfully()
+        public async Task GetVehicleByIdAsync_ValidVehicle_Successfully()
         {
             // Arrange   
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
@@ -96,7 +95,7 @@
         }
 
         [Fact]
-        public async Task GetModelByIdAsync_VehicleNotFoundException_ThrowsExceptionAsync()
+        public async Task GetVehicleByIdAsync_VehicleNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
             _vehicleRepositoryMock.Setup(x => x.GetAll())
@@ -108,7 +107,7 @@
         }
 
         [Fact]
-        public async Task GetModelByIdAsync_GetAllNotBreak_ThrowsExceptionAsync()
+        public async Task GetVehicleByIdAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange
             _vehicleRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
@@ -318,6 +317,185 @@
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.AddVehicleAsync(dto)).Should()
                 .ThrowAsync<Exception>();
+        }
+
+        #endregion
+
+        #region UpdateVehicleAsync
+
+        [Fact]
+        public async Task UpdateVehicleAsync_ValidVehicle_Successfully()
+        {
+            // Arrange
+            VehicleImageDTO vehicleImageDTO = VehicleImageBuilder.VehicleImageDTO();
+            vehicleImageDTO.VehicleId = 0;
+            vehicleImageDTO.Id = 0;
+            vehicleImageDTO.IsMain = true;
+
+            VehicleDTO dto = VehicleBuilder.VehicleDTO();
+            dto.Id = 0;
+            dto.VehicleImages = VehicleImageBuilder.VehicleImageDTOList(vehicleImageDTO);
+
+            Vehicle vehicle = VehicleBuilder.Vehicle(dto);
+            vehicle.SetVehicleImages(VehicleImageBuilder.VehicleImageList(vehicleImageDTO));
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryable(dto)));
+
+            _vehicleRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Vehicle>())).ReturnsAsync(VehicleBuilder.Vehicle(dto));
+
+            // Act
+            VehicleDTO result = await _vehicleService.UpdateVehicleAsync(dto);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.ModelId.Should().Be(dto.ModelId);
+            result.Version.Should().Be(dto.Version);
+            result.FuelType.Should().Be(dto.FuelType);
+            result.Price.Should().Be(dto.Price);
+            result.Mileage.Should().Be(dto.Mileage);
+            result.Year.Should().Be(dto.Year);
+            result.Color.Should().Be(dto.Color);
+            result.Doors.Should().Be(dto.Doors);
+            result.Transmission.Should().Be(dto.Transmission);
+            result.EngineSize.Should().Be(dto.EngineSize);
+            result.Power.Should().Be(dto.Power);
+            result.Observations.Should().Be(dto.Observations);
+            result.Opportunity.Should().Be(dto.Opportunity);
+            result.VehicleImages.Should().BeEquivalentTo(dto.VehicleImages).And.NotBeEmpty();
+
+            _vehicleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _vehicleRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Vehicle>()), Times.Once);
+            _vehicleRepositoryMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task UpdateVehicleAsync_VehicleNotFoundException_ThrowsExceptionAsync()
+        {
+            // Arrange   
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryableEmpty()));
+
+            // Act & Assert
+            await FluentActions.Invoking(async () => await _vehicleService.UpdateVehicleAsync(It.IsAny<VehicleDTO>())).Should()
+                .ThrowAsync<Exception>();
+        }
+
+        [Fact]
+        public async Task UpdateVehicleAsyncc_UpdateAsyncNotBreak_ThrowsExceptionAsync()
+        {
+            // Arrange   
+            VehicleDTO dto = VehicleBuilder.VehicleDTO();
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryable(dto)));
+
+            _vehicleRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Vehicle>())).ThrowsAsync(new Exception());
+
+            // Act & Assert
+            await FluentActions.Invoking(async () => await _vehicleService.UpdateVehicleAsync(dto)).Should()
+                .ThrowAsync<Exception>();
+        }
+
+        #endregion
+
+        #region DeleteVehiclesAsync
+
+        [Fact]
+        public async Task DeleteVehiclesAsync_ValidVehicle_Successfully()
+        {
+            // Arrange
+            VehicleDTO dto = VehicleBuilder.VehicleDTO();
+            dto.Id = 0;
+            Vehicle vehicle = VehicleBuilder.Vehicle(dto);
+
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(null, vehicle.Id, "-");
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryable(dto)));
+
+            _vehicleRepositoryMock.Setup(repo => repo.RemoveAsync(It.IsAny<Vehicle>())).ReturnsAsync(true);
+
+            // Act
+            List<ResponseMessageDTO> results = await _vehicleService.DeleteVehiclesAsync(new List<int>() { dto.Id });
+
+            // Assert
+            results.Should().NotBeEmpty();
+            results.Should().BeEquivalentTo(responseMessageDTOs);
+
+            _vehicleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _vehicleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Vehicle>()), Times.Once);
+            _vehicleRepositoryMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task DeleteVehiclesAsync_InvalidVehicle_VehicleNotFoundException()
+        {
+            // Arrange
+            string errorMessage = DomainResource.VehicleNotFoundException;
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryableEmpty()));
+
+            // Act
+            List<ResponseMessageDTO> results = await _vehicleService.DeleteVehiclesAsync(new List<int> { 0 });
+
+            // Assert
+            results.Should().NotBeEmpty();
+            results.Should().BeEquivalentTo(responseMessageDTOs);
+
+            _vehicleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _vehicleRepositoryMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task DeleteVehiclesAsync_GetAll_DeleteVehiclesAsyncException()
+        {
+            // Arrange
+            string errorMessage = DomainResource.DeleteVehiclesAsyncException;
+
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
+
+            // Act
+            List<ResponseMessageDTO> results = await _vehicleService.DeleteVehiclesAsync(new List<int> { 0 });
+
+            // Assert
+            results.Should().NotBeEmpty();
+            results.Should().BeEquivalentTo(responseMessageDTOs);
+
+            _vehicleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _vehicleRepositoryMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task DeleteVehiclesAsync_RemoveAsync_DeleteVehiclesAsyncException()
+        {
+            // Arrange
+            VehicleDTO dto = VehicleBuilder.VehicleDTO();
+            dto.Id = 0;
+            Vehicle vehicle = VehicleBuilder.Vehicle(dto);
+            string errorMessage = DomainResource.DeleteVehiclesAsyncException;
+
+            List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage, vehicle.Id, "-");
+
+            _vehicleRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryable(dto)));
+
+            _vehicleRepositoryMock.Setup(repo => repo.RemoveAsync(It.IsAny<Vehicle>())).ThrowsAsync(new Exception());
+
+            // Act
+            List<ResponseMessageDTO> results = await _vehicleService.DeleteVehiclesAsync(new List<int> { dto.Id });
+
+            // Assert
+            results.Should().NotBeEmpty();
+            results.Should().BeEquivalentTo(responseMessageDTOs);
+
+            _vehicleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+            _vehicleRepositoryMock.Verify(repo => repo.RemoveAsync(It.IsAny<Vehicle>()), Times.Once);
+            _vehicleRepositoryMock.VerifyNoOtherCalls();
         }
 
         #endregion

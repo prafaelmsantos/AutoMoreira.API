@@ -4,7 +4,7 @@
     {
         #region Protected properties
         protected AppDbContext _context;
-        protected DbSet<T> Entity;
+        protected DbSet<T> _entity;
         #endregion
 
         #region constructor
@@ -12,7 +12,7 @@
         public Repository(AppDbContext context)
         {
             _context = context;
-            Entity = _context.Set<T>();
+            _entity = _context.Set<T>();
         }
         #endregion
 
@@ -20,58 +20,56 @@
 
         public virtual async Task<T> AddAsync(T entity)
         {
-            await Entity.AddAsync(entity);
+            await _entity.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
         public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
         {
-            await Entity.AddRangeAsync(entities);
+            await _entity.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
             return entities;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
         {
-            Entity.Update(entity);
+            _entity.Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
         public virtual async Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities)
         {
-            Entity.UpdateRange(entities);
+            _entity.UpdateRange(entities);
             await _context.SaveChangesAsync();
             return entities;
         }
 
         public virtual async Task<bool> RemoveAsync(T entity)
         {
-            Entity.Remove(entity);
+            _entity.Remove(entity);
             await _context.SaveChangesAsync();
             return true;
         }
 
         public virtual async Task<bool> RemoveRangeAsync(IEnumerable<T> entities)
         {
-            Entity.RemoveRange(entities);
+            _entity.RemoveRange(entities);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public virtual IQueryable<T> GetAll() => Entity;
+        public virtual IQueryable<T> GetAll() => _entity;
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Entity.ToListAsync();
+            return await _entity.ToListAsync();
         }
 
-        public virtual async Task<T> FindByIdAsync(int id)
+        public virtual async Task<T?> FindByIdAsync(int id)
         {
-#pragma warning disable CS8603 // Possible null reference return.
-            return await Entity.FindAsync(id);
-#pragma warning restore CS8603 // Possible null reference return.
+            return await _entity.FindAsync(id);
         }
 
         public void Dispose()
@@ -90,11 +88,11 @@
                 if (_context != null)
                 {
                     _context.Dispose();
-                    _context = null;
+                    _context = null!;
                 }
-                if (Entity != null)
+                if (_entity != null)
                 {
-                    Entity = null;
+                    _entity = null!;
                 }
             }
         }

@@ -2,11 +2,11 @@
 {
     public class ResponseMessageDTOBuilder
     {
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(string errorMessage, string? name = null, int id = 0)
+        public static List<ResponseMessageDTO> ResponseMessageDTOList(string? errorMessage = null, int id = 0, string? name = null)
         {
             return new() { new() {
                     Entity = new MinimumDTO() { Id = id, Name = name },
-                    OperationSuccess = false,
+                    OperationSuccess = errorMessage is null,
                     ErrorMessage = errorMessage
                 }
             };

@@ -40,16 +40,5 @@
         {
             return new List<Mark>().AsQueryable();
         }
-        public static List<ResponseMessageDTO> ResponseMessageDTOList(Mark mark)
-        {
-            List<ResponseMessageDTO> responseMessageDTOs = new() {
-                new ResponseMessageDTO {
-                    Entity = new MinimumDTO() { Id = mark.Id, Name = mark.Name },
-                    OperationSuccess = true,
-                    ErrorMessage = null
-                }
-            };
-            return responseMessageDTOs;
-        }
     }
 }
