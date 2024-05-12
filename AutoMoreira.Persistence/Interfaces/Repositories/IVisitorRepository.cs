@@ -1,6 +1,4 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IVisitorRepository : IRepository<Visitor>
-    {
-    }
+    public interface IVisitorRepository : IRepository<Visitor> { }
 }

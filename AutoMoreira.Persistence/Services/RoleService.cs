@@ -81,7 +81,7 @@
         {
             try
             {
-                Role role = await _roleRepository.FindByIdAsync(roleDTO.Id);
+                Role? role = await _roleRepository.FindByIdAsync(roleDTO.Id);
 
                 role.ThrowIfNull(() => throw new Exception(DomainResource.RoleNotFoundException));
 

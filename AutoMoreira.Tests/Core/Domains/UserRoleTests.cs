@@ -2,9 +2,7 @@
 {
     public class UserRoleTests : BaseClassTests
     {
-        public UserRoleTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public UserRoleTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()

@@ -82,7 +82,7 @@
 
             // Assert
             result.Should().NotBeEmpty();
-            result.Should().BeEquivalentTo(UserBuilder.UserListDTO(dto));
+            result.Should().BeEquivalentTo(UserBuilder.UserDTOList(dto));
 
             _userRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _userRepositoryMock.VerifyNoOtherCalls();
@@ -139,7 +139,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.GetUserByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetUserByIdAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
@@ -150,7 +151,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.GetUserByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetUserByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -193,7 +195,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.GetUserByEmailAsync(It.IsAny<string>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetUserByEmailAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
@@ -204,7 +207,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.GetUserByEmailAsync(It.IsAny<string>())).Should()
-               .ThrowAsync<Exception>();
+               .ThrowAsync<Exception>()
+               .WithMessage($"{DomainResource.GetUserByEmailAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -315,7 +319,7 @@
             roleDTO.Id = 0;
             roleDTO.IsDefault = false;
             roleDTO.IsReadOnly = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.Setup(x => x.GetAll())
@@ -363,7 +367,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {DomainResource.UserAlreadyExistsException}");
         }
 
         [Fact]
@@ -372,8 +377,7 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
 
-            _userRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _userRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
@@ -391,7 +395,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -408,11 +413,12 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
-        public async Task AddUserAsync_CreateAsync_ThrowsExceptionAsync()
+        public async Task AddUserAsync_CreateAsyncFailed_ThrowsExceptionAsync()
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
@@ -429,7 +435,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -437,20 +444,25 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
-            Role role = RoleBuilder.Role();
+            RoleDTO roleDTO = RoleBuilder.RoleDTO();
+            roleDTO.Id = 0;
+            roleDTO.IsDefault = false;
+            roleDTO.IsReadOnly = false;
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
+            User user = UserBuilder.User(dto);
 
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!
-                .ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(RoleBuilder.Role(roleDTO));
 
             _userManagerMock.Setup(repo => repo.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -458,13 +470,17 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
-            Role role = RoleBuilder.Role();
+            RoleDTO roleDTO = RoleBuilder.RoleDTO();
+            roleDTO.Id = 0;
+            roleDTO.IsDefault = false;
+            roleDTO.IsReadOnly = false;
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
+            User user = UserBuilder.User(dto);
 
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!
-                .ReturnsAsync(role);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(RoleBuilder.Role(roleDTO));
 
             _userManagerMock.Setup(repo => repo.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
@@ -474,7 +490,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.AddUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -492,7 +509,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
@@ -538,24 +555,22 @@
         }
 
         [Fact]
-        public async Task UpdateUserAsync_UpdateDefaultUser_Successfully()
+        public async Task UpdateUserAsync_UpdateDefaultRole_Successfully()
         {
-            // Arrange   
+            UserDTO dto = UserBuilder.UserDTO();
             RoleDTO roleDTO = RoleBuilder.RoleDTO();
             roleDTO.IsDefault = true;
             roleDTO.IsReadOnly = true;
-            UserDTO dto = UserBuilder.UserDTO();
             dto.IsDefault = true;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
-            User user = UserBuilder.FullUser(dto);
-
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
+            User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryableWithRoles(dto)))
+                .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryable(dto)))
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
             _roleRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Role>(RoleBuilder.FullIQueryable(roleDTO)));
+               .Returns(new TestAsyncEnumerable<Role>(RoleBuilder.FullIQueryable(roleDTO)));
 
             _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).ReturnsAsync(dto.Token!);
 
@@ -604,7 +619,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             dto.Password = null;
             User user = UserBuilder.User(dto);
 
@@ -656,19 +671,20 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(It.IsAny<UserDTO>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
         public async Task UpdateUserAsync_UserGetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _userRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _userRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(It.IsAny<UserDTO>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -676,14 +692,18 @@
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
+            dto.Id = 0;
+            UserDTO userDTO = UserBuilder.UserDTO();
+            userDTO.Email = dto.Email;
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)))
-                .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)));
+                .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryable(userDTO)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {DomainResource.UserAlreadyExistsException}");
         }
 
         [Fact]
@@ -715,7 +735,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -733,7 +754,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -747,7 +769,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
@@ -760,11 +782,12 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
-        public async Task UpdateUserAsync_UpdateUserPasswordAsyncException_ThrowsExceptionAsync()
+        public async Task UpdateUserAsync_UpdateUserPasswordAsyncFailed_ThrowsExceptionAsync()
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
@@ -774,7 +797,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
@@ -788,7 +811,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {DomainResource.UpdateUserPasswordAsyncException}");
         }
 
         [Fact]
@@ -802,7 +826,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
@@ -816,28 +840,27 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
         public async Task UpdateUserAsync_UpdateAsyncNotBreak_ThrowsExceptionAsync()
         {
-            // Arrange   
+            UserDTO dto = UserBuilder.UserDTO();
             RoleDTO roleDTO = RoleBuilder.RoleDTO();
             roleDTO.IsDefault = true;
             roleDTO.IsReadOnly = true;
-            UserDTO dto = UserBuilder.UserDTO();
             dto.IsDefault = true;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
-            User user = UserBuilder.FullUser(dto);
-
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
+            User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryableWithRoles(dto)))
+                .Returns(new TestAsyncEnumerable<User>(UserBuilder.FullIQueryable(dto)))
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryableEmpty()));
 
             _roleRepositoryMock.Setup(x => x.GetAll())
-                .Returns(new TestAsyncEnumerable<Role>(RoleBuilder.FullIQueryable(roleDTO)));
+               .Returns(new TestAsyncEnumerable<Role>(RoleBuilder.FullIQueryable(roleDTO)));
 
             _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).ReturnsAsync(dto.Token!);
 
@@ -847,7 +870,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -861,7 +885,7 @@
             roleDTO.IsReadOnly = false;
             dto.Id = 0;
             dto.IsDefault = false;
-            dto.Roles = RoleBuilder.RoleListDTO(roleDTO);
+            dto.Roles = RoleBuilder.RoleDTOList(roleDTO);
             User user = UserBuilder.User(dto);
 
             _userRepositoryMock.SetupSequence(x => x.GetAll())
@@ -880,7 +904,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -922,11 +947,12 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserModeAsync(dto.Id, dto.DarkMode)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserModeAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
@@ -935,11 +961,12 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.Throws(new Exception());
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserModeAsync(dto.Id, dto.DarkMode)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserModeAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -955,7 +982,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserModeAsync(dto.Id, dto.DarkMode)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserModeAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -997,11 +1025,12 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserImageAsync(dto.Id, dto.Image)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserImageAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
@@ -1010,11 +1039,12 @@
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
 
-            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.Throws(new Exception());
+            _userRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserImageAsync(dto.Id, dto.Image)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserImageAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -1030,7 +1060,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserImageAsync(dto.Id, dto.Image)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserImageAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -1103,11 +1134,12 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserPasswordAsync(userLoginDTO)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
-        public async Task UpdateUserPasswordAsync_UpdateUserPasswordAsyncException_ThrowsExceptionAsync()
+        public async Task UpdateUserPasswordAsync_GeneratePasswordResetTokenAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             UserDTO dto = UserBuilder.UserDTO();
@@ -1119,12 +1151,32 @@
 
             _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).Throws(new Exception());
 
+            // Act & Assert
+            await FluentActions.Invoking(async () => await _userService.UpdateUserPasswordAsync(userLoginDTO)).Should()
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
+        }
+
+        [Fact]
+        public async Task UpdateUserPasswordAsync_ResetPasswordAsyncFailed_ThrowsExceptionAsync()
+        {
+            // Arrange   
+            UserDTO dto = UserBuilder.UserDTO();
+            UserLoginDTO userLoginDTO = UserBuilder.UserLoginDTO(dto);
+            User user = UserBuilder.User(dto);
+
+            _userRepositoryMock.Setup(x => x.GetAll())
+                .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)));
+
+            _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).ReturnsAsync(dto.Token!);
+
             _userManagerMock.Setup(repo => repo.ResetPasswordAsync(It.IsAny<User>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserPasswordAsync(userLoginDTO)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserPasswordAsyncException} {DomainResource.UpdateUserPasswordAsyncException}");
         }
 
         [Fact]
@@ -1138,14 +1190,15 @@
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)));
 
-            _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).Throws(new Exception());
+            _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).ReturnsAsync(dto.Token!);
 
             _userManagerMock.Setup(repo => repo.ResetPasswordAsync(It.IsAny<User>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserPasswordAsync(userLoginDTO)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -1159,7 +1212,7 @@
             _userRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<User>(UserBuilder.IQueryable(dto)));
 
-            _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).Throws(new Exception());
+            _userManagerMock.Setup(repo => repo.GeneratePasswordResetTokenAsync(It.IsAny<User>())).ReturnsAsync(dto.Token!);
 
             _userManagerMock.Setup(repo => repo.ResetPasswordAsync(It.IsAny<User>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
@@ -1169,7 +1222,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.UpdateUserPasswordAsync(userLoginDTO)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -1226,7 +1280,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.ResetUserPasswordAsync(dto.Email)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.ResetUserPasswordAsyncException} {DomainResource.UserNotFoundException}");
         }
 
         [Fact]
@@ -1239,7 +1294,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.ResetUserPasswordAsync(dto.Email)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.ResetUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -1259,7 +1315,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.ResetUserPasswordAsync(dto.Email)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.ResetUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -1279,7 +1336,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.ResetUserPasswordAsync(dto.Email)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.ResetUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         [Fact]
@@ -1302,7 +1360,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _userService.ResetUserPasswordAsync(dto.Email)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.ResetUserPasswordAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion

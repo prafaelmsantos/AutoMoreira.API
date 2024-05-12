@@ -54,7 +54,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetAllVehiclesAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllVehiclesAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
         #endregion
 
@@ -103,7 +104,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetVehicleByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetVehicleByIdAsyncException} {DomainResource.VehicleNotFoundException}");
         }
 
         [Fact]
@@ -114,7 +116,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetVehicleByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetVehicleByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -151,7 +154,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetVehicleCountersAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetVehicleCountersAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -187,7 +191,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetAllVehiclesWithYearComparisonAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllVehiclesWithYearComparisonAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -222,7 +227,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetAllVehiclesWithMonthComparisonAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllVehiclesWithMonthComparisonAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -257,7 +263,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.GetVehiclePieStatisticsAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetVehiclePieStatisticsAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -316,7 +323,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.AddVehicleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddVehicleAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -378,14 +386,16 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.UpdateVehicleAsync(It.IsAny<VehicleDTO>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateVehicleAsyncException} {DomainResource.VehicleNotFoundException}");
         }
 
         [Fact]
-        public async Task UpdateVehicleAsyncc_UpdateAsyncNotBreak_ThrowsExceptionAsync()
+        public async Task UpdateVehicleAsync_UpdateAsyncNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
             VehicleDTO dto = VehicleBuilder.VehicleDTO();
+            dto.Id = 0;
 
             _vehicleRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<Vehicle>(VehicleBuilder.IQueryable(dto)));
@@ -394,7 +404,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _vehicleService.UpdateVehicleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateVehicleAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion

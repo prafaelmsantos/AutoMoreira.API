@@ -40,7 +40,7 @@
 
             // Assert
             result.Should().NotBeEmpty();
-            result.Should().BeEquivalentTo(MarkBuilder.MarkListDTO(dto));
+            result.Should().BeEquivalentTo(MarkBuilder.MarkDTOList(dto));
 
             _markRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _markRepositoryMock.VerifyNoOtherCalls();
@@ -54,7 +54,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.GetAllMarksAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllMarksAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
         #endregion
 
@@ -83,13 +84,12 @@
         public async Task GetMarkByIdAsync_MarkNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            Mark? mark = null;
-
-            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(mark);
+            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetMarkByIdAsyncException} {DomainResource.MarkNotFoundException}");
         }
 
         [Fact]
@@ -100,7 +100,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.GetMarkByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetMarkByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -141,7 +142,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.AddMarkAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                 .WithMessage($"{DomainResource.AddMarkAsyncException} {DomainResource.MarkAlreadyExistsException}");
         }
 
         [Fact]
@@ -157,7 +159,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.AddMarkAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                 .WithMessage($"{DomainResource.AddMarkAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -196,13 +199,13 @@
         {
             // Arrange   
             MarkDTO dto = MarkBuilder.MarkDTO();
-            Mark? mark = null;
 
-            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(mark);
+            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.UpdateMarkAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateMarkAsyncException} {DomainResource.MarkNotFoundException}");
         }
 
         [Fact]
@@ -211,14 +214,15 @@
             // Arrange   
             MarkDTO dto = MarkBuilder.MarkDTO();
 
-            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(MarkBuilder.Mark(dto));
+            _markRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(MarkBuilder.Mark(dto));
 
             _markRepositoryMock.Setup(x => x.GetAll())
                 .Returns(new TestAsyncEnumerable<Mark>(MarkBuilder.IQueryable(dto)));
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.UpdateMarkAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateMarkAsyncException} {DomainResource.MarkAlreadyExistsException}");
         }
 
         [Fact]
@@ -236,7 +240,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _markService.UpdateMarkAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateMarkAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion

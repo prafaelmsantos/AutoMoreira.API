@@ -40,7 +40,7 @@
 
             // Assert
             result.Should().NotBeEmpty();
-            result.Should().BeEquivalentTo(ModelBuilder.ModelListDTO(dto));
+            result.Should().BeEquivalentTo(ModelBuilder.ModelDTOList(dto));
 
             _modelRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _modelRepositoryMock.VerifyNoOtherCalls();
@@ -50,12 +50,12 @@
         public async Task GetAllModelsAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _modelRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _modelRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.GetAllModelsAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllModelsAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
         #endregion
 
@@ -92,7 +92,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetModelByIdAsyncException} {DomainResource.ModelNotFoundException}");
         }
 
         [Fact]
@@ -103,7 +104,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.GetModelByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetModelByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -125,7 +127,7 @@
 
             // Assert
             result.Should().NotBeEmpty();
-            result.Should().BeEquivalentTo(ModelBuilder.ModelListDTO(dto));
+            result.Should().BeEquivalentTo(ModelBuilder.ModelDTOList(dto));
 
             _modelRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _modelRepositoryMock.VerifyNoOtherCalls();
@@ -139,7 +141,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.GetModelsByMarkIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetModelsByMarkIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
         #endregion
 
@@ -180,7 +183,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.AddModelAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddModelAsyncException} {DomainResource.ModelAlreadyExistsException}");
         }
 
         [Fact]
@@ -196,7 +200,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.AddModelAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddModelAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -236,11 +241,12 @@
             // Arrange   
             ModelDTO dto = ModelBuilder.ModelDTO();
 
-            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
+            _modelRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.UpdateModelAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateModelAsyncException} {DomainResource.ModelNotFoundException}");
         }
 
         [Fact]
@@ -256,7 +262,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.UpdateModelAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateModelAsyncException} {DomainResource.ModelAlreadyExistsException}");
         }
 
         [Fact]
@@ -274,7 +281,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _modelService.UpdateModelAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateModelAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion

@@ -54,12 +54,12 @@
         public async Task GetAllClientMessagesAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _clientMessageRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _clientMessageRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.GetAllClientMessagesAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllClientMessagesAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -98,14 +98,13 @@
         public async Task GetClientMessageByIdAsync_ClientMessageNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            ClientMessage? clientMessage = null;
-
-            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(clientMessage);
+            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.GetClientMessageByIdAsync(0))
                 .Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetClientMessageByIdAsyncException} {DomainResource.ClientMessageNotFoundException}");
         }
 
         [Fact]
@@ -117,7 +116,8 @@
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.GetClientMessageByIdAsync(0))
                 .Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetClientMessageByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -168,7 +168,8 @@
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.AddClientMessageAsync(dto))
                 .Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddClientMessageAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -212,14 +213,14 @@
         {
             // Arrange   
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();
-            ClientMessage? clientMessage = null;
 
-            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(clientMessage);
+            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.UpdateClientMessageStatusAsync(It.IsAny<int>(), It.IsAny<STATUS>()))
                 .Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateClientMessageAsyncException} {DomainResource.ClientMessageNotFoundException}");
         }
 
         [Fact]
@@ -240,7 +241,8 @@
             // Act & Assert
             await FluentActions.Invoking(async () => await _clientMessageService.UpdateClientMessageStatusAsync(It.IsAny<int>(), It.IsAny<STATUS>()))
                 .Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateClientMessageAsyncException} {DomainResource.ClientMessageStatusNeedsToBeSpecifiedException}");
         }
 
         #endregion
@@ -276,11 +278,10 @@
         public async Task DeleteClientMessagesAsync_InvalidClientMessage_ClientMessageNotFoundException()
         {
             // Arrange
-            ClientMessage? clientMessage = null;
             string errorMessage = DomainResource.ClientMessageNotFoundException;
             List<ResponseMessageDTO> responseMessageDTOs = ResponseMessageDTOBuilder.ResponseMessageDTOList(errorMessage);
 
-            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(clientMessage);
+            _clientMessageRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act
             List<ResponseMessageDTO> results = await _clientMessageService.DeleteClientMessagesAsync(new List<int> { 0 });
@@ -294,7 +295,7 @@
         }
 
         [Fact]
-        public async Task DeleteClientMessagesAsync_FindByIdAsync_DeleteClientMessagesAsyncException()
+        public async Task DeleteClientMessagesAsync_FindByIdAsyncNotBreak_DeleteClientMessagesAsyncException()
         {
             // Arrange
             string errorMessage = DomainResource.DeleteClientMessagesAsyncException;
@@ -315,7 +316,7 @@
         }
 
         [Fact]
-        public async Task DeleteClientMessagesAsync_RemoveAsync_DeleteClientMessagesAsyncException()
+        public async Task DeleteClientMessagesAsync_RemoveAsyncNotBreak_DeleteClientMessagesAsyncException()
         {
             // Arrange
             ClientMessageDTO dto = ClientMessageBuilder.ClientMessageDTO();

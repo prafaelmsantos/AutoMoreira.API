@@ -47,7 +47,7 @@
 
             // Assert
             result.Should().NotBeEmpty();
-            result.Should().BeEquivalentTo(RoleBuilder.RoleListDTO(dto));
+            result.Should().BeEquivalentTo(RoleBuilder.RoleDTOList(dto));
 
             _roleRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
             _roleRepositoryMock.VerifyNoOtherCalls();
@@ -57,12 +57,12 @@
         public async Task GetAllRolesAsync_GetAllNotBreak_ThrowsExceptionAsync()
         {
             // Arrange   
-            _roleRepositoryMock.Setup(x => x.GetAll())
-                .Throws(new Exception());
+            _roleRepositoryMock.Setup(x => x.GetAll()).Throws(new Exception());
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.GetAllRolesAsync()).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetAllRolesAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
         #endregion
 
@@ -93,11 +93,12 @@
         public async Task GetRoleByIdAsync_RoleNotFoundException_ThrowsExceptionAsync()
         {
             // Arrange   
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.GetRoleByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetRoleByIdAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -108,7 +109,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.GetRoleByIdAsync(It.IsAny<int>())).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.GetRoleByIdAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -151,7 +153,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.AddRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddRoleAsyncException} {DomainResource.RoleAlreadyExistsException}");
         }
 
         [Fact]
@@ -167,7 +170,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.AddRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.AddRoleAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion
@@ -209,11 +213,12 @@
             // Arrange   
             RoleDTO dto = RoleBuilder.RoleDTO();
 
-            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))!.ReturnsAsync(() => null!);
+            _roleRepositoryMock.Setup(repo => repo.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.UpdateRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateRoleAsyncException} {DomainResource.RoleNotFoundException}");
         }
 
         [Fact]
@@ -229,7 +234,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.UpdateRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateRoleAsyncException} {DomainResource.RoleAlreadyExistsException}");
         }
 
         [Theory]
@@ -250,7 +256,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.UpdateRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateRoleAsyncException} {DomainResource.UpdateDefaultRoleException}");
         }
 
         [Fact]
@@ -268,7 +275,8 @@
 
             // Act & Assert
             await FluentActions.Invoking(async () => await _roleService.UpdateRoleAsync(dto)).Should()
-                .ThrowAsync<Exception>();
+                .ThrowAsync<Exception>()
+                .WithMessage($"{DomainResource.UpdateRoleAsyncException} {ExceptionBuilder.ExceptionMessage}");
         }
 
         #endregion

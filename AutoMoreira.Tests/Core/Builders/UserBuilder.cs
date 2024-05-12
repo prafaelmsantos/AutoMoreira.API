@@ -65,23 +65,15 @@
         {
             return new List<User>() { User(dto) };
         }
-        public static List<User> UserListWithRoles(UserDTO dto)
+        public static List<User> FullUserList(UserDTO dto)
         {
-            User user = User(dto);
-            user.SetRoles(RoleBuilder.RoleList(dto.Roles.FirstOrDefault()!));
-            return new List<User>() { user };
+            return new List<User>() { FullUser(dto) };
         }
-        public static List<User> FullUserListWithRoles(UserDTO dto)
-        {
-            User user = FullUser(dto);
-            user.SetRoles(RoleBuilder.RoleList(dto.Roles.FirstOrDefault()!));
-            return new List<User>() { user };
-        }
-        public static List<UserDTO> UserListDTO(UserDTO dto)
+        public static List<UserDTO> UserDTOList(UserDTO dto)
         {
             return new List<UserDTO>() { dto };
         }
-        public static List<User> FullUserListDTO(UserDTO dto)
+        public static List<User> FullUserDTOList(UserDTO dto)
         {
             return new List<User>() { FullUser(dto) };
         }
@@ -93,13 +85,9 @@
         {
             return UserList(user).AsQueryable();
         }
-        public static IQueryable<User> IQueryableWithRoles(UserDTO dto)
+        public static IQueryable<User> FullIQueryable(UserDTO dto)
         {
-            return UserListWithRoles(dto).AsQueryable();
-        }
-        public static IQueryable<User> FullIQueryableWithRoles(UserDTO dto)
-        {
-            return FullUserListWithRoles(dto).AsQueryable();
+            return FullUserList(dto).AsQueryable();
         }
         public static IQueryable<User> IQueryableEmpty()
         {

@@ -23,7 +23,6 @@
         {
             try
             {
-
                 var userEmail = UserEmail(toName, toAddress, password);
 
                 await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);

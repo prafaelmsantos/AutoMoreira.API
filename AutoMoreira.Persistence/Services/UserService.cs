@@ -92,22 +92,29 @@
             }
             catch (Exception ex)
             {
-                throw new Exception($"{DomainResource.LoginUserAsyncException} {ex.Message}");
+                throw new Exception($"{DomainResource.GetUserByEmailAsyncException} {ex.Message}");
             }
         }
 
         public async Task<bool> LoginUserAsync(UserLoginDTO userLoginDTO)
         {
-            User? user = await _userManager
+            try
+            {
+                User? user = await _userManager
                    .Users
                    .SingleOrDefaultAsync(user => user.Email == userLoginDTO.Email);
 
-            user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
+                user.ThrowIfNull(() => throw new Exception(DomainResource.UserNotFoundException));
 
-            SignInResult signInResult = await _signInManager
-                .CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
+                SignInResult signInResult = await _signInManager
+                    .CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
 
-            return signInResult.Succeeded;
+                return signInResult.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{DomainResource.LoginUserAsyncException} {ex.Message}");
+            }
         }
 
         public async Task<UserDTO> AddUserAsync(UserDTO userDTO)

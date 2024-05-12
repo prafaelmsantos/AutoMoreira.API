@@ -28,7 +28,7 @@
         {
             return new List<Mark>() { Mark(dto) };
         }
-        public static List<MarkDTO> MarkListDTO(MarkDTO dto)
+        public static List<MarkDTO> MarkDTOList(MarkDTO dto)
         {
             return new List<MarkDTO>() { dto };
         }

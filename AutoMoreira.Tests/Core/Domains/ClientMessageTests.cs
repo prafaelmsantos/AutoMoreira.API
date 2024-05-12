@@ -2,9 +2,7 @@
 {
     public class ClientMessageTests : BaseClassTests
     {
-        public ClientMessageTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public ClientMessageTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()

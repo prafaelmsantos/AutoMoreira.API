@@ -29,7 +29,7 @@
         {
             return new List<Model>() { Model(dto) };
         }
-        public static List<ModelDTO> ModelListDTO(ModelDTO dto)
+        public static List<ModelDTO> ModelDTOList(ModelDTO dto)
         {
             return new List<ModelDTO>() { dto };
         }

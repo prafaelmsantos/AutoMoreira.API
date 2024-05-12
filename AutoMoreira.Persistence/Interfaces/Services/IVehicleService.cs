@@ -8,8 +8,6 @@
         Task<ResponseCompleteStatisticDTO> GetAllVehiclesWithYearComparisonAsync();
         Task<ResponseStatisticDTO> GetAllVehiclesWithMonthComparisonAsync();
         Task<PieStatisticDTO> GetVehiclePieStatisticsAsync();
-
-
         Task<VehicleDTO> AddVehicleAsync(VehicleDTO vehicleDTO);
         Task<VehicleDTO> UpdateVehicleAsync(VehicleDTO vehicleDTO);
         Task<List<ResponseMessageDTO>> DeleteVehiclesAsync(List<int> vehiclesIds);

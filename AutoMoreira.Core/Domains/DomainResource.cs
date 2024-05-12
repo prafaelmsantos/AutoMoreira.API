@@ -84,6 +84,7 @@
 
         public static readonly string GetAllUsersAsyncException = "Erro ao tentar encontrar utilizadores.";
         public static readonly string GetUserByIdAsyncException = "Erro ao tentar encontrar utilizador por id.";
+        public static readonly string GetUserByEmailAsyncException = "Erro ao tentar encontrar utilizador por email.";
         public static readonly string LoginUserAsyncException = "Erro ao tentar iniciar sessão do utilizador.";
         public static readonly string AddUserAsyncException = "Erro ao tentar criar o utilizador.";
         public static readonly string UpdateUserAsyncException = "Erro ao tentar atualizar o utilizador.";

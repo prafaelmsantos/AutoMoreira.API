@@ -12,6 +12,7 @@
         {
             return new()
             {
+                Id = data.Random.Int(1),
                 Year = data.Date.RecentDateOnly().Year,
                 Month = (MONTH)data.Date.RecentDateOnly().Month,
                 Value = data.Random.Int(1)
@@ -21,10 +22,27 @@
         {
             return new()
             {
+                Id = visitor.Id,
                 Year = visitor.Year,
                 Month = visitor.Month,
                 Value = visitor.Value
             };
+        }
+        public static List<Visitor> VisitorList(Visitor visitor)
+        {
+            return new List<Visitor>() { visitor };
+        }
+        public static List<VisitorDTO> VisitorDTOList(VisitorDTO dto)
+        {
+            return new List<VisitorDTO>() { dto };
+        }
+        public static IQueryable<Visitor> IQueryable(Visitor visitor)
+        {
+            return VisitorList(visitor).AsQueryable();
+        }
+        public static IQueryable<Visitor> IQueryableEmpty()
+        {
+            return new List<Visitor>().AsQueryable();
         }
     }
 }

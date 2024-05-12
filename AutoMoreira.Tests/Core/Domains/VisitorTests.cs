@@ -2,9 +2,7 @@
 {
     public class VisitorTests : BaseClassTests
     {
-        public VisitorTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public VisitorTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()
@@ -29,6 +27,7 @@
             Visitor result = Mapper.Map<Visitor>(dto);
 
             // Assert
+            result.Id.Should().Be(visitor.Id);
             result.Year.Should().Be(visitor.Year);
             result.Month.Should().Be(visitor.Month);
             result.Value.Should().Be(visitor.Value);

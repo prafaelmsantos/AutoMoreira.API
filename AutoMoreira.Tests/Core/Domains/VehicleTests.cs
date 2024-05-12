@@ -2,9 +2,7 @@
 {
     public class VehicleTests : BaseClassTests
     {
-        public VehicleTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public VehicleTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()
@@ -662,6 +660,5 @@
             // Assert
             vehicle.VehicleImages.Should().BeEquivalentTo(vehicleImages);
         }
-
     }
 }

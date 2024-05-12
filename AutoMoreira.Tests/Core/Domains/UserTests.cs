@@ -2,9 +2,7 @@
 {
     public class UserTests : BaseClassTests
     {
-        public UserTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public UserTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()

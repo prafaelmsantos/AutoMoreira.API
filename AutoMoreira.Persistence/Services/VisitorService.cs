@@ -102,7 +102,6 @@
                 }
 
                 return _mapper.Map<VisitorDTO>(visitor);
-
             }
             catch (Exception ex)
             {
@@ -113,6 +112,7 @@
         #endregion
 
         #region Private methods
+
         private async Task<List<VisitorDTO>> GetAllVisitoresByYear(int year)
         {
             List<Visitor> visitors = await _visitorRepository

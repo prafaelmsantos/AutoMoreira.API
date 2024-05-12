@@ -5,8 +5,6 @@
         Task<VisitorCounterDTO> GetVisitorCountersAsync();
         Task<ResponseVisitorDTO> GetAllVisitoresWithMonthComparisonAsync();
         Task<ResponseCompleteVisitorDTO> GetAllVisitoresWithYearComparisonAsync();
-
-
         Task<VisitorDTO> CreateOrUpdateVisitorAsync();
     }
 }

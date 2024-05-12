@@ -1,6 +1,4 @@
 ﻿namespace AutoMoreira.Persistence.Interfaces.Repositories
 {
-    public interface IVehicleRepository : IRepository<Vehicle>
-    {
-    }
+    public interface IVehicleRepository : IRepository<Vehicle> { }
 }

@@ -2,9 +2,7 @@
 {
     public class VehicleImageTests : BaseClassTests
     {
-        public VehicleImageTests(ITestOutputHelper output) : base(output)
-        {
-        }
+        public VehicleImageTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Constructor_WithValidParameters_InitializesProperties()

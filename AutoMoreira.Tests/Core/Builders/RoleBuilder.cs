@@ -34,7 +34,7 @@
         {
             return new List<Role>() { FullRole(dto) };
         }
-        public static List<RoleDTO> RoleListDTO(RoleDTO dto)
+        public static List<RoleDTO> RoleDTOList(RoleDTO dto)
         {
             return new List<RoleDTO>() { dto };
         }
