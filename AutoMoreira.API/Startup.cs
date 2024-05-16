@@ -46,10 +46,21 @@
             //Rafael AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            //Rafael - JWT
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AutoMoreira.API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "AutoMoreira.API",
+                    Description = "An ASP.NET Core Web API for Auto Moreira",
+                    Contact = new OpenApiContact()
+                    {
+                        Name = "Auto Moreira Portugal",
+                        Email = "automoreiraportugal@gmail.com"
+                    },
+                    Version = "v1"
+                });
+
+                //Rafael - JWT
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header utilizando o Bearer.
@@ -61,6 +72,7 @@
                     Scheme = "Bearer"
 
                 });
+
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {

@@ -99,7 +99,7 @@
                     return Unauthorized(userLoginDTO);
                 }
 
-                userDTO.Token = await _tokenService.CreateToken(userDTO);
+                userDTO.Token = _tokenService.CreateToken(userDTO);
 
                 return Ok(userDTO);
             }

@@ -2,41 +2,26 @@
 {
     public class TokenService : ITokenService
     {
-        private readonly IConfiguration _config;
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
-
-        //Quando criamos um token, é preciso uma chave de verificação 
+        #region Private variables
         //(chave de segurança- chave de encriptação)
-        public readonly SymmetricSecurityKey _key;
+        private readonly string _key;
+        #endregion
 
-        public TokenService(IConfiguration config, UserManager<User> userManager, IMapper mapper)
+        #region Constructors
+        public TokenService(string key)
         {
-            _config = config;
-            _userManager = userManager;
-            _mapper = mapper;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
+            _key = key;
         }
-        public async Task<string> CreateToken(UserDTO userDTO)
+        #endregion
+
+        #region Public methods
+        public string CreateToken(UserDTO userDTO)
         {
-            var user = _mapper.Map<User>(userDTO);
+            List<Claim> claims = GetClaims(userDTO);
 
-            //Claims são afirmações sobre o utilizador ( nome, idade, foto, ...).
-            //Neste caso estou a adicionar para dentro das claims, uma claim do userId e outra do UserName,
-            //ou seja, estou a criar claims baseadas no meu utilizador
-            var claims = new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Name, user.UserName)
-            };
+            SymmetricSecurityKey tokenKey = new(Encoding.UTF8.GetBytes(_key));
 
-            //Vou buscar todas as roles do utilizador
-            var roles = await _userManager.GetRolesAsync(user);
-
-            //Ele vai adicionar para dentro de claims varias outras claims(Roles).
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha512Signature);
 
             //Montar a estrutura do token.
             var tokenDescription = new SecurityTokenDescriptor
@@ -57,5 +42,18 @@
             //Escrevo token no formato JWT
             return tokenHandler.WriteToken(token);
         }
+        #endregion
+
+        #region Private methods
+        private static List<Claim> GetClaims(UserDTO userDTO)
+        {
+            //Claims são afirmações sobre o utilizador ( nome, idade, foto, ...).
+            return new()
+            {
+                new(ClaimTypes.NameIdentifier, userDTO.Id.ToString()),
+                new(ClaimTypes.Name, userDTO.Email)
+            };
+        }
+        #endregion
     }
 }

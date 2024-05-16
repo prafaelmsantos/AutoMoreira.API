@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        Task<string> CreateToken(UserDTO userDTO);
+        string CreateToken(UserDTO userDTO);
     }
 }
