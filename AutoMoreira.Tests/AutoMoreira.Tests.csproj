@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoMoreira.Core\AutoMoreira.Core.csproj" />
-    <ProjectReference Include="..\AutoMoreira.Persistence\AutoMoreira.Persistence.csproj" />
+    <ProjectReference Include="..\AutoMoreira.Infrastructure\AutoMoreira.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

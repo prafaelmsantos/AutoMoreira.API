@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["AutoMoreira.API/AutoMoreira.API.csproj", "AutoMoreira.API/"]
-COPY ["AutoMoreira.Persistence/AutoMoreira.Persistence.csproj", "AutoMoreira.Persistence/"]
+COPY ["AutoMoreira.Infrastructure/AutoMoreira.Infrastructure.csproj", "AutoMoreira.Infrastructure/"]
 COPY ["AutoMoreira.Core/AutoMoreira.Core.csproj", "AutoMoreira.Core/"]
 RUN dotnet restore "./AutoMoreira.API/./AutoMoreira.API.csproj"
 COPY . .
