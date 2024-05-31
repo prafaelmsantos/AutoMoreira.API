@@ -23,11 +23,9 @@
         {
             try
             {
+                (string subject, string body) = UserEmail(toName, toAddress, password);
 
-                var userEmail = UserEmail(toName, toAddress, password);
-
-                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
-
+                await SendEmail(toName, toAddress, subject, body);
             }
             catch (Exception e)
             {
@@ -39,10 +37,9 @@
         {
             try
             {
-                var userEmail = UserUpdateEmail(toName);
+                (string subject, string body) = UserUpdateEmail(toName);
 
-                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
-
+                await SendEmail(toName, toAddress, subject, body);
             }
             catch (Exception e)
             {
@@ -54,8 +51,8 @@
         {
             try
             {
-                var userEmail = UserResetPasswordEmail(toName, password);
-                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
+                (string subject, string body) = UserResetPasswordEmail(toName, password);
+                await SendEmail(toName, toAddress, subject, body);
             }
             catch (Exception e)
             {
@@ -67,8 +64,8 @@
         {
             try
             {
-                var userEmail = UserPasswordEmail(toName);
-                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
+                (string subject, string body) = UserPasswordEmail(toName);
+                await SendEmail(toName, toAddress, subject, body);
             }
             catch (Exception e)
             {
@@ -80,8 +77,8 @@
         {
             try
             {
-                var userEmail = ClientEmail(toName);
-                await SendEmail(toName, toAddress, userEmail.Item1, userEmail.Item2);
+                (string subject, string body) = ClientEmail(toName);
+                await SendEmail(toName, toAddress, subject, body);
             }
             catch (Exception e)
             {
@@ -92,7 +89,7 @@
         #endregion
 
         #region Private methods
-        private async Task SendEmail(string toName, string toAddress, string subject, string text)
+        private async Task SendEmail(string toName, string toAddress, string subject, string body)
         {
             var message = new MimeMessage();
 
@@ -101,7 +98,7 @@
             message.Subject = subject;
             message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
-                Text = string.Format(text)
+                Text = string.Format(body)
             };
 
             using var client = new SmtpClient();
