@@ -7,10 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
+
+#Add GitHub NuGet sources
+ENV GITHUB_PASSWORD=password
+
 WORKDIR /src
 COPY ["AutoMoreira.API/AutoMoreira.API.csproj", "AutoMoreira.API/"]
 COPY ["AutoMoreira.Infrastructure/AutoMoreira.Infrastructure.csproj", "AutoMoreira.Infrastructure/"]
 COPY ["AutoMoreira.Core/AutoMoreira.Core.csproj", "AutoMoreira.Core/"]
+RUN dotnet nuget add source -n github -u AZ -p ${GITHUB_PASSWORD} --store-password-in-clear-text https://nuget.pkg.github.com/prafaelmsantos/index.json
 RUN dotnet restore "./AutoMoreira.API/./AutoMoreira.API.csproj"
 COPY . .
 WORKDIR "/src/AutoMoreira.API"

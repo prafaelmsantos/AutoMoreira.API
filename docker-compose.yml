@@ -11,9 +11,10 @@ services:
       context: .
       dockerfile: AutoMoreira.API/Dockerfile
     ports:
-      - 9000:80
-      - 9001:443
+      - 5040:80
+      - 5041:443
     environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80;
       - CONNECTION_STRINGS=host=postgres;port=5432;Database=auto_moreira_db;User ID=sa;Password=password@12345#;Include Error Detail=true
     restart: always
     networks:
