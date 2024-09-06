@@ -1,5 +1,12 @@
 name: CI/CD Pipeline
 
+env:
+  DOTNET_VERSION: '6.0.425'
+  SOLUTION_PATH: './AutoMoreira.sln'
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKERFILE_PATH: './AutoMoreira.API/Dockerfile'
+  
 on:
   push:
   pull_request:
@@ -20,16 +27,16 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '6.0.425'
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Restore dependencies
-      run: dotnet restore ./AutoMoreira.sln
+      run: dotnet restore ${{ env.SOLUTION_PATH }}
 
     - name: Build the project
-      run: dotnet build ./AutoMoreira.sln --configuration Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test ./AutoMoreira.sln --no-restore --verbosity normal
+      run: dotnet test ${{ env.SOLUTION_PATH }} --no-restore --verbosity normal
 
   docker:
     needs: build
@@ -45,13 +52,13 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ env.DOCKERHUB_USERNAME }}
+        password: ${{ env.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./AutoMoreira.API/Dockerfile
+        file: ${{ env.DOCKERFILE_PATH }}
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/automoreiraapi:latest
+        tags: ${{ env.DOCKERHUB_USERNAME }}/automoreiraapi:latest
