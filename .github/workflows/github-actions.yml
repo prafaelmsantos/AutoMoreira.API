@@ -2,11 +2,12 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
+    paths:
+      - '**.cs'
+      - '**.csproj'
 
 jobs:
   build:
@@ -23,6 +24,7 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: ./src/api
 
     - name: Build the project
       run: dotnet build --configuration Release --no-restore
