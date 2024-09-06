@@ -26,7 +26,7 @@ jobs:
       run: dotnet restore ./AutoMoreira.sln
 
     - name: Build the project
-      run: dotnet build --configuration Release --o ${{env.DOTNET_ROOT}}/AutoMoreira.API
+      run: dotnet build ./AutoMoreira.sln --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ./AutoMoreira.sln --no-restore --verbosity normal
