@@ -4,7 +4,7 @@ env:
   DOTNET_VERSION: '6.0.425'
   SOLUTION_PATH: './AutoMoreira.sln'
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
   DOCKER_FILE_PATH: './AutoMoreira.API/Dockerfile'
   
 on:
