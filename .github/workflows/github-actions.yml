@@ -23,7 +23,7 @@ jobs:
         dotnet-version: '6.0.425'
 
     - name: Restore dependencies
-      run: dotnet restore ./src/AutoMoreira.sln
+      run: dotnet restore ./AutoMoreira.sln
 
     - name: Build the project
       run: dotnet build --configuration Release --o ${{env.DOTNET_ROOT}}/AutoMoreira.API
