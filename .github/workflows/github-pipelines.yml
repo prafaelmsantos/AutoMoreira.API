@@ -5,6 +5,7 @@ env:
   SOLUTION_PATH: './AutoMoreira.sln'
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+  DOCKER_IMAGE: 'automoreiraapi'
   DOCKER_FILE_PATH: './AutoMoreira.API/Dockerfile'
   
 on:
@@ -61,4 +62,4 @@ jobs:
         context: .
         file: ${{ env.DOCKER_FILE_PATH }}
         push: true
-        tags: ${{ env.DOCKER_HUB_USERNAME }}/automoreiraapi:latest
+        tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
