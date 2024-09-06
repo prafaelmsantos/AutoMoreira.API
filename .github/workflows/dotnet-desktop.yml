@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.0' # Altere para a versão desejada
+        dotnet-version: '6.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -52,4 +52,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/automoreiraapi:latest # Substitua pelo nome do seu projeto
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/automoreiraapi:latest
