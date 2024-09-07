@@ -31,7 +31,7 @@
 
             entity.Property(x => x.NormalizedName)
                .HasColumnName("normalized_name")
-               .IsRequired(false);
+               .IsRequired(true);
 
             entity.Property(x => x.ConcurrencyStamp)
                .HasColumnName("concurrency_stamp")

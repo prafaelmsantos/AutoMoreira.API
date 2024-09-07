@@ -9,17 +9,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AutoMoreira.Persistence.Migrations
+namespace AutoMoreira.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240504163423_Migrations000001")]
-    partial class Migrations000001
+    [Migration("20240907212941_Migration000001")]
+    partial class Migration000001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
+                .HasAnnotation("ProductVersion", "6.0.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -98,6 +98,7 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("normalized_name");
@@ -114,7 +115,7 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "47d13d2d-de91-4ffa-b40c-4a13560566b0",
+                            ConcurrencyStamp = "24118ee3-7631-4f8d-8e7d-19c5cf885042",
                             IsDefault = true,
                             IsReadOnly = true,
                             Name = "Administrador",
@@ -123,7 +124,7 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e12187d4-3326-470e-af73-3b0f22ea875b",
+                            ConcurrencyStamp = "1f36a64d-1351-4b3b-8684-b1db1f50f18c",
                             IsDefault = true,
                             IsReadOnly = false,
                             Name = "Colaborador",
@@ -132,7 +133,7 @@ namespace AutoMoreira.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "61f47d55-4031-4ad6-97bd-acaf2408cac0",
+                            ConcurrencyStamp = "13f41f84-fdbc-4004-8816-65c680da350e",
                             IsDefault = false,
                             IsReadOnly = false,
                             Name = "Comercial",
@@ -155,7 +156,6 @@ namespace AutoMoreira.Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("concurrency_stamp");
 
@@ -208,17 +208,18 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("lockout_end");
 
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("normalized_email");
 
                     b.Property<string>("NormalizedUserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("normalized_user_name");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password_hash");
 
@@ -234,7 +235,6 @@ namespace AutoMoreira.Persistence.Migrations
                         .HasColumnName("phone_number_confirmed");
 
                     b.Property<string>("SecurityStamp")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("security_stamp");
 
@@ -266,7 +266,7 @@ namespace AutoMoreira.Persistence.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "199f3200-938e-4d16-863e-35e683432889",
+                            ConcurrencyStamp = "b7c8fd47-1b1d-4c5b-87b2-6cd23c5d7024",
                             DarkMode = false,
                             Email = "automoreiraportugal@gmail.com",
                             EmailConfirmed = true,
@@ -276,10 +276,9 @@ namespace AutoMoreira.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
                             NormalizedUserName = "AUTOMOREIRAPORTUGAL@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHDn7xnwovpGMqhsT0gl4E1MGfrVoMTHSCswZ41MpeMZGPzmdLOti42PfCZ3ndUsoQ==",
                             PhoneNumber = "231472555",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "ce5b0ce7-55aa-4531-a057-b6aa3bc143ce",
+                            SecurityStamp = "dcc08757-b7c5-4dc7-8af3-4f21d8d051be",
                             TwoFactorEnabled = false,
                             UserName = "automoreiraportugal@gmail.com"
                         });

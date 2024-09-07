@@ -19,6 +19,7 @@
             user.Email.Should().Be(dto.Email).And.NotBeNullOrWhiteSpace();
             user.NormalizedEmail.Should().Be(dto.Email.ToUpper()).And.NotBeNullOrWhiteSpace();
             user.EmailConfirmed.Should().BeTrue();
+            user.ConcurrencyStamp.Should().NotBeNullOrWhiteSpace();
             user.PhoneNumber.Should().Be(dto.PhoneNumber).And.NotBeEmpty();
             user.PhoneNumberConfirmed.Should().BeTrue();
             user.FirstName.Should().Be(dto.FirstName).And.NotBeNullOrWhiteSpace();
@@ -43,6 +44,7 @@
             user.Email.Should().Be(dto.Email).And.NotBeNullOrWhiteSpace();
             user.NormalizedEmail.Should().Be(dto.Email.ToUpper()).And.NotBeNullOrWhiteSpace();
             user.EmailConfirmed.Should().BeTrue();
+            user.ConcurrencyStamp.Should().NotBeNullOrWhiteSpace();
             user.PhoneNumber.Should().Be(dto.PhoneNumber).And.NotBeEmpty();
             user.PhoneNumberConfirmed.Should().BeTrue();
             user.FirstName.Should().Be(dto.FirstName).And.NotBeNullOrWhiteSpace();
@@ -395,37 +397,6 @@
 
             // Assert
             user.Roles.Should().BeEquivalentTo(roles);
-        }
-
-        [Fact]
-        public void SetPasswordHash_WithValidParameters()
-        {
-            // Arrange
-            UserDTO dto = UserBuilder.UserDTO();
-            User user = UserBuilder.User(dto);
-
-            // Act
-            user.SetPasswordHash(dto.Password!);
-
-            // Assert
-            user.PasswordHash.Should().Be(dto.Password).And.NotBeNullOrWhiteSpace();
-            user.SecurityStamp.Should().NotBeNull();
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        public void SetPasswordHash_WithInvalidPasswordHash_ThrowsArgumentException(string? password)
-        {
-            // Arrange
-            UserDTO dto = UserBuilder.UserDTO();
-            User user = UserBuilder.User(dto);
-
-            // Act & Assert
-            FluentActions.Invoking(() => user.SetPasswordHash(password!)).Should()
-                .Throw<Exception>()
-                .WithMessage(DomainResource.UserPasswordHashNeedsToBeSpecifiedException);
         }
     }
 }

@@ -38,6 +38,7 @@
             Email = email;
             NormalizedEmail = email.ToUpper();
             EmailConfirmed = true;
+            SecurityStamp = Guid.NewGuid().ToString();
             PhoneNumber = phoneNumber;
             PhoneNumberConfirmed = true;
             FirstName = firstName;
@@ -66,6 +67,7 @@
             Email = email;
             NormalizedEmail = email.ToUpper();
             EmailConfirmed = true;
+            SecurityStamp = Guid.NewGuid().ToString();
             PhoneNumber = phoneNumber;
             PhoneNumberConfirmed = phoneNumber != null;
             FirstName = firstName;
@@ -121,15 +123,6 @@
         {
             Roles.Clear();
             Roles = roles;
-        }
-
-        public void SetPasswordHash(string passwordHash)
-        {
-            passwordHash.ThrowIfNull(() => throw new Exception(DomainResource.UserPasswordHashNeedsToBeSpecifiedException))
-                .IfWhiteSpace();
-
-            PasswordHash = passwordHash;
-            SecurityStamp = Guid.NewGuid().ToString();
         }
     }
 }

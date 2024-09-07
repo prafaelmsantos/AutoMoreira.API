@@ -4,9 +4,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AutoMoreira.Persistence.Migrations
+namespace AutoMoreira.Infrastructure.Migrations
 {
-    public partial class Migrations000001 : Migration
+    public partial class Migration000001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,7 +50,7 @@ namespace AutoMoreira.Persistence.Migrations
                     is_default = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     is_read_only = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     concurrency_stamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -70,13 +70,13 @@ namespace AutoMoreira.Persistence.Migrations
                     dark_mode = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     is_default = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    normalized_email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     email_confirmed = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    password_hash = table.Column<string>(type: "text", nullable: false),
-                    security_stamp = table.Column<string>(type: "text", nullable: false),
-                    concurrency_stamp = table.Column<string>(type: "text", nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: true),
+                    security_stamp = table.Column<string>(type: "text", nullable: true),
+                    concurrency_stamp = table.Column<string>(type: "text", nullable: true),
                     phone_number = table.Column<string>(type: "text", nullable: false),
                     phone_number_confirmed = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     two_factor_enabled = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
@@ -303,22 +303,22 @@ namespace AutoMoreira.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "roles",
                 columns: new[] { "id", "concurrency_stamp", "is_default", "is_read_only", "name", "normalized_name" },
-                values: new object[] { 1, "47d13d2d-de91-4ffa-b40c-4a13560566b0", true, true, "Administrador", "ADMINISTRADOR" });
+                values: new object[] { 1, "24118ee3-7631-4f8d-8e7d-19c5cf885042", true, true, "Administrador", "ADMINISTRADOR" });
 
             migrationBuilder.InsertData(
                 table: "roles",
                 columns: new[] { "id", "concurrency_stamp", "is_default", "name", "normalized_name" },
-                values: new object[] { 2, "e12187d4-3326-470e-af73-3b0f22ea875b", true, "Colaborador", "COLABORADOR" });
+                values: new object[] { 2, "1f36a64d-1351-4b3b-8684-b1db1f50f18c", true, "Colaborador", "COLABORADOR" });
 
             migrationBuilder.InsertData(
                 table: "roles",
                 columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
-                values: new object[] { 3, "61f47d55-4031-4ad6-97bd-acaf2408cac0", "Comercial", "COMERCIAL" });
+                values: new object[] { 3, "13f41f84-fdbc-4004-8816-65c680da350e", "Comercial", "COMERCIAL" });
 
             migrationBuilder.InsertData(
                 table: "users",
                 columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "first_name", "image", "is_default", "last_name", "lockout_end", "normalized_email", "normalized_user_name", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "user_name" },
-                values: new object[] { 1, 0, "199f3200-938e-4d16-863e-35e683432889", "automoreiraportugal@gmail.com", true, "Auto", null, true, "Moreira", null, "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AQAAAAEAACcQAAAAEHDn7xnwovpGMqhsT0gl4E1MGfrVoMTHSCswZ41MpeMZGPzmdLOti42PfCZ3ndUsoQ==", "231472555", true, "ce5b0ce7-55aa-4531-a057-b6aa3bc143ce", "automoreiraportugal@gmail.com" });
+                values: new object[] { 1, 0, "b7c8fd47-1b1d-4c5b-87b2-6cd23c5d7024", "automoreiraportugal@gmail.com", true, "Auto", null, true, "Moreira", null, "AUTOMOREIRAPORTUGAL@GMAIL.COM", "AUTOMOREIRAPORTUGAL@GMAIL.COM", null, "231472555", true, "dcc08757-b7c5-4dc7-8af3-4f21d8d051be", "automoreiraportugal@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "models",
