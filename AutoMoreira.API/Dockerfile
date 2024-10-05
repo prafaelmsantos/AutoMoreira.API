@@ -11,7 +11,6 @@ ARG BUILD_CONFIGURATION=Release
 #Add GitHub NuGet sources
 ENV GITHUB_PASSWORD=password
 
-
 WORKDIR /src
 COPY ["AutoMoreira.API/AutoMoreira.API.csproj", "AutoMoreira.API/"]
 COPY ["AutoMoreira.Infrastructure/AutoMoreira.Infrastructure.csproj", "AutoMoreira.Infrastructure/"]
